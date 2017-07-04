@@ -1,0 +1,18 @@
+{
+  "name": "ztool",
+  "version": "0.1.0",
+  "private": true,
+  "author": "nadun1indunil@gmail.com",
+  "dependencies": {
+    "draft-js": "^0.10.1",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-scripts": "1.0.10"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
