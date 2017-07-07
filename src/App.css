@@ -40,42 +40,42 @@ body{
   margin-top: 10px!important;
 }
 
-.TeXEditor-container {
+.Zeditor-container {
   width: 100%;
   height: 100%;
 }
 
-.TeXEditor-root {
+.Zeditor-root {
   background: white;
   -webkit-font-smoothing: antialiased;
   margin: 40px auto;
   width: 700px;
 }
 
-.TeXEditor-editor {
+.Zeditor-editor {
   cursor: text;
-  font-size: 21px;
-  line-height: 33px;
-  min-height: 40px;
-  padding: 30px;
+  font-size: 15px;
+  line-height: 26px;
+  min-height: 34px;
+  padding: 25px;
 }
 
-.TeXEditor-button {
+.Zeditor-button {
   margin-top: 10px;
   text-align: center;
 }
 
-.TeXEditor-handle {
+.Zeditor-handle {
   color: rgba(98, 177, 254, 1.0);
   direction: ltr;
   unicode-bidi: bidi-override;
 }
 
-.TeXEditor-hashtag {
+.Zeditor-hashtag {
   color: rgba(95, 184, 138, 1.0);
 }
 
-.TeXEditor-tex {
+.Zeditor-tex {
   background-color: #fff;
   cursor: pointer;
   margin: 20px auto;
@@ -85,16 +85,16 @@ body{
   -webkit-user-select: none;
 }
 
-.TeXEditor-activeTeX {
+.Zeditor-activeTeX {
   color: #888;
 }
 
-.TeXEditor-panel {
+.Zeditor-panel {
   font-family: 'Helvetica', sans-serif;
   font-weight: 200;
 }
 
-.TeXEditor-panel .TeXEditor-texValue {
+.Zeditor-panel .Zeditor-texValue {
   border: 1px solid #e1e1e1;
   display: block;
   font-family: 'Inconsolata', 'Menlo', monospace;
@@ -108,12 +108,12 @@ body{
   width: 500px;
 }
 
-.TeXEditor-buttons {
+.Zeditor-buttons {
   text-align: center;
 }
 
-.TeXEditor-saveButton,
-.TeXEditor-removeButton {
+.Zeditor-saveButton,
+.Zeditor-removeButton {
   background-color: #fff;
   border: 1px solid #0a0;
   cursor: pointer;
@@ -126,19 +126,19 @@ body{
   width: 100px;
 }
 
-.TeXEditor-removeButton {
+.Zeditor-removeButton {
   border-color: #aaa;
   color: #999;
   margin-left: 8px;
 }
 
-.TeXEditor-invalidButton {
+.Zeditor-invalidButton {
   background-color: #eee;
   border-color: #a00;
   color: #666;
 }
 
-.TeXEditor-insert {
+.Zeditor-insert {
   background-color: #f1f1f1;
   border: 1px solid #ccc;
   border-radius: 3px;
@@ -146,7 +146,7 @@ body{
   position: fixed;
   right: 30px;
 }
-.TeXEditor-insert2 {
+.Zeditor-insert2 {
   background-color: #f1f1f1;
   border: 1px solid #ccc;
   border-radius: 3px;
@@ -155,7 +155,7 @@ body{
   right: 160px;
 }
 
-.TeXEditor-insert3 {
+.Zeditor-insert3 {
   background-color: #f1f1f1;
   border: 1px solid #ccc;
   border-radius: 3px;

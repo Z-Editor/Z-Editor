@@ -1,5 +1,3 @@
-'use strict';
-
 import React, { Component } from 'react';
 import ZEditor from './editor/editor'
 import './App.css';
@@ -30,14 +28,10 @@ class App extends Component {
                         Clear
                     </button>
                 </div>
-                {this.renderSide()}
-                <div className="container-content">
-                    <div className="TeXEditor-root">
-                        <div className="TeXEditor-editor">
-                          <ZEditor/>
-                        </div>
-                    </div>
-                </div>
+                {/*{this.renderSide()}*/}
+                
+                <ZEditor/>
+                
             </div>
         );
     }
