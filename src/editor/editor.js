@@ -4,7 +4,8 @@ import React, {
 import {
     Map
 } from 'immutable';
-import TodoBlock from './TodoBlock'
+import TodoBlock from './TodoBlock';
+import Schemata from './Schemata';
 import {
     Editor,
     EditorState,
@@ -16,11 +17,13 @@ import {
     Entity,
     Modifier,
     CompositeDecorator,
-    DefaultDraftBlockRenderMap
+    DefaultDraftBlockRenderMap,
+    AtomicBlockUtils
 } from 'draft-js';
 import '../App.css';
 
 const TODO_BLOCK = 'todo';
+const SCHEMA = 'schemata';
 
 function findPlaceholders(contentBlock, callback) {
     contentBlock.findEntityRanges((character) => {
@@ -81,9 +84,25 @@ A higher-order function. http://bitwiser.in/2016/08/31/implementing-todo-list-in
 const getBlockRendererFn = (getEditorState, onChange) => (block) => {
     const type = block.getType();
     switch (type) {
-        case 'todo':
+        case 'atomic':
             return {
                 component: TodoBlock,
+                props: {
+                    getEditorState,
+                    onChange,
+                },
+                };
+        // case 'todo':
+        //     return {
+        //         component: TodoBlock,
+        //         props: {
+        //             getEditorState,
+        //             onChange,
+        //         },
+        //     };
+        case 'schemata':
+            return {
+                component: Schemata,
                 props: {
                     getEditorState,
                     onChange,
@@ -107,6 +126,9 @@ class ZEditor extends Component {
             [TODO_BLOCK]: {
                 element: 'div',
             },
+            [SCHEMA]: {
+                element: 'div',
+            },
         }).merge(DefaultDraftBlockRenderMap);
 
 
@@ -117,8 +139,6 @@ class ZEditor extends Component {
         this.handleBeforeInput = this.handleBeforeInput.bind(this);
 
         this.handleKeyCommand = this.handleKeyCommand.bind(this);
-
-
         // Get a blockRendererFn from the higher-order function.
         this.blockRendererFn = getBlockRendererFn(
             this.getEditorState, this.onChange);
@@ -130,8 +150,12 @@ class ZEditor extends Component {
 
     blockStyleFn(block) {
         switch (block.getType()) {
+            case 'atomic':
+                return 'block block-todo';
             case TODO_BLOCK:
                 return 'block block-todo';
+            case SCHEMA:
+                return 'schemata';
             default:
                 return 'block';
         }
@@ -140,21 +164,48 @@ class ZEditor extends Component {
 
 
     insertPlaceholder = () => {
-        const label = "|----------------------------- \n|makeMilkCoffee \n|ΔtheCoffeeMachine \n|coffee? : ℕ \n|milk? : ℕ \n|------------------------- \n|coffee   0 \n|milk   0 \n|coffee  halfCupCapacity \n|milk  halfCupCapacity \n|------------------------- \n "
-        const meta = "test test"
+        // const label = "|----------------------------- \n|makeMilkCoffee \n|ΔtheCoffeeMachine \n|coffee? : ℕ \n|milk? : ℕ \n|------------------------- \n|coffee   0 \n|milk   0 \n|coffee  halfCupCapacity \n|milk  halfCupCapacity \n|------------------------- \n "
+        const meta = "na"
         const editorState = this.state.editorState;
-        const currentContent = editorState.getCurrentContent();
-        const selection = editorState.getSelection();
-        const entityKey = Entity.create('unstyled', 'IMMUTABLE', {
-            meta
-        });
-        const textWithEntity = Modifier.insertText(currentContent, selection, label, null, entityKey);
 
-        this.setState({
-            editorState: EditorState.push(editorState, textWithEntity, 'insert-characters')
-        }, () => {
-            this.refs.editor.focus();
-        });
+        // const selectionState = editorState.getSelection();
+        const contentState = editorState.getCurrentContent();
+
+        const contentStateWithEntity = contentState.createEntity(
+        'todo',
+        'MUTABLE',{
+            text:meta
+        }
+        );
+        const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
+        const newEditorState = EditorState.set(
+            editorState,
+            { currentContent: contentStateWithEntity }
+        );
+
+        // const newContentState = Modifier.applyEntity(
+        // contentState,
+        // selectionState,
+        // entityKey
+        // );
+
+        // this.setState({
+        //     editorState: EditorState.push(editorState, textWithEntity, 'insert-characters')
+        // }, () => {
+        //     this.refs.editor.focus();
+        // });
+        // associate the text in the selection (from - to) to the entety and get a new content state
+        // const newContentState = Modifier.insertText(contentState, selectionState, 'test', null, entityKey);
+
+        // insert a new atomic block with the entity and a whit space as the text
+        const newEditorStateWithBlock = AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, ' ');
+        this.setState({ TODO_BLOCK: Map() , editorState: newEditorStateWithBlock });
+
+        // this.setState({
+        //     editorState: EditorState.push(editorState, newContentState, 'apply-entity')
+        // }, () => {
+        //     this.refs.editor.focus();
+        // });
     }
 
     handleKeyCommand(command) {
@@ -194,26 +245,30 @@ class ZEditor extends Component {
     render() {
         return ( 
             <div className = "container-content" >
-            <button type = "button"
-            onClick = {this.insertPlaceholder}>
+                <button type = "button"
+                onClick = {this.insertPlaceholder}>
 
-            {'Insert 2'} 
-            
-            </button>
-            <div className = "Zeditor-root" >
-            <div className = "Zeditor-editor" >
-            <Editor editorState = {this.state.editorState}
-            handleKeyCommand = {this.handleKeyCommand}
-            ref = "editor"
-            onChange = {this.onChange}
-            blockStyleFn = {this.blockStyleFn}
-            blockRenderMap = {this.blockRenderMap}
-            blockRendererFn = {this.blockRendererFn}
-            handleBeforeInput = {this.handleBeforeInput}
-            handleKeyCommand = {this.handleKeyCommand}
-            />
-            </div> 
-            </div> 
+                {'Insert 2'} 
+                
+                </button>
+                <div className = "Zeditor-root" >
+                    <div className = "Zeditor-editor" >
+                        <Editor editorState = {this.state.editorState}
+                        handleKeyCommand = {this.handleKeyCommand}
+                        ref = "editor"
+                        onChange = {this.onChange}
+                        blockStyleFn = {this.blockStyleFn}
+                        blockRenderMap = {this.blockRenderMap}
+                        blockRendererFn = {this.blockRendererFn}
+                        handleBeforeInput = {this.handleBeforeInput}
+                        handleKeyCommand = {this.handleKeyCommand}
+                        />
+                    </div> 
+                </div>
+                <div>
+                    JSON
+                    <pre >{JSON.stringify(convertToRaw(this.state.editorState.getCurrentContent()), null, 1)}</pre>
+                </div>
             </div>
         );
     }

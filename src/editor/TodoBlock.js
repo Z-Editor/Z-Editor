@@ -37,6 +37,7 @@ class TodoBlock extends Component {
       onChange,
       getEditorState
     } = blockProps;
+    
     const data = block.getData();
     const checked = (data.has('checked') && data.get('checked') === true);
     const newData = data.set('checked', !checked);
