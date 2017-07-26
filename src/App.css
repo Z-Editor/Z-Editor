@@ -1,9 +1,9 @@
-body{
+/*body{
   font-family: "Georgia","Cambria","Times New Roman","Times","serif";
   line-height: initial;
   margin: 0;
   background: #F7F7F7;
-}
+}*/
 
 .public-DraftEditor-content > div > *:first-child{
   margin-top: 1px;
@@ -271,11 +271,12 @@ body{
 }
 
 .schemata_up {
-  border-left: 2px solid black;
-  border-top: 2px solid black;
+  border-bottom: 2px solid black;
   position: relative;
-  padding: 1px 20px;
-  /*box-shadow: inset 0px 0px 10px 2px #f7f7f7;*/
+  padding: 8px 20px;
+  padding-left:10px;
+  line-height:0.001em;
+  
 }
 
 .schemata_down {
@@ -284,4 +285,77 @@ body{
   position: relative;
   padding: 1px 20px;
   /*box-shadow: inset 0px 0px 10px 2px #f7f7f7;*/
+}
+
+/*.schemata-up {
+  width:100%;
+  border-top:2px solid #000;
+  padding-left:10px; 
+  line-height:0.1em; 
+  margin:10px 0 20px; 
+}*/
+
+.schemata_up span {
+  padding:10px 10px;
+  background:#fff;
+
+}
+
+body {
+  font-family: "Georgia","Cambria","Times New Roman","Times","serif";
+  line-height: initial;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #FAFAFA;
+}
+* {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+.page {
+  width: 210mm;
+  min-height: 297mm;
+  padding: 20mm;
+  margin: 10mm auto;
+  border: 1px #D3D3D3 solid;
+  border-radius: 5px;
+  background: white;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+.subpage {
+  padding: 1cm;
+  border: 5px red solid;
+  height: 257mm;
+  outline: 2cm #FFEAEA solid;
+}
+
+@page {
+    size: A4;
+    margin: 0;
+}
+@media print {
+    body * {
+      visibility: hidden;
+    }
+    html, body {
+        width: 210mm;
+        height: 297mm;        
+    }
+    .page * {
+      visibility: visible;
+    }
+    .page {
+        margin: 0;
+        border: initial;
+        border-radius: initial;
+        width: initial;
+        min-height: initial;
+        box-shadow: initial;
+        background: initial;
+        page-break-after: always;
+        left: 0;
+        top: 0;
+    }
 }

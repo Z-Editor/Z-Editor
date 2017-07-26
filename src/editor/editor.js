@@ -31,17 +31,6 @@ const SCHEMA = 'schemata';
 const SCHEMA_UP = 'schemata_up';
 const SCHEMA_DOWN = 'schemata_down';
 
-function findPlaceholders(contentBlock, callback) {
-    contentBlock.findEntityRanges((character) => {
-        const entityKey = character.getEntity();
-        return (
-            entityKey !== null &&
-            Entity.get(entityKey).getType() === 'PLACEHOLDER'
-        );
-    }, callback);
-}
-
-
 const convertBlock = (type,editorState, selectionState, contentState) => {
 
     const newType = type;
@@ -51,11 +40,7 @@ const convertBlock = (type,editorState, selectionState, contentState) => {
     const key = selectionState.getStartKey();
     const blockMap = contentState.getBlockMap();
     const block = blockMap.get(key);
-    let newText = '';
-    const text = block.getText();
-    if (block.getLength() >= 2) {
-        newText = text.substr(1);
-    }
+    const newText = block.getText();
     const newBlock = block.merge({
         text: newText,
         type: newType,
@@ -74,7 +59,7 @@ const convertBlock = (type,editorState, selectionState, contentState) => {
 
 const insert_block = (editorState, selection, contentState, currentBlock) => {
     
-    const newBlock = convertBlock('schemata',editorState, selection, contentState);
+    const newBlock = convertBlock('schemata_up',editorState, selection, contentState);
     const blockMap = contentState.getBlockMap()
     // Split the blocks
     const blocksBefore = blockMap.toSeq().takeUntil(function (v) {
@@ -85,20 +70,53 @@ const insert_block = (editorState, selection, contentState, currentBlock) => {
     }).rest()
     const newBlockKey = genKey();
     const newBlockKey2 = genKey();
+    const newBlockKey3 = genKey();
+    const newBlockKey4 = genKey();
+    const newBlockKey5 = genKey();
+    const newBlockKeyFirst = genKey();
+    const newBlockKeyLast = genKey();
 
+    // schema table building from here
     let newBlocks =[
-        [newBlockKey, new ContentBlock({
-            key: newBlockKey,
-            type: 'schemata_up',
+        [newBlockKeyFirst, new ContentBlock({
+            key: newBlockKeyFirst,
+            type: 'unstyled',
             text: ''
         })],
         [currentBlock.getKey(), newBlock],
+        [newBlockKey, new ContentBlock({
+            key: newBlockKey,
+            type: 'schemata',
+            text: ''
+        })],     
+        [newBlockKey3, new ContentBlock({
+            key: newBlockKey3,
+            type: 'schemata_down',
+            text: ''
+        })],
+        [newBlockKey4, new ContentBlock({
+            key: newBlockKey4,
+            type: 'schemata',
+            text: ''
+        })],
+        [newBlockKey5, new ContentBlock({
+            key: newBlockKey5,
+            type: 'schemata',
+            text: ''
+        })],
         [newBlockKey2, new ContentBlock({
             key: newBlockKey2,
             type: 'schemata_down',
             text: ''
+        })],
+        [newBlockKeyLast, new ContentBlock({
+            key: newBlockKeyLast,
+            type: 'unstyled',
+            text: ''
         })]
     ];
+
+    //////// schema ends ///////////////////////////
 
     const newBlockMap = blocksBefore.concat(newBlocks, blocksAfter).toOrderedMap()
     const newContentState = contentState.merge({
@@ -404,8 +422,8 @@ class ZEditor extends Component {
                 {'Insert 2'} 
                 
                 </button>
-                <div className = "Zeditor-root" >
-                    <div className = "Zeditor-editor" >
+                <div className = "page" >
+                    <div >
                         <Editor editorState = {this.state.editorState}
                         handleKeyCommand = {this.handleKeyCommand}
                         ref = "editor"

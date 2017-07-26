@@ -17,6 +17,7 @@ class SchemataUp extends Component {
   render() {
     return ( 
         <div>
+            <span className='up_span'><EditorBlock { ...this.props}/></span>
         </div>
     );
   }
