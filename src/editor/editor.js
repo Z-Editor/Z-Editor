@@ -423,15 +423,13 @@ class ZEditor extends Component {
                 
                 </button>
                 <div className = "page" >
-                    <div >
+                    <div>
                         <Editor editorState = {this.state.editorState}
-                        handleKeyCommand = {this.handleKeyCommand}
                         ref = "editor"
                         onChange = {this.onChange}
                         blockStyleFn = {this.blockStyleFn}
                         blockRenderMap = {this.blockRenderMap}
                         blockRendererFn = {this.blockRendererFn}
-                        handleBeforeInput = {this.handleBeforeInput}
                         handleKeyCommand = {this.handleKeyCommand}
                         />
                     </div> 
