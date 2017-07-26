@@ -9,7 +9,7 @@ import {
   RichUtils
 } from 'draft-js';
 
-class Schemata extends Component {
+class SchemataUp extends Component {
   constructor(props) {
     super(props);
   }
@@ -17,9 +17,8 @@ class Schemata extends Component {
   render() {
     return ( 
         <div>
-            <EditorBlock { ...this.props}/> 
         </div>
     );
   }
 }
-export default Schemata;
+export default SchemataUp;

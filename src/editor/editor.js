@@ -6,6 +6,8 @@ import {
 } from 'immutable';
 import TodoBlock from './TodoBlock';
 import Schemata from './Schemata';
+import SchemataUp from './SchemataUp';
+import SchemataDown from './SchemataDown';
 import {
     Editor,
     EditorState,
@@ -18,12 +20,16 @@ import {
     Modifier,
     CompositeDecorator,
     DefaultDraftBlockRenderMap,
-    AtomicBlockUtils
+    AtomicBlockUtils,
+    genKey,
+    ContentBlock
 } from 'draft-js';
 import '../App.css';
 
 const TODO_BLOCK = 'todo';
 const SCHEMA = 'schemata';
+const SCHEMA_UP = 'schemata_up';
+const SCHEMA_DOWN = 'schemata_down';
 
 function findPlaceholders(contentBlock, callback) {
     contentBlock.findEntityRanges((character) => {
@@ -33,6 +39,75 @@ function findPlaceholders(contentBlock, callback) {
             Entity.get(entityKey).getType() === 'PLACEHOLDER'
         );
     }, callback);
+}
+
+
+const convertBlock = (type,editorState, selectionState, contentState) => {
+
+    const newType = type;
+    // const editorState = this.state.editorState;
+    // const contentState = editorState.getCurrentContent();
+    // const selectionState = editorState.getSelection();
+    const key = selectionState.getStartKey();
+    const blockMap = contentState.getBlockMap();
+    const block = blockMap.get(key);
+    let newText = '';
+    const text = block.getText();
+    if (block.getLength() >= 2) {
+        newText = text.substr(1);
+    }
+    const newBlock = block.merge({
+        text: newText,
+        type: newType,
+        data: getDefaultBlockData(newType),
+    });
+    const newContentState = contentState.merge({
+        blockMap: blockMap.set(key, newBlock),
+        selectionAfter: selectionState.merge({
+            anchorOffset: 0,
+            focusOffset: 0,
+        }),
+    });
+
+    return newBlock;
+}
+
+const insert_block = (editorState, selection, contentState, currentBlock) => {
+    
+    const newBlock = convertBlock('schemata',editorState, selection, contentState);
+    const blockMap = contentState.getBlockMap()
+    // Split the blocks
+    const blocksBefore = blockMap.toSeq().takeUntil(function (v) {
+        return v === currentBlock
+    })
+    const blocksAfter = blockMap.toSeq().skipUntil(function (v) {
+        return v === currentBlock
+    }).rest()
+    const newBlockKey = genKey();
+    const newBlockKey2 = genKey();
+
+    let newBlocks =[
+        [newBlockKey, new ContentBlock({
+            key: newBlockKey,
+            type: 'schemata_up',
+            text: ''
+        })],
+        [currentBlock.getKey(), newBlock],
+        [newBlockKey2, new ContentBlock({
+            key: newBlockKey2,
+            type: 'schemata_down',
+            text: ''
+        })]
+    ];
+
+    const newBlockMap = blocksBefore.concat(newBlocks, blocksAfter).toOrderedMap()
+    const newContentState = contentState.merge({
+        blockMap: newBlockMap,
+        selectionBefore: selection,
+        selectionAfter: selection,
+    })
+    return EditorState.push(editorState, newContentState, 'insert-fragment');
+
 }
 
 /*
@@ -92,14 +167,14 @@ const getBlockRendererFn = (getEditorState, onChange) => (block) => {
                     onChange,
                 },
                 };
-        // case 'todo':
-        //     return {
-        //         component: TodoBlock,
-        //         props: {
-        //             getEditorState,
-        //             onChange,
-        //         },
-        //     };
+        case 'todo':
+            return {
+                component: TodoBlock,
+                props: {
+                    getEditorState,
+                    onChange,
+                },
+            };
         case 'schemata':
             return {
                 component: Schemata,
@@ -108,6 +183,22 @@ const getBlockRendererFn = (getEditorState, onChange) => (block) => {
                     onChange,
                 },
             };
+        case 'schemata_up':
+            return {
+                component: SchemataUp,
+                props: {
+                    getEditorState,
+                    onChange,
+                },
+            };
+        case 'schemata_down':
+            return {
+                component: SchemataDown,
+                props: {
+                    getEditorState,
+                    onChange,
+                },
+            };        
         default:
             return null;
     }
@@ -127,6 +218,12 @@ class ZEditor extends Component {
                 element: 'div',
             },
             [SCHEMA]: {
+                element: 'div',
+            },
+            [SCHEMA_UP]: {
+                element: 'div',
+            },
+            [SCHEMA_DOWN]: {
                 element: 'div',
             },
         }).merge(DefaultDraftBlockRenderMap);
@@ -156,33 +253,89 @@ class ZEditor extends Component {
                 return 'block block-todo';
             case SCHEMA:
                 return 'schemata';
+            case SCHEMA_UP:
+                return 'schemata_up';
+            case SCHEMA_DOWN:
+                return 'schemata_down';    
             default:
                 return 'block';
         }
     }
-
-
-
-    insertPlaceholder = () => {
-        // const label = "|----------------------------- \n|makeMilkCoffee \n|ΔtheCoffeeMachine \n|coffee? : ℕ \n|milk? : ℕ \n|------------------------- \n|coffee   0 \n|milk   0 \n|coffee  halfCupCapacity \n|milk  halfCupCapacity \n|------------------------- \n "
-        const meta = "na"
+    insert = () => {
         const editorState = this.state.editorState;
-
-        // const selectionState = editorState.getSelection();
         const contentState = editorState.getCurrentContent();
+        const selectionState = editorState.getSelection();
+        const key = selectionState.getStartKey();
+        const blockMap = contentState.getBlockMap();
+        const block = blockMap.get(key);
 
-        const contentStateWithEntity = contentState.createEntity(
-        'todo',
-        'MUTABLE',{
-            text:meta
+        this.setState({
+            editorState: insert_block(editorState, selectionState, contentState, block)
+        }, () => {
+            this.refs.editor.focus();
+        });
+    }
+
+    insertPlaceholder = (type) => {
+
+        /// convert current block :) 
+        const newType = type;
+        const editorState = this.state.editorState;
+        const contentState = editorState.getCurrentContent();
+        const selectionState = editorState.getSelection();
+        const key = selectionState.getStartKey();
+        const blockMap = contentState.getBlockMap();
+        const block = blockMap.get(key);
+        let newText = '';
+        const text = block.getText();
+        if (block.getLength() >= 2) {
+            newText = text.substr(1);
         }
-        );
-        const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
-        const newEditorState = EditorState.set(
-            editorState,
-            { currentContent: contentStateWithEntity }
-        );
+        const newBlock = block.merge({
+            text: newText,
+            type: newType,
+            data: getDefaultBlockData(newType),
+        });
+        const newContentState = contentState.merge({
+            blockMap: blockMap.set(key, newBlock),
+            selectionAfter: selectionState.merge({
+                anchorOffset: 0,
+                focusOffset: 0,
+            }),
+        });
 
+        this.setState({
+            editorState: EditorState.push(editorState, newContentState, 'change-block-type')
+        }, () => {
+            this.refs.editor.focus();
+        });
+
+
+        // typical method of creating an entity and add it to the blocks
+
+        // const label = "|----------------------------- \n|makeMilkCoffee \n|ΔtheCoffeeMachine \n|coffee? : ℕ \n|milk? : ℕ \n|------------------------- \n|coffee   0 \n|milk   0 \n|coffee  halfCupCapacity \n|milk  halfCupCapacity \n|------------------------- \n "
+        // const meta = "na"
+        // const editorState = this.state.editorState;
+
+        // // const selectionState = editorState.getSelection();
+        // const contentState = editorState.getCurrentContent();
+
+        // const contentStateWithEntity = contentState.createEntity(
+        // 'todo',
+        // 'MUTABLE',{
+        //     text:meta
+        // }
+        // );
+        // const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
+        // const newEditorState = EditorState.set(
+        //     editorState,
+        //     { currentContent: contentStateWithEntity }
+        // );
+
+        // const newEditorStateWithBlock = AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, ' ');
+        // this.setState({ TODO_BLOCK: Map() , editorState: newEditorStateWithBlock });
+
+        ////////////////////////////////////////////////
         // const newContentState = Modifier.applyEntity(
         // contentState,
         // selectionState,
@@ -198,8 +351,8 @@ class ZEditor extends Component {
         // const newContentState = Modifier.insertText(contentState, selectionState, 'test', null, entityKey);
 
         // insert a new atomic block with the entity and a whit space as the text
-        const newEditorStateWithBlock = AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, ' ');
-        this.setState({ TODO_BLOCK: Map() , editorState: newEditorStateWithBlock });
+
+        
 
         // this.setState({
         //     editorState: EditorState.push(editorState, newContentState, 'apply-entity')
@@ -246,7 +399,7 @@ class ZEditor extends Component {
         return ( 
             <div className = "container-content" >
                 <button type = "button"
-                onClick = {this.insertPlaceholder}>
+                onClick = {this.insert}>
 
                 {'Insert 2'} 
                 

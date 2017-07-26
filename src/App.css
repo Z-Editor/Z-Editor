@@ -9,7 +9,7 @@ body{
   margin-top: 1px;
 }
 .public-DraftEditor-content > div > *:not(:first-child){
-  margin-top: 39px;
+  margin-top: 0px;
 }
 
 .header {
@@ -250,7 +250,7 @@ body{
 .block-todo {
   position: relative;
   padding: 10px 20px;
-  border: 1px solid #f7f7f7;
+  border: 2px solid #f7f7f7;
   margin-bottom: 10px;
   /*box-shadow: inset 0px 0px 10px 2px #f7f7f7;*/
   border-radius: 4px;
@@ -264,12 +264,24 @@ body{
 }
 
 .schemata {
-  border-left: 2px;
-  border-bottom: 2px;
-  border-top: 2px;
+  border-left: 2px solid black;
   position: relative;
-  padding: 10px 20px;
-  margin-bottom: 10px;
+  padding: 1px 20px;
   /*box-shadow: inset 0px 0px 10px 2px #f7f7f7;*/
-  border-radius: 4px;
+}
+
+.schemata_up {
+  border-left: 2px solid black;
+  border-top: 2px solid black;
+  position: relative;
+  padding: 1px 20px;
+  /*box-shadow: inset 0px 0px 10px 2px #f7f7f7;*/
+}
+
+.schemata_down {
+  border-left: 2px solid black;
+  border-bottom: 2px solid black;
+  position: relative;
+  padding: 1px 20px;
+  /*box-shadow: inset 0px 0px 10px 2px #f7f7f7;*/
 }
