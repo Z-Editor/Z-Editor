@@ -4,12 +4,14 @@ import React, {
 import {
     Map
 } from 'immutable';
+import { Editor } from 'react-draft-wysiwyg';
+import '../App.css';
+import './styles.css';
 import TodoBlock from './TodoBlock';
 import Schemata from './Schemata';
 import SchemataUp from './SchemataUp';
 import SchemataDown from './SchemataDown';
 import {
-    Editor,
     EditorState,
     RichUtils
 } from 'draft-js';
@@ -24,7 +26,7 @@ import {
     genKey,
     ContentBlock
 } from 'draft-js';
-import '../App.css';
+
 
 const TODO_BLOCK = 'todo';
 const SCHEMA = 'schemata';
@@ -247,21 +249,33 @@ class ZEditor extends Component {
         }).merge(DefaultDraftBlockRenderMap);
 
 
-        this.onChange = (editorState) => this.setState({
-            editorState
-        });
+        this.onEditorStateChange = (editorState) => {
+            this.setState({
+            editorState,
+            });
+        }
+        // this.onChange = (editorState) => this.setState({
+        //     editorState
+        // });
 
         this.handleBeforeInput = this.handleBeforeInput.bind(this);
 
         this.handleKeyCommand = this.handleKeyCommand.bind(this);
         // Get a blockRendererFn from the higher-order function.
         this.blockRendererFn = getBlockRendererFn(
-            this.getEditorState, this.onChange);
+            this.getEditorState, this.onEditorStateChange);
+
     }
 
     componentDidMount() {
+        console.log(refs);
         this.refs.editor.focus();
     }
+
+    // componentDidMount(){
+    //     console.log(this.domEditor);
+    //     this.domEditor.focus()
+    // }
 
     blockStyleFn(block) {
         switch (block.getType()) {
@@ -287,10 +301,12 @@ class ZEditor extends Component {
         const blockMap = contentState.getBlockMap();
         const block = blockMap.get(key);
 
+        console.log("inside insert");
+
         this.setState({
             editorState: insert_block(editorState, selectionState, contentState, block)
         }, () => {
-            this.refs.editor.focus();
+            // this.refs.editor.focus();
         });
     }
 
@@ -325,7 +341,7 @@ class ZEditor extends Component {
         this.setState({
             editorState: EditorState.push(editorState, newContentState, 'change-block-type')
         }, () => {
-            this.refs.editor.focus();
+            // this.refs.editor.focus();
         });
 
 
@@ -382,7 +398,7 @@ class ZEditor extends Component {
     handleKeyCommand(command) {
         const newState = RichUtils.handleKeyCommand(this.state.editorState, command);
         if (newState) {
-            this.onChange(newState);
+            this.onEditorStateChange(newState);
             return 'handled';
         }
         return 'not-handled';
@@ -407,31 +423,36 @@ class ZEditor extends Component {
         const blockType = currentBlock.getType();
         const blockLength = currentBlock.getLength();
         if (blockLength === 1 && currentBlock.getText() === '[') {
-            this.onChange(resetBlockType(editorState, blockType !== TODO_BLOCK ? TODO_BLOCK : 'unstyled'));
+            this.onEditorStateChange(resetBlockType(editorState, blockType !== TODO_BLOCK ? TODO_BLOCK : 'unstyled'));
             return true;
         }
         return false;
     }
 
+
     render() {
+        const { editorState } = this.state;
         return ( 
-            <div className = "container-content" >
+            <div className = "container-content">
                 <button type = "button"
                 onClick = {this.insert}>
 
                 {'Insert 2'} 
                 
                 </button>
-                <div className = "page" >
+                <div>
                     <div>
-                        <Editor editorState = {this.state.editorState}
-                        ref = "editor"
-                        onChange = {this.onChange}
+                        <Editor
+                        editorState={editorState}
+                        onEditorStateChange={this.onEditorStateChange}
                         blockStyleFn = {this.blockStyleFn}
                         blockRenderMap = {this.blockRenderMap}
                         blockRendererFn = {this.blockRendererFn}
                         handleKeyCommand = {this.handleKeyCommand}
-                        />
+                        handleBeforeInput = {this.handleBeforeInput}
+                        editorClassName = "page"
+                        ref = "editor"
+                        toolbarOnFocus/>
                     </div> 
                 </div>
                 <div>
