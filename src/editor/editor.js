@@ -5,12 +5,13 @@ import {
     Map
 } from 'immutable';
 import { Editor } from 'react-draft-wysiwyg';
-import '../App.css';
 import './styles.css';
+import '../App.css';
 import TodoBlock from './TodoBlock';
 import Schemata from './Schemata';
 import SchemataUp from './SchemataUp';
 import SchemataDown from './SchemataDown';
+import SideToolBar from './sideToolBar';
 import {
     EditorState,
     RichUtils
@@ -32,6 +33,34 @@ const TODO_BLOCK = 'todo';
 const SCHEMA = 'schemata';
 const SCHEMA_UP = 'schemata_up';
 const SCHEMA_DOWN = 'schemata_down';
+
+const allData = [{id:0 , data:[{id: 0 , symbol: "Δ"},{id: 1 , symbol: "≙"},{id: 2 , symbol: "⨟"},{id: 3 , symbol: "⨠"},
+{id: 4 , symbol: "Ξ"},{id: 5 , symbol: "⧹"},{id: 6 , symbol: "⨡"},{id: 7 , symbol: "pre"},{id: 8 , symbol: "′"},
+{id: 9 , symbol: "θ"},{id: 10 , symbol: "⦉"},{id: 11 , symbol: "⦊"}]},
+{id: 1 , data:[{id: 0 , symbol: "∧"},{id: 1 , symbol: "∨"},{id: 2 , symbol: "¬"},{id: 3 , symbol: "⇒"},
+{id: 4 , symbol: "⊢"},{id: 5 , symbol: "∀"},{id: 6 , symbol: "∃"},{id: 7 , symbol: "∃1"},{id: 8 , symbol: "⇔"},
+{id: 9 , symbol: "≠"}]},
+{id: 2 , data:[{id: 0 , symbol: "∅"},{id: 1 , symbol: "ℙ"},{id: 2 , symbol: "ℙ1"},{id: 3 , symbol: "⦁"},
+{id: 4 , symbol: "∈"},{id: 5 , symbol: "∉"},{id: 6 , symbol: "⊆"},{id: 7 , symbol: "⊂"},{id: 8 , symbol: "⟪"},
+{id: 9 , symbol: "⟫"},{id: 10 , symbol: "∖"},{id: 11 , symbol: "⊖"},{id: 12 , symbol: "∪"},{id: 13 , symbol: "∩"},
+{id: 14 , symbol: "⋃"},{id: 15 , symbol: "⋂"},]},
+{id: 3 , data:[{id: 0 , symbol: "↔"},{id: 1 , symbol: "↦"},{id: 2 , symbol: "×"},{id: 3 , symbol: "⨾"},
+{id: 4 , symbol: "∘"},{id: 5 , symbol: "⊕"},{id: 6 , symbol: "∼"},{id: 7 , symbol: "+"},{id: 8 , symbol: "*"},
+{id: 9 , symbol: "⦇"},{id: 10 , symbol: "⦈"},{id: 11 , symbol: "◁"},{id: 12 , symbol: "▷"},{id: 13 , symbol: "⩤"},
+{id: 14 , symbol: "⩥"}]},
+{id: 4 , data:[{id: 0 , symbol: "⇸"},{id: 1 , symbol: "⤔"},{id: 2 , symbol: "⤀"},{id: 3 , symbol: "⤗"},
+{id: 4 , symbol: "→"},{id: 5 , symbol: "↣"},{id: 6 , symbol: "↠"},{id: 7 , symbol: "⤖"},{id: 8 , symbol: "⇻"},
+{id: 9 , symbol: "⤕"},{id: 10 , symbol: "λ"},{id: 11 , symbol: "μ"}]},
+{id: 5 , data:[{id: 0 , symbol: "ℤ"},{id: 1 , symbol: "ℚ"},{id: 2 , symbol: "ℝ"},{id: 3 , symbol: "ℕ"},
+{id: 4 , symbol: "ℕ1"},{id: 5 , symbol: "≤"},{id: 6 , symbol: "≥"},{id: 7 , symbol: "÷"},{id: 8 , symbol: "−"},
+{id: 9 , symbol: "mod"}]},
+{id: 6 , data:[{id: 0 , symbol: "⟨"},{id: 1 , symbol: "⟩"},{id: 2 , symbol: "↿"},{id: 3 , symbol: "↾"},
+{id: 4 , symbol: "⁀"},{id: 5 , symbol: "⁀/"}]},
+{id: 7 , data:[{id: 0 , symbol: "⟦"},{id: 1 , symbol: "⟧"},{id: 2 , symbol: "⊎"},{id: 3 , symbol: "⩁"},
+{id: 4 , symbol: "⊗"},{id: 5 , symbol: "⋿"},{id: 6 , symbol: "⊑"},{id: 7 , symbol: "♯"}]},
+];
+
+const allData_left = [{id: 100 , type: "main"},{id: 101 , type: "half"},{id: 102 , type: "bar"},{id: 103 , type: "inverse"}];
 
 const convertBlock = (type,editorState, selectionState, contentState) => {
 
@@ -59,10 +88,21 @@ const convertBlock = (type,editorState, selectionState, contentState) => {
     return newBlock;
 }
 
-const insert_block = (editorState, selection, contentState, currentBlock) => {
+const generate_block = (style) => {
+    const newBlockKey = genKey();
+    const block  = new ContentBlock({
+            key: newBlockKey,
+            type: style,
+            text: ''
+        });
+    return [newBlockKey,block];
+}
+
+
+const insert_schemata = (editorState, selection, contentState, currentBlock, type) => {
     
     const newBlock = convertBlock('schemata_up',editorState, selection, contentState);
-    const blockMap = contentState.getBlockMap()
+    const blockMap = contentState.getBlockMap();
     // Split the blocks
     const blocksBefore = blockMap.toSeq().takeUntil(function (v) {
         return v === currentBlock
@@ -70,55 +110,50 @@ const insert_block = (editorState, selection, contentState, currentBlock) => {
     const blocksAfter = blockMap.toSeq().skipUntil(function (v) {
         return v === currentBlock
     }).rest()
-    const newBlockKey = genKey();
-    const newBlockKey2 = genKey();
-    const newBlockKey3 = genKey();
-    const newBlockKey4 = genKey();
-    const newBlockKey5 = genKey();
-    const newBlockKeyFirst = genKey();
-    const newBlockKeyLast = genKey();
 
-    // schema table building from here
-    let newBlocks =[
-        [newBlockKeyFirst, new ContentBlock({
-            key: newBlockKeyFirst,
-            type: 'unstyled',
-            text: ''
-        })],
-        [currentBlock.getKey(), newBlock],
-        [newBlockKey, new ContentBlock({
-            key: newBlockKey,
-            type: 'schemata',
-            text: ''
-        })],     
-        [newBlockKey3, new ContentBlock({
-            key: newBlockKey3,
-            type: 'schemata_down',
-            text: ''
-        })],
-        [newBlockKey4, new ContentBlock({
-            key: newBlockKey4,
-            type: 'schemata',
-            text: ''
-        })],
-        [newBlockKey5, new ContentBlock({
-            key: newBlockKey5,
-            type: 'schemata',
-            text: ''
-        })],
-        [newBlockKey2, new ContentBlock({
-            key: newBlockKey2,
-            type: 'schemata_down',
-            text: ''
-        })],
-        [newBlockKeyLast, new ContentBlock({
-            key: newBlockKeyLast,
-            type: 'unstyled',
-            text: ''
-        })]
-    ];
+    let newBlocks = [];
 
-    //////// schema ends ///////////////////////////
+    switch (type) {
+            case 'half':
+                newBlocks =[
+                    generate_block('unstyled'),
+                    [currentBlock.getKey(), newBlock],
+                    generate_block('schemata'),     
+                    generate_block('schemata_down'),
+                    generate_block('unstyled')
+                ];
+                break;
+            case 'main':
+                newBlocks =[
+                    generate_block('unstyled'),
+                    [currentBlock.getKey(), newBlock],
+                    generate_block('schemata'),     
+                    generate_block('schemata_down'),
+                    generate_block('schemata'),
+                    generate_block('schemata'),
+                    generate_block('schemata_down'),
+                    generate_block('unstyled')
+                ];
+                break;
+            case 'bar':
+                newBlocks = [
+                    generate_block('unstyled'),
+                    [currentBlock.getKey(), convertBlock('schemata',editorState, selection, contentState)],
+                    generate_block('unstyled')
+                ];
+                break;
+            case 'inverse':
+                newBlocks = [
+                    generate_block('unstyled'),
+                    [currentBlock.getKey(), convertBlock('schemata',editorState, selection, contentState)],
+                    generate_block('schemata_down'),
+                    generate_block('schemata'),
+                    generate_block('unstyled')
+                ];
+                break;
+            default:
+                null;
+    }
 
     const newBlockMap = blocksBefore.concat(newBlocks, blocksAfter).toOrderedMap()
     const newContentState = contentState.merge({
@@ -265,11 +300,12 @@ class ZEditor extends Component {
         this.blockRendererFn = getBlockRendererFn(
             this.getEditorState, this.onEditorStateChange);
 
+        this.onUserClick = this.insert_schema.bind(this);
+
     }
 
     componentDidMount() {
-        console.log(refs);
-        this.refs.editor.focus();
+        // this.refs.editor.focus();
     }
 
     // componentDidMount(){
@@ -293,7 +329,18 @@ class ZEditor extends Component {
                 return 'block';
         }
     }
-    insert = () => {
+
+    insertFN = (symbol,type,side) => {
+        if (type){
+            this.insert_schema(type);
+        }
+        else{
+            this.insertSymbol(symbol);
+        }
+
+    }
+
+    insert_schema = (type) => {
         const editorState = this.state.editorState;
         const contentState = editorState.getCurrentContent();
         const selectionState = editorState.getSelection();
@@ -301,10 +348,8 @@ class ZEditor extends Component {
         const blockMap = contentState.getBlockMap();
         const block = blockMap.get(key);
 
-        console.log("inside insert");
-
         this.setState({
-            editorState: insert_block(editorState, selectionState, contentState, block)
+            editorState: insert_schemata(editorState, selectionState, contentState, block, type )
         }, () => {
             // this.refs.editor.focus();
         });
@@ -395,6 +440,19 @@ class ZEditor extends Component {
         // });
     }
 
+    insertSymbol = (symbol)=>{
+        const editorState = this.state.editorState;
+        const contentState = editorState.getCurrentContent();
+        const selectionState = editorState.getSelection();
+        const newContentState = Modifier.insertText(contentState, selectionState, symbol, null, null);
+
+        this.setState({
+            editorState: EditorState.push(editorState, newContentState, 'add-text')
+        }, () => {
+            // this.refs.editor.focus();
+        });
+    }
+
     handleKeyCommand(command) {
         const newState = RichUtils.handleKeyCommand(this.state.editorState, command);
         if (newState) {
@@ -431,31 +489,37 @@ class ZEditor extends Component {
 
 
     render() {
-        const { editorState } = this.state;
-        return ( 
-            <div className = "container-content">
-                <button type = "button"
-                onClick = {this.insert}>
-
-                {'Insert 2'} 
+        const bar = allData.map((btn) => {
+                return (
                 
-                </button>
-                <div>
-                    <div>
+                    <SideToolBar side={"right"} data={btn.data} key={btn.id} insertFn={this.insertFN}/>
+                
+                )
+            });
+
+        return ( 
+            
+            <div className = "container-content">
+
+                <ul className="menu">{bar}</ul>
+                <ul className="menu_left"><SideToolBar side={"left"} data={allData_left} insertFn={this.insertFN}/></ul>
+
+                <div>              
+                    <div>                
                         <Editor
-                        editorState={editorState}
+                        editorState={this.state.editorState}
                         onEditorStateChange={this.onEditorStateChange}
                         blockStyleFn = {this.blockStyleFn}
                         blockRenderMap = {this.blockRenderMap}
                         blockRendererFn = {this.blockRendererFn}
                         handleKeyCommand = {this.handleKeyCommand}
                         handleBeforeInput = {this.handleBeforeInput}
-                        editorClassName = "page"
-                        ref = "editor"
-                        toolbarOnFocus/>
+                        editorClassName="page"
+                        />
                     </div> 
                 </div>
                 <div>
+                    <button onClick={this.insert_schema}> {'insert'}</button>
                     JSON
                     <pre >{JSON.stringify(convertToRaw(this.state.editorState.getCurrentContent()), null, 1)}</pre>
                 </div>

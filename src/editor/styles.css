@@ -720,6 +720,17 @@ textarea {
   margin-bottom: 50px !important;
   height: 450px !important;
 }
+
+.demo-toolbar-relative {
+  position: absolute !important;
+  top: 0px !important;
+  width: 550px !important;
+  border-radius: 3px !important;
+  background: #f3f3f3 !important;
+  border: 1px solid #e3e3e3 !important;
+  position: relative !important;
+}
+
 .bordered-option-classname {
   border: 1px solid #e3e3e3 !important;
 }
@@ -993,7 +1004,7 @@ code {
   box-sizing: border-box;
 }
 .rdw-editor-toolbar {
-  padding: 6px 5px 0;
+  padding: 6px 5px;
   border-radius: 2px;
   border: 1px solid #F1F1F1;
   display: flex;
@@ -1003,9 +1014,12 @@ code {
   font-size: 15px;
   margin-bottom: 5px;
   user-select: none;
+  position: relative;
+  top: -25px;
+  list-style-type: none;
 }
 .public-DraftStyleDefault-block {
-  margin: 1em 0;
+  margin: 0.001em 0;
 }
 .rdw-editor-wrapper:focus {
   outline: none;
@@ -1019,13 +1033,13 @@ code {
   min-width: 25px;
   height: 20px;
   border-radius: 2px;
-  margin: 0 4px;
+  margin: 2px 4px;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
   background: white;
-  text-transform: capitalize;
+  line-height: 0.001em;
 }
 .rdw-option-wrapper:hover {
   box-shadow: 1px 1px 0px #BFBDBD;
