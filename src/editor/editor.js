@@ -7,7 +7,6 @@ import {
 import { Editor } from 'react-draft-wysiwyg';
 import './styles.css';
 import '../App.css';
-import TodoBlock from './TodoBlock';
 import Schemata from './Schemata';
 import SchemataUp from './SchemataUp';
 import SchemataDown from './SchemataDown';
@@ -29,7 +28,6 @@ import {
 } from 'draft-js';
 import {l_config,r_config} from './config';
 
-const TODO_BLOCK = 'todo';
 const SCHEMA = 'schemata';
 const SCHEMA_UP = 'schemata_up';
 const SCHEMA_DOWN = 'schemata_down';
@@ -43,8 +41,7 @@ const convertBlock = (type,editorState, selectionState, contentState) => {
     const newText = block.getText();
     const newBlock = block.merge({
         text: newText,
-        type: newType,
-        data: getDefaultBlockData(newType),
+        type: newType
     });
     const newContentState = contentState.merge({
         blockMap: blockMap.set(key, newBlock),
@@ -135,41 +132,11 @@ const insert_schemata = (editorState, selection, contentState, currentBlock, typ
 }
 
 /*
-    Returns default block-level metadata for various block type. Empty object otherwise.
-    */
-const getDefaultBlockData = (blockType, initialData = {}) => {
-    switch (blockType) {
-        case TODO_BLOCK:
-            return {
-                checked: false
-            };
-        default:
-            return initialData;
-    }
-};
-
-/*
 A higher-order function. http://bitwiser.in/2016/08/31/implementing-todo-list-in-draft-js.html
 */
 const getBlockRendererFn = (getEditorState, onChange) => (block) => {
     const type = block.getType();
     switch (type) {
-        case 'atomic':
-            return {
-                component: TodoBlock,
-                props: {
-                    getEditorState,
-                    onChange,
-                },
-                };
-        case 'todo':
-            return {
-                component: TodoBlock,
-                props: {
-                    getEditorState,
-                    onChange,
-                },
-            };
         case 'schemata':
             return {
                 component: Schemata,
@@ -211,9 +178,6 @@ class ZEditor extends Component {
 
         /* blockRenderMap */
         this.blockRenderMap = Map({
-            [TODO_BLOCK]: {
-                element: 'div',
-            },
             [SCHEMA]: {
                 element: 'div',
             },
@@ -247,10 +211,6 @@ class ZEditor extends Component {
 
     blockStyleFn(block) {
         switch (block.getType()) {
-            case 'atomic':
-                return 'block block-todo';
-            case TODO_BLOCK:
-                return 'block block-todo';
             case SCHEMA:
                 return 'schemata';
             case SCHEMA_UP:
@@ -304,8 +264,7 @@ class ZEditor extends Component {
         }
         const newBlock = block.merge({
             text: newText,
-            type: newType,
-            data: getDefaultBlockData(newType),
+            type: newType
         });
         const newContentState = contentState.merge({
             blockMap: blockMap.set(key, newBlock),
