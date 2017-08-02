@@ -7,10 +7,10 @@ import {
 import { Editor } from 'react-draft-wysiwyg';
 import './styles.css';
 import '../App.css';
-import Schemata from './Schemata';
-import SchemataUp from './SchemataUp';
-import SchemataDown from './SchemataDown';
-import SideToolBar from './sideToolBar';
+import Schemata from './schemas/Schemata';
+import SchemataUp from './schemas/SchemataUp';
+import SchemataDown from './schemas/SchemataDown';
+import SideToolBar from './toolBar/sideToolBar';
 import {
     EditorState,
     RichUtils
@@ -32,7 +32,16 @@ const SCHEMA = 'schemata';
 const SCHEMA_UP = 'schemata_up';
 const SCHEMA_DOWN = 'schemata_down';
 
-const convertBlock = (type,editorState, selectionState, contentState) => {
+/**
+ * convert the given block to a given type
+ * 
+ * @param {any} type 
+ * @param {any} editorState 
+ * @param {any} selectionState 
+ * @param {any} contentState 
+ * @returns new block
+ */
+const convertBlock = (type, editorState, selectionState, contentState) => {
 
     const newType = type;
     const key = selectionState.getStartKey();
@@ -54,6 +63,12 @@ const convertBlock = (type,editorState, selectionState, contentState) => {
     return newBlock;
 }
 
+/**
+ * generates a new block with a key for a given style
+ * 
+ * @param {any} style 
+ * @returns new block
+ */
 const generate_block = (style) => {
     const newBlockKey = genKey();
     const block  = new ContentBlock({
@@ -65,6 +80,16 @@ const generate_block = (style) => {
 }
 
 
+/**
+ * insert schema by identifying the desired schema type
+ * 
+ * @param {any} editorState 
+ * @param {any} selection 
+ * @param {any} contentState 
+ * @param {any} currentBlock 
+ * @param {any} type 
+ * @returns new editor state
+ */
 const insert_schemata = (editorState, selection, contentState, currentBlock, type) => {
     
     const newBlock = convertBlock('schemata_up',editorState, selection, contentState);
@@ -196,8 +221,6 @@ class ZEditor extends Component {
             });
         }
 
-        // this.handleKeyCommand = this.handleKeyCommand.bind(this);
-        // Get a blockRendererFn from the higher-order function.
         this.blockRendererFn = getBlockRendererFn(
             this.getEditorState, this.onEditorStateChange);
 
@@ -242,40 +265,6 @@ class ZEditor extends Component {
 
         this.setState({
             editorState: insert_schemata(editorState, selectionState, contentState, block, type )
-        }, () => {
-            this.refs.editor.focusEditor();
-        });
-    }
-
-    insertPlaceholder = (type) => {
-
-        /// convert current block :) 
-        const newType = type;
-        const editorState = this.state.editorState;
-        const contentState = editorState.getCurrentContent();
-        const selectionState = editorState.getSelection();
-        const key = selectionState.getStartKey();
-        const blockMap = contentState.getBlockMap();
-        const block = blockMap.get(key);
-        let newText = '';
-        const text = block.getText();
-        if (block.getLength() >= 2) {
-            newText = text.substr(1);
-        }
-        const newBlock = block.merge({
-            text: newText,
-            type: newType
-        });
-        const newContentState = contentState.merge({
-            blockMap: blockMap.set(key, newBlock),
-            selectionAfter: selectionState.merge({
-                anchorOffset: 0,
-                focusOffset: 0,
-            }),
-        });
-
-        this.setState({
-            editorState: EditorState.push(editorState, newContentState, 'change-block-type')
         }, () => {
             this.refs.editor.focusEditor();
         });

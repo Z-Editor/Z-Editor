@@ -225,42 +225,8 @@
   border: 1px solid rgba(255, 255, 255, 0.51);
 }
 
-.sidepanel{
-  position: fixed;
-  left: 30px;
-  top: 200px;
-  background: white;
-  padding: 10px 30px 10px 30px;
-}
-.sidepanel .info{
-  font-size: 10px;
-  color: #666;
-  margin: 10px 0 10px 0;
-  text-transform: uppercase;
-}
-
-.sidepanel .item{
-  margin-bottom: 5px;
-}
-
 .block {
   margin-bottom: 10px;
-}
-
-.block-todo {
-  position: relative;
-  padding: 10px 20px;
-  border: 2px solid #f7f7f7;
-  margin-bottom: 10px;
-  /*box-shadow: inset 0px 0px 10px 2px #f7f7f7;*/
-  border-radius: 4px;
-}
-
-.block-todo input[type=checkbox] {
-  position: absolute;
-  top: 10px;
-  left: 0px;
-  cursor: pointer;
 }
 
 .schemata {
