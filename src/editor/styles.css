@@ -1014,9 +1014,28 @@ code {
   font-size: 15px;
   margin-bottom: 5px;
   user-select: none;
+  position: fixed;
+  top: 65px;
+  width: 100%;
+  list-style-type: none;
+  z-index: 1000;
+}
+
+.rdw-editor-toolbar-side {
+  padding: 6px 5px;
+  border-radius: 2px;
+  border: 1px solid #F1F1F1;
+  display: flex;
+  justify-content: flex-start;
+  background: white;
+  flex-wrap: wrap;
+  font-size: 15px;
+  margin-bottom: 5px;
+  user-select: none;
   position: relative;
   top: -25px;
   list-style-type: none;
+  z-index: 1100;
 }
 .public-DraftStyleDefault-block {
   margin: 0.001em 0;

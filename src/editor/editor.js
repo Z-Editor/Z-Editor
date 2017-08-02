@@ -27,47 +27,16 @@ import {
     genKey,
     ContentBlock
 } from 'draft-js';
-
+import {l_config,r_config} from './config';
 
 const TODO_BLOCK = 'todo';
 const SCHEMA = 'schemata';
 const SCHEMA_UP = 'schemata_up';
 const SCHEMA_DOWN = 'schemata_down';
 
-const allData = [{id:0 , data:[{id: 0 , symbol: "Δ"},{id: 1 , symbol: "≙"},{id: 2 , symbol: "⨟"},{id: 3 , symbol: "⨠"},
-{id: 4 , symbol: "Ξ"},{id: 5 , symbol: "⧹"},{id: 6 , symbol: "⨡"},{id: 7 , symbol: "pre"},{id: 8 , symbol: "′"},
-{id: 9 , symbol: "θ"},{id: 10 , symbol: "⦉"},{id: 11 , symbol: "⦊"}]},
-{id: 1 , data:[{id: 0 , symbol: "∧"},{id: 1 , symbol: "∨"},{id: 2 , symbol: "¬"},{id: 3 , symbol: "⇒"},
-{id: 4 , symbol: "⊢"},{id: 5 , symbol: "∀"},{id: 6 , symbol: "∃"},{id: 7 , symbol: "∃1"},{id: 8 , symbol: "⇔"},
-{id: 9 , symbol: "≠"}]},
-{id: 2 , data:[{id: 0 , symbol: "∅"},{id: 1 , symbol: "ℙ"},{id: 2 , symbol: "ℙ1"},{id: 3 , symbol: "⦁"},
-{id: 4 , symbol: "∈"},{id: 5 , symbol: "∉"},{id: 6 , symbol: "⊆"},{id: 7 , symbol: "⊂"},{id: 8 , symbol: "⟪"},
-{id: 9 , symbol: "⟫"},{id: 10 , symbol: "∖"},{id: 11 , symbol: "⊖"},{id: 12 , symbol: "∪"},{id: 13 , symbol: "∩"},
-{id: 14 , symbol: "⋃"},{id: 15 , symbol: "⋂"},]},
-{id: 3 , data:[{id: 0 , symbol: "↔"},{id: 1 , symbol: "↦"},{id: 2 , symbol: "×"},{id: 3 , symbol: "⨾"},
-{id: 4 , symbol: "∘"},{id: 5 , symbol: "⊕"},{id: 6 , symbol: "∼"},{id: 7 , symbol: "+"},{id: 8 , symbol: "*"},
-{id: 9 , symbol: "⦇"},{id: 10 , symbol: "⦈"},{id: 11 , symbol: "◁"},{id: 12 , symbol: "▷"},{id: 13 , symbol: "⩤"},
-{id: 14 , symbol: "⩥"}]},
-{id: 4 , data:[{id: 0 , symbol: "⇸"},{id: 1 , symbol: "⤔"},{id: 2 , symbol: "⤀"},{id: 3 , symbol: "⤗"},
-{id: 4 , symbol: "→"},{id: 5 , symbol: "↣"},{id: 6 , symbol: "↠"},{id: 7 , symbol: "⤖"},{id: 8 , symbol: "⇻"},
-{id: 9 , symbol: "⤕"},{id: 10 , symbol: "λ"},{id: 11 , symbol: "μ"}]},
-{id: 5 , data:[{id: 0 , symbol: "ℤ"},{id: 1 , symbol: "ℚ"},{id: 2 , symbol: "ℝ"},{id: 3 , symbol: "ℕ"},
-{id: 4 , symbol: "ℕ1"},{id: 5 , symbol: "≤"},{id: 6 , symbol: "≥"},{id: 7 , symbol: "÷"},{id: 8 , symbol: "−"},
-{id: 9 , symbol: "mod"}]},
-{id: 6 , data:[{id: 0 , symbol: "⟨"},{id: 1 , symbol: "⟩"},{id: 2 , symbol: "↿"},{id: 3 , symbol: "↾"},
-{id: 4 , symbol: "⁀"},{id: 5 , symbol: "⁀/"}]},
-{id: 7 , data:[{id: 0 , symbol: "⟦"},{id: 1 , symbol: "⟧"},{id: 2 , symbol: "⊎"},{id: 3 , symbol: "⩁"},
-{id: 4 , symbol: "⊗"},{id: 5 , symbol: "⋿"},{id: 6 , symbol: "⊑"},{id: 7 , symbol: "♯"}]},
-];
-
-const allData_left = [{id: 100 , type: "main"},{id: 101 , type: "half"},{id: 102 , type: "bar"},{id: 103 , type: "inverse"}];
-
 const convertBlock = (type,editorState, selectionState, contentState) => {
 
     const newType = type;
-    // const editorState = this.state.editorState;
-    // const contentState = editorState.getCurrentContent();
-    // const selectionState = editorState.getSelection();
     const key = selectionState.getStartKey();
     const blockMap = contentState.getBlockMap();
     const block = blockMap.get(key);
@@ -267,6 +236,8 @@ class ZEditor extends Component {
             editorState: EditorState.createEmpty()
         };
 
+        this.refer = null;
+
         /* blockRenderMap */
         this.blockRenderMap = Map({
             [TODO_BLOCK]: {
@@ -289,13 +260,10 @@ class ZEditor extends Component {
             editorState,
             });
         }
-        // this.onChange = (editorState) => this.setState({
-        //     editorState
-        // });
 
         this.handleBeforeInput = this.handleBeforeInput.bind(this);
 
-        this.handleKeyCommand = this.handleKeyCommand.bind(this);
+        // this.handleKeyCommand = this.handleKeyCommand.bind(this);
         // Get a blockRendererFn from the higher-order function.
         this.blockRendererFn = getBlockRendererFn(
             this.getEditorState, this.onEditorStateChange);
@@ -305,13 +273,8 @@ class ZEditor extends Component {
     }
 
     componentDidMount() {
-        // this.refs.editor.focus();
+        this.refs.editor.focusEditor();
     }
-
-    // componentDidMount(){
-    //     console.log(this.domEditor);
-    //     this.domEditor.focus()
-    // }
 
     blockStyleFn(block) {
         switch (block.getType()) {
@@ -351,7 +314,7 @@ class ZEditor extends Component {
         this.setState({
             editorState: insert_schemata(editorState, selectionState, contentState, block, type )
         }, () => {
-            // this.refs.editor.focus();
+            this.refs.editor.focusEditor();
         });
     }
 
@@ -386,7 +349,7 @@ class ZEditor extends Component {
         this.setState({
             editorState: EditorState.push(editorState, newContentState, 'change-block-type')
         }, () => {
-            // this.refs.editor.focus();
+            this.refs.editor.focusEditor();
         });
 
 
@@ -449,21 +412,23 @@ class ZEditor extends Component {
         this.setState({
             editorState: EditorState.push(editorState, newContentState, 'add-text')
         }, () => {
-            // this.refs.editor.focus();
+            this.refs.editor.focusEditor();
         });
     }
 
-    handleKeyCommand(command) {
-        const newState = RichUtils.handleKeyCommand(this.state.editorState, command);
-        if (newState) {
-            this.onEditorStateChange(newState);
-            return 'handled';
-        }
-        return 'not-handled';
-    }
+    // handleKeyCommand(command) {
+    //     const newState = RichUtils.handleKeyCommand(this.state.editorState, command);
+    //     if (newState) {
+    //         this.onEditorStateChange(newState);
+    //         return 'handled';
+    //     }
+    //     return 'not-handled';
+    // }
 
 
-    /* Add this as a method inside MyTodoListEditor */
+    /* Add this as a method inside MyTodoListEditor 
+    this method can be used add more functionalities to the system
+    */
 
     handleBeforeInput(str) {
         if (str !== ']') {
@@ -487,13 +452,17 @@ class ZEditor extends Component {
         return false;
     }
 
+    focus(editor) {
+        this.refs.editor.focusEditor();
+    }
+
 
     render() {
-        const bar = allData.map((btn) => {
+        const bar = r_config.map((btn) => {
                 return (
-                
+
                     <SideToolBar side={"right"} data={btn.data} key={btn.id} insertFn={this.insertFN}/>
-                
+                    
                 )
             });
 
@@ -502,26 +471,28 @@ class ZEditor extends Component {
             <div className = "container-content">
 
                 <ul className="menu">{bar}</ul>
-                <ul className="menu_left"><SideToolBar side={"left"} data={allData_left} insertFn={this.insertFN}/></ul>
+                <ul className="menu_left">
+                    {'schema'}
+
+                    <SideToolBar side={"left"} data={l_config} insertFn={this.insertFN}/>
+                </ul>
 
                 <div>              
                     <div>                
                         <Editor
-                        editorState={this.state.editorState}
-                        onEditorStateChange={this.onEditorStateChange}
+                        editorState = {this.state.editorState}
+                        onEditorStateChange = {this.onEditorStateChange}
                         blockStyleFn = {this.blockStyleFn}
                         blockRenderMap = {this.blockRenderMap}
                         blockRendererFn = {this.blockRendererFn}
-                        handleKeyCommand = {this.handleKeyCommand}
                         handleBeforeInput = {this.handleBeforeInput}
                         editorClassName="page"
+                        ref = "editor"
                         />
                     </div> 
                 </div>
-                <div>
-                    <button onClick={this.insert_schema}> {'insert'}</button>
-                    JSON
-                    <pre >{JSON.stringify(convertToRaw(this.state.editorState.getCurrentContent()), null, 1)}</pre>
+                <div className="container-content">
+                    <pre>{JSON.stringify(convertToRaw(this.state.editorState.getCurrentContent()), null, 1)}</pre>
                 </div>
             </div>
         );

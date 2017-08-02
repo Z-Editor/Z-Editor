@@ -31,7 +31,7 @@ class SideToolBar extends Component {
         
         )
     });
-    return (<ul className="rdw-editor-toolbar">{bt}</ul>);
+    return (<ul className="rdw-editor-toolbar-side">{bt}</ul>);
   }
 }
 export default SideToolBar;

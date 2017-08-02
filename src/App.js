@@ -3,13 +3,10 @@ import ZEditor from './editor/editor'
 import './App.css';
 
 class App extends Component {
-  renderSide(){
-       return (
-           <div className="sidepanel">
-               <span className="info">Drag & Drop area</span>
-           </div>
-       )
+    onClick() {
+    this.setState({childVisible: !this.state.childVisible});
     }
+  
     render() {
         return (
             <div className="flex-container">
@@ -21,14 +18,7 @@ class App extends Component {
                     <button className="button">
                         See JSON
                     </button>
-                    <button className="button">
-                        See Editor
-                    </button>
-                    <button className="button">
-                        Clear
-                    </button>
                 </div>
-                {/*{this.renderSide()}*/}
                 
                 <ZEditor/>
                 

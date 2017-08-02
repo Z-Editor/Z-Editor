@@ -17,12 +17,23 @@ class SideToolBarBtn extends Component {
   }
 
   render() {
+    const side = this.props.side;
+
+    let label = null;
+    if (side == "left") {
+      label = <div><img src={this.props.type.icon} width="19" height="19" /></div>;
+    } else {
+      label = <div>
+        {this.props.type.symbol}
+      </div>;
+    }
     return ( 
             <li>
-                <button className = "rdw-option-wrapper" type = "button" onClick={() => 
+                <div className = "rdw-option-wrapper" onClick={() => 
                     {this.props.insertFn(this.props.type.symbol,this.props.type.type,this.props.side)}}>
-                    {this.props.type.symbol}
-                </button>
+
+                    {label}
+                </div>
             </li>
     );
   }
