@@ -149,35 +149,6 @@ const getDefaultBlockData = (blockType, initialData = {}) => {
 };
 
 /*
-Changes the block type of the current block.
-*/
-const resetBlockType = (editorState, newType = 'unstyled') => {
-    const contentState = editorState.getCurrentContent();
-    const selectionState = editorState.getSelection();
-    const key = selectionState.getStartKey();
-    const blockMap = contentState.getBlockMap();
-    const block = blockMap.get(key);
-    let newText = '';
-    const text = block.getText();
-    if (block.getLength() >= 2) {
-        newText = text.substr(1);
-    }
-    const newBlock = block.merge({
-        text: newText,
-        type: newType,
-        data: getDefaultBlockData(newType),
-    });
-    const newContentState = contentState.merge({
-        blockMap: blockMap.set(key, newBlock),
-        selectionAfter: selectionState.merge({
-            anchorOffset: 0,
-            focusOffset: 0,
-        }),
-    });
-    return EditorState.push(editorState, newContentState, 'change-block-type');
-};
-
-/*
 A higher-order function. http://bitwiser.in/2016/08/31/implementing-todo-list-in-draft-js.html
 */
 const getBlockRendererFn = (getEditorState, onChange) => (block) => {
@@ -260,8 +231,6 @@ class ZEditor extends Component {
             editorState,
             });
         }
-
-        this.handleBeforeInput = this.handleBeforeInput.bind(this);
 
         // this.handleKeyCommand = this.handleKeyCommand.bind(this);
         // Get a blockRendererFn from the higher-order function.
@@ -351,56 +320,6 @@ class ZEditor extends Component {
         }, () => {
             this.refs.editor.focusEditor();
         });
-
-
-        // typical method of creating an entity and add it to the blocks
-
-        // const label = "|----------------------------- \n|makeMilkCoffee \n|ΔtheCoffeeMachine \n|coffee? : ℕ \n|milk? : ℕ \n|------------------------- \n|coffee   0 \n|milk   0 \n|coffee  halfCupCapacity \n|milk  halfCupCapacity \n|------------------------- \n "
-        // const meta = "na"
-        // const editorState = this.state.editorState;
-
-        // // const selectionState = editorState.getSelection();
-        // const contentState = editorState.getCurrentContent();
-
-        // const contentStateWithEntity = contentState.createEntity(
-        // 'todo',
-        // 'MUTABLE',{
-        //     text:meta
-        // }
-        // );
-        // const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
-        // const newEditorState = EditorState.set(
-        //     editorState,
-        //     { currentContent: contentStateWithEntity }
-        // );
-
-        // const newEditorStateWithBlock = AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, ' ');
-        // this.setState({ TODO_BLOCK: Map() , editorState: newEditorStateWithBlock });
-
-        ////////////////////////////////////////////////
-        // const newContentState = Modifier.applyEntity(
-        // contentState,
-        // selectionState,
-        // entityKey
-        // );
-
-        // this.setState({
-        //     editorState: EditorState.push(editorState, textWithEntity, 'insert-characters')
-        // }, () => {
-        //     this.refs.editor.focus();
-        // });
-        // associate the text in the selection (from - to) to the entety and get a new content state
-        // const newContentState = Modifier.insertText(contentState, selectionState, 'test', null, entityKey);
-
-        // insert a new atomic block with the entity and a whit space as the text
-
-        
-
-        // this.setState({
-        //     editorState: EditorState.push(editorState, newContentState, 'apply-entity')
-        // }, () => {
-        //     this.refs.editor.focus();
-        // });
     }
 
     insertSymbol = (symbol)=>{
@@ -414,46 +333,6 @@ class ZEditor extends Component {
         }, () => {
             this.refs.editor.focusEditor();
         });
-    }
-
-    // handleKeyCommand(command) {
-    //     const newState = RichUtils.handleKeyCommand(this.state.editorState, command);
-    //     if (newState) {
-    //         this.onEditorStateChange(newState);
-    //         return 'handled';
-    //     }
-    //     return 'not-handled';
-    // }
-
-
-    /* Add this as a method inside MyTodoListEditor 
-    this method can be used add more functionalities to the system
-    */
-
-    handleBeforeInput(str) {
-        if (str !== ']') {
-            return false;
-        }
-        const {
-            editorState
-        } = this.state;
-        /* Get the selection */
-        const selection = editorState.getSelection();
-
-        /* Get the current block */
-        const currentBlock = editorState.getCurrentContent()
-            .getBlockForKey(selection.getStartKey());
-        const blockType = currentBlock.getType();
-        const blockLength = currentBlock.getLength();
-        if (blockLength === 1 && currentBlock.getText() === '[') {
-            this.onEditorStateChange(resetBlockType(editorState, blockType !== TODO_BLOCK ? TODO_BLOCK : 'unstyled'));
-            return true;
-        }
-        return false;
-    }
-
-    focus(editor) {
-        this.refs.editor.focusEditor();
     }
 
 
@@ -485,7 +364,6 @@ class ZEditor extends Component {
                         blockStyleFn = {this.blockStyleFn}
                         blockRenderMap = {this.blockRenderMap}
                         blockRendererFn = {this.blockRendererFn}
-                        handleBeforeInput = {this.handleBeforeInput}
                         editorClassName="page"
                         ref = "editor"
                         />
