@@ -4,7 +4,7 @@ import React, {
 import {
     Map
 } from 'immutable';
-import { Editor } from 'react-draft-wysiwyg';
+import { Editor } from './edited-rdw/react-draft-wysiwyg';
 import './styles.css';
 import '../App.css';
 import Schemata from './schemas/Schemata';
