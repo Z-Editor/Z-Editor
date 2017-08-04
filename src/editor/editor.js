@@ -5,7 +5,7 @@ import {
     Map
 } from 'immutable';
 import { Editor } from './edited-rdw/react-draft-wysiwyg';
-import './styles.css';
+import './edited-rdw/styles.css';
 import '../App.css';
 import Schemata from './schemas/Schemata';
 import SchemataUp from './schemas/SchemataUp';
@@ -156,9 +156,7 @@ const insert_schemata = (editorState, selection, contentState, currentBlock, typ
 
 }
 
-/*
-A higher-order function. http://bitwiser.in/2016/08/31/implementing-todo-list-in-draft-js.html
-*/
+
 const getBlockRendererFn = (getEditorState, onChange) => (block) => {
     const type = block.getType();
     switch (type) {
@@ -305,7 +303,7 @@ class ZEditor extends Component {
                 </ul>
 
                 <div>              
-                    <div>                
+                    <div id={'here'}>                
                         <Editor
                         editorState = {this.state.editorState}
                         onEditorStateChange = {this.onEditorStateChange}
@@ -317,9 +315,10 @@ class ZEditor extends Component {
                         />
                     </div> 
                 </div>
-                <div className="container-content">
+                {/*<div className="container-content">
                     <pre>{JSON.stringify(convertToRaw(this.state.editorState.getCurrentContent()), null, 1)}</pre>
-                </div>
+                </div>*/}
+                <center><small>Made with ♥ by <a href="https://github.com/Open-SL" target="_blank">Open_SL</a></small></center>
             </div>
         );
     }
