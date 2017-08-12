@@ -12,7 +12,7 @@ class App extends Component {
                     <a className="github-button" href="https://github.com/Z-Editor/Z-Editor" target="_blank">
                         View on Github
                     </a>
-                    <button className="button">
+                    <button className="button" onClick={() => {window.print()}}>
                         Print
                     </button>
                 </div>

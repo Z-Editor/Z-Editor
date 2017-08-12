@@ -299,45 +299,42 @@ body {
 }
 
 @page {
-    size: A4;
-    margin: 0;
+  size: A4;
+  margin: 0;
 }
-@media print {
-    .rdw-editor-toolbar * {
-      display: none;
-    }
-    .head * {
-      display: none;
-    }
-    .menu * {
-      display: none;
-    }
-    .menu_left * {
-      display: none;
-    }
-    body * {
-      visibility: hidden;
-    }
-    html, body {
-        width: 210mm;
-        height: 297mm;        
-    }
-    .page * {
-      visibility: visible;
-    }
-    .page {
-        page-break-after: always;
-        background-color: white;
-        height: 100%;
-        width: 100%;
-        position: fixed;
-        top: 0;
-        left: 0;
-        margin: 0;
-        padding: 15px;
-        font-size: 14px;
-        line-height: 18px;
-    }
+
+@media print {  
+  .head {
+    display: none;
+  }
+  
+  .menu * {
+    display: none;
+  }
+  .menu_left * {
+    display: none;
+  }
+  body * {
+    visibility: hidden;
+  }
+  .rdw-editor-toolbar{
+    display: none;
+  }
+  .page * {
+    visibility: visible;
+  }
+  .page {
+    background-color: white;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    top: -60px;
+    left: 0;
+    margin: 0;
+    padding: 20px 45px 20px 45px;
+    font-size: 14px;
+    line-height: 18px;
+  }
 }
 
 .menu {

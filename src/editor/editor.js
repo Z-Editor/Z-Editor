@@ -16,13 +16,9 @@ import {
     RichUtils
 } from 'draft-js';
 import {
-    convertToRaw,
-    convertFromRaw,
     Entity,
     Modifier,
-    CompositeDecorator,
     DefaultDraftBlockRenderMap,
-    AtomicBlockUtils,
     genKey,
     ContentBlock
 } from 'draft-js';
