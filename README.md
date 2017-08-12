@@ -4,6 +4,8 @@ A tool to edit and create your formal [Z-notation](https://en.wikipedia.org/wiki
 
 Try the **[Demo](https://z-editor.github.io/)**
 
+<img src="https://github.com/Z-Editor/Z-Editor/blob/master/gif/demo.gif" width="800" height="400">
+
 Original repo is from [Open-SL](https://github.com/Open-SL) and inspired from [draft-wysiwyg](https://github.com/bkniffler/draft-wysiwyg) and [react-draft-wysiwyg](https://github.com/jpuri/react-draft-wysiwyg).
 
 ### Getting started
