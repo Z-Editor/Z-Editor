@@ -1,7 +1,8 @@
 language: node_js
 node_js:
   - "8"
-before_deploy:
+script:
+  - npm install
   - npm run build
 deploy:
   provider: pages
