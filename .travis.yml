@@ -1,0 +1,20 @@
+language: node_js
+warnings_are_errors: false
+env:
+  - CI=false
+node_js:
+  - "8"
+before_script:
+  - npm install
+  - npm run build
+script:
+  - echo "Script phase"
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  local_dir: build/
+  repo: Z-Editor/z-editor.github.io
+  target_branch: master
+  on:
+    branch: master
