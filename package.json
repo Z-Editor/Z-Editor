@@ -31,5 +31,23 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "axios-mock-adapter": "^1.15.0",
+    "babel-eslint": "^8.2.3",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-config-react": "^1.1.7",
+    "eslint-config-react-app": "^2.1.0",
+    "eslint-plugin-flowtype": "^2.46.3",
+    "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-prettier": "^2.6.0",
+    "eslint-plugin-react": "^7.7.0",
+    "react-test-renderer": "^16.4.0",
+    "redux-mock-store": "^1.5.1"
+  }
 }
