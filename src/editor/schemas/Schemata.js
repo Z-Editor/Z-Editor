@@ -1,13 +1,6 @@
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
 
-import {
-  Editor,
-  EditorState,
-  EditorBlock,
-  RichUtils
-} from 'draft-js';
+import { Editor, EditorState, EditorBlock, RichUtils } from 'draft-js';
 
 class Schemata extends Component {
   constructor(props) {
@@ -15,10 +8,10 @@ class Schemata extends Component {
   }
 
   render() {
-    return ( 
-        <div>
-            <EditorBlock { ...this.props}/> 
-        </div>
+    return (
+      <div>
+        <EditorBlock {...this.props} />
+      </div>
     );
   }
 }

@@ -1,13 +1,6 @@
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
 
-import {
-  Editor,
-  EditorState,
-  EditorBlock,
-  RichUtils
-} from 'draft-js';
+import { Editor, EditorState, EditorBlock, RichUtils } from 'draft-js';
 
 class SchemataDown extends Component {
   constructor(props) {
@@ -15,10 +8,7 @@ class SchemataDown extends Component {
   }
 
   render() {
-    return ( 
-        <div>
-        </div>
-    );
+    return <div />;
   }
 }
 export default SchemataDown;

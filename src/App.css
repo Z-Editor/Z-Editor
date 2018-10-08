@@ -5,39 +5,41 @@
   background: #F7F7F7;
 }*/
 
-.public-DraftEditor-content > div > *:first-child{
+.public-DraftEditor-content > div > *:first-child {
   margin-top: 1px;
 }
-.public-DraftEditor-content > div > *:not(:first-child){
+.public-DraftEditor-content > div > *:not(:first-child) {
   margin-top: 0px;
 }
 
 .header {
-  font-family: "Lucida Grande";
+  font-family: 'Lucida Grande';
   font-weight: 700;
-  line-height: 1.0;
+  line-height: 1;
   margin-top: 39px;
   margin-bottom: 0;
 }
-.h1{
+.h1 {
   font-size: 52px;
 }
-.h2{
+.h2 {
   font-size: 44px;
 }
-.h3{
+.h3 {
   font-size: 36px;
 }
-.h4{
+.h4 {
   font-size: 28px;
 }
-.header + .header, .header + * + .header {
-  margin-top: 1px!important;
+.header + .header,
+.header + * + .header {
+  margin-top: 1px !important;
   font-weight: initial;
-  color: rgba(0,0,0,.44);
+  color: rgba(0, 0, 0, 0.44);
 }
-.header + .paragraph, .header + * + .paragraph {
-  margin-top: 10px!important;
+.header + .paragraph,
+.header + * + .paragraph {
+  margin-top: 10px !important;
 }
 
 .Zeditor-container {
@@ -66,13 +68,13 @@
 }
 
 .Zeditor-handle {
-  color: rgba(98, 177, 254, 1.0);
+  color: rgba(98, 177, 254, 1);
   direction: ltr;
   unicode-bidi: bidi-override;
 }
 
 .Zeditor-hashtag {
-  color: rgba(95, 184, 138, 1.0);
+  color: rgba(95, 184, 138, 1);
 }
 
 .Zeditor-tex {
@@ -164,14 +166,14 @@
   right: 300px;
 }
 
-.logo{
+.logo {
   float: left;
   font-size: 30px;
   color: white;
   margin: 15px;
 }
 
-.github-button{
+.github-button {
   float: left;
   margin: 15px;
   margin-top: 26px;
@@ -184,10 +186,10 @@
 
 .head {
   /*background: linear-gradient(150deg, #ffb347, #ffcc33);*/
-  background: linear-gradient(150deg,#3366ff, #3333cc);
+  background: linear-gradient(150deg, #3366ff, #3333cc);
 
   height: 65px;
-  top:0;
+  top: 0;
   width: 100%;
   z-index: 10;
   position: fixed;
@@ -205,7 +207,7 @@
   align-self: stretch;
 }
 
-.button{
+.button {
   outline: 0;
   cursor: pointer;
   float: right;
@@ -218,10 +220,10 @@
   color: rgb(255, 255, 255);
   padding: 10px;
 }
-.button:hover{
+.button:hover {
   border: 1px solid rgba(255, 255, 255, 0.51);
 }
-.button.active{
+.button.active {
   border: 1px solid rgba(255, 255, 255, 0.51);
 }
 
@@ -240,9 +242,8 @@
   border-bottom: 2px solid black;
   position: relative;
   padding: 8px 20px;
-  padding-left:10px;
-  line-height:0.001em;
-  
+  padding-left: 10px;
+  line-height: 0.001em;
 }
 
 .schemata_down {
@@ -262,19 +263,18 @@
 }*/
 
 .schemata_up span {
-  padding:10px 10px;
-  background:#fff;
-
+  padding: 10px 10px;
+  background: #fff;
 }
 
 body {
-  font-family: "Georgia","Cambria","Times New Roman","Times","serif";
+  font-family: 'Georgia', 'Cambria', 'Times New Roman', 'Times', 'serif';
   line-height: initial;
   width: 100%;
   height: 100%;
   margin: 0;
   padding: 0;
-  background-color: #FAFAFA;
+  background-color: #fafafa;
 }
 * {
   box-sizing: border-box;
@@ -285,8 +285,8 @@ body {
   min-height: 297mm;
   padding: 20mm;
   margin: 10mm auto;
-  margin-top:150px;
-  border: 1px #D3D3D3 solid;
+  margin-top: 150px;
+  border: 1px #d3d3d3 solid;
   border-radius: 5px;
   background: white;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
@@ -295,7 +295,7 @@ body {
   padding: 1cm;
   border: 5px red solid;
   height: 257mm;
-  outline: 2cm #FFEAEA solid;
+  outline: 2cm #ffeaea solid;
 }
 
 @page {
@@ -303,11 +303,11 @@ body {
   margin: 0;
 }
 
-@media print {  
+@media print {
   .head {
     display: none;
   }
-  
+
   .menu * {
     display: none;
   }
@@ -317,7 +317,7 @@ body {
   body * {
     visibility: hidden;
   }
-  .rdw-editor-toolbar{
+  .rdw-editor-toolbar {
     display: none;
   }
   .page * {

@@ -1,13 +1,6 @@
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
 
-import {
-  Editor,
-  EditorState,
-  EditorBlock,
-  RichUtils
-} from 'draft-js';
+import { Editor, EditorState, EditorBlock, RichUtils } from 'draft-js';
 
 class SchemataUp extends Component {
   constructor(props) {
@@ -15,10 +8,12 @@ class SchemataUp extends Component {
   }
 
   render() {
-    return ( 
-        <div>
-            <span className='up_span'><EditorBlock { ...this.props}/></span>
-        </div>
+    return (
+      <div>
+        <span className="up_span">
+          <EditorBlock {...this.props} />
+        </span>
+      </div>
     );
   }
 }
