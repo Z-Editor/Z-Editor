@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 module.exports = (function(e) {
   function t(o) {
     if (n[o]) return n[o].exports;

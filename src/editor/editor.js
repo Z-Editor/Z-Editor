@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
-import { Map } from 'immutable';
-import { Editor } from './edited-rdw/react-draft-wysiwyg';
+import React, {Component} from 'react';
+import {Map} from 'immutable';
+import {Editor} from './edited-rdw/react-draft-wysiwyg';
 import './edited-rdw/styles.css';
 import '../App.css';
 import Schemata from './schemas/Schemata';
 import SchemataUp from './schemas/SchemataUp';
 import SchemataDown from './schemas/SchemataDown';
 import SideToolBar from './toolBar/sideToolBar';
-import { EditorState, RichUtils } from 'draft-js';
-import { Entity, Modifier, DefaultDraftBlockRenderMap, genKey, ContentBlock } from 'draft-js';
-import { l_config, r_config } from './config';
+import {EditorState, RichUtils} from 'draft-js';
+import {Entity, Modifier, DefaultDraftBlockRenderMap, genKey, ContentBlock} from 'draft-js';
+import {l_config, r_config} from './config';
 
 const SCHEMA = 'schemata';
 const SCHEMA_UP = 'schemata_up';
@@ -30,16 +30,10 @@ const convertBlock = (type, editorState, selectionState, contentState) => {
   const blockMap = contentState.getBlockMap();
   const block = blockMap.get(key);
   const newText = block.getText();
-  const newBlock = block.merge({
-    text: newText,
-    type: newType
-  });
+  const newBlock = block.merge({text: newText, type: newType});
   const newContentState = contentState.merge({
     blockMap: blockMap.set(key, newBlock),
-    selectionAfter: selectionState.merge({
-      anchorOffset: 0,
-      focusOffset: 0
-    })
+    selectionAfter: selectionState.merge({anchorOffset: 0, focusOffset: 0})
   });
 
   return newBlock;
@@ -53,11 +47,7 @@ const convertBlock = (type, editorState, selectionState, contentState) => {
  */
 const generate_block = style => {
   const newBlockKey = genKey();
-  const block = new ContentBlock({
-    key: newBlockKey,
-    type: style,
-    text: ''
-  });
+  const block = new ContentBlock({key: newBlockKey, type: style, text: ''});
   return [newBlockKey, block];
 };
 
@@ -75,12 +65,14 @@ const insert_schemata = (editorState, selection, contentState, currentBlock, typ
   const newBlock = convertBlock('schemata_up', editorState, selection, contentState);
   const blockMap = contentState.getBlockMap();
   // Split the blocks
-  const blocksBefore = blockMap.toSeq().takeUntil(function(v) {
-    return v === currentBlock;
-  });
+  const blocksBefore = blockMap
+    .toSeq()
+    .takeUntil(function (v) {
+      return v === currentBlock;
+    });
   const blocksAfter = blockMap
     .toSeq()
-    .skipUntil(function(v) {
+    .skipUntil(function (v) {
       return v === currentBlock;
     })
     .rest();
@@ -91,7 +83,10 @@ const insert_schemata = (editorState, selection, contentState, currentBlock, typ
     case 'half':
       newBlocks = [
         generate_block('unstyled'),
-        [currentBlock.getKey(), newBlock],
+        [
+          currentBlock.getKey(),
+          newBlock
+        ],
         generate_block('schemata'),
         generate_block('schemata_down'),
         generate_block('unstyled')
@@ -100,7 +95,10 @@ const insert_schemata = (editorState, selection, contentState, currentBlock, typ
     case 'main':
       newBlocks = [
         generate_block('unstyled'),
-        [currentBlock.getKey(), newBlock],
+        [
+          currentBlock.getKey(),
+          newBlock
+        ],
         generate_block('schemata'),
         generate_block('schemata_down'),
         generate_block('schemata'),
@@ -112,29 +110,33 @@ const insert_schemata = (editorState, selection, contentState, currentBlock, typ
     case 'bar':
       newBlocks = [
         generate_block('unstyled'),
-        [currentBlock.getKey(), convertBlock('schemata', editorState, selection, contentState)],
+        [
+          currentBlock.getKey(),
+          convertBlock('schemata', editorState, selection, contentState)
+        ],
         generate_block('unstyled')
       ];
       break;
     case 'inverse':
       newBlocks = [
         generate_block('unstyled'),
-        [currentBlock.getKey(), convertBlock('schemata', editorState, selection, contentState)],
+        [
+          currentBlock.getKey(),
+          convertBlock('schemata', editorState, selection, contentState)
+        ],
         generate_block('schemata_down'),
         generate_block('schemata'),
         generate_block('unstyled')
       ];
       break;
     default:
-      null;
+      newBlocks = null;
   }
 
-  const newBlockMap = blocksBefore.concat(newBlocks, blocksAfter).toOrderedMap();
-  const newContentState = contentState.merge({
-    blockMap: newBlockMap,
-    selectionBefore: selection,
-    selectionAfter: selection
-  });
+  const newBlockMap = blocksBefore
+    .concat(newBlocks, blocksAfter)
+    .toOrderedMap();
+  const newContentState = contentState.merge({blockMap: newBlockMap, selectionBefore: selection, selectionAfter: selection});
   return EditorState.push(editorState, newContentState, 'insert-fragment');
 };
 
@@ -194,18 +196,21 @@ class ZEditor extends Component {
     }).merge(DefaultDraftBlockRenderMap);
 
     this.onEditorStateChange = editorState => {
-      this.setState({
-        editorState
-      });
+      this.setState({editorState});
     };
 
     this.blockRendererFn = getBlockRendererFn(this.getEditorState, this.onEditorStateChange);
 
-    this.onUserClick = this.insert_schema.bind(this);
+    this.onUserClick = this
+      .insert_schema
+      .bind(this);
   }
 
   componentDidMount() {
-    this.refs.editor.focusEditor();
+    this
+      .refs
+      .editor
+      .focusEditor();
   }
 
   blockStyleFn(block) {
@@ -237,14 +242,14 @@ class ZEditor extends Component {
     const blockMap = contentState.getBlockMap();
     const block = blockMap.get(key);
 
-    this.setState(
-      {
-        editorState: insert_schemata(editorState, selectionState, contentState, block, type)
-      },
-      () => {
-        this.refs.editor.focusEditor();
-      }
-    );
+    this.setState({
+      editorState: insert_schemata(editorState, selectionState, contentState, block, type)
+    }, () => {
+      this
+        .refs
+        .editor
+        .focusEditor();
+    });
   };
 
   insertSymbol = symbol => {
@@ -253,19 +258,23 @@ class ZEditor extends Component {
     const selectionState = editorState.getSelection();
     const newContentState = Modifier.insertText(contentState, selectionState, symbol, null, null);
 
-    this.setState(
-      {
-        editorState: EditorState.push(editorState, newContentState, 'add-text')
-      },
-      () => {
-        this.refs.editor.focusEditor();
-      }
-    );
+    this.setState({
+      editorState: EditorState.push(editorState, newContentState, 'add-text')
+    }, () => {
+      this
+        .refs
+        .editor
+        .focusEditor();
+    });
   };
 
   render() {
     const bar = r_config.map(btn => {
-      return <SideToolBar side={'right'} data={btn.data} key={btn.id} insertFn={this.insertFN} />;
+      return <SideToolBar
+        side={'right'}
+        data={btn.data}
+        key={btn.id}
+        insertFn={this.insertFN}/>;
     });
 
     return (
@@ -274,7 +283,7 @@ class ZEditor extends Component {
         <ul className="menu_left">
           {'schema'}
 
-          <SideToolBar side={'left'} data={l_config} insertFn={this.insertFN} />
+          <SideToolBar side={'left'} data={l_config} insertFn={this.insertFN}/>
         </ul>
 
         <div>
@@ -286,8 +295,7 @@ class ZEditor extends Component {
               blockRenderMap={this.blockRenderMap}
               blockRendererFn={this.blockRendererFn}
               editorClassName="page"
-              ref="editor"
-            />
+              ref="editor"/>
           </div>
         </div>
         {/*<div className="container-content">
