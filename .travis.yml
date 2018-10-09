@@ -12,6 +12,7 @@ script:
 deploy:
   provider: pages
   skip_cleanup: true
+  keep-history: true
   github_token: $GITHUB_TOKEN
   local_dir: build/
   repo: Z-Editor/z-editor.github.io
