@@ -45,7 +45,7 @@ notations in Z-Editor toolbar
 Rich Text Utilities were added make your life more easier
 
 ### Todo
-- [ ]  implement a method to print the Z script
+- [ ]  implement a method save as file and upload and edit method
 - [ ]  loose the coupling between rdw and Z-Editor (current version of **react-draft-wysiwyg** doesn't support ref and few problems were the reasons to add the edited version of [react-draft-wysiwyg](https://github.com/jpuri/react-draft-wysiwyg))
 
 ## Something Missing?
