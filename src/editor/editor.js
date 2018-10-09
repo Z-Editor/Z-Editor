@@ -284,7 +284,7 @@ class ZEditor extends Component {
         <center>
           <small>
             Made with ♥ by{' '}
-            <a href="https://github.com/Open-SL" target="_blank">
+            <a href="https://github.com/Open-SL" target="_blank" rel="noopener noreferrer">
               Open_SL
             </a>
           </small>
