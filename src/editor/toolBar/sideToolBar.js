@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
-
+import { string, func, array } from 'prop-types';
 import SideToolBarBtn from './sideToolBarBtn';
 
-import { Editor, EditorState, EditorBlock, RichUtils } from 'draft-js';
-
 class SideToolBar extends Component {
+  static propTypes = {
+    data: array.isRequired,
+    side: string,
+    insertFn: func
+  };
+
   constructor(props) {
     super(props);
 
@@ -14,9 +18,8 @@ class SideToolBar extends Component {
   }
 
   render() {
-    const bt = this.state.btns.map(btn => {
-      return <SideToolBarBtn type={btn} side={this.props.side} key={btn.id} insertFn={this.props.insertFn} />;
-    });
+    const { side, insertFn } = this.props;
+    const bt = this.state.btns.map(btn => <SideToolBarBtn type={btn} side={side} key={btn.id} insertFn={insertFn} />);
     return <ul className="rdw-editor-toolbar-side">{bt}</ul>;
   }
 }

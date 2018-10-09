@@ -1,18 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-import { Editor, EditorState, EditorBlock, RichUtils } from 'draft-js';
+import { EditorBlock } from 'draft-js';
 
-class Schemata extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <div>
-        <EditorBlock {...this.props} />
-      </div>
-    );
-  }
+function Schemata(props) {
+  return (
+    <div>
+      <EditorBlock {...props} />
+    </div>
+  );
 }
+
 export default Schemata;

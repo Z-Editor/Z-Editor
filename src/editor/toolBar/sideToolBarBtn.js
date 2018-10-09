@@ -1,40 +1,35 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { string, func, object } from 'prop-types';
 
-import { Editor, EditorState, EditorBlock, RichUtils } from 'draft-js';
+SideToolBarBtn.propTypes = {
+  insertFn: func.isRequired,
+  side: string,
+  type: object
+};
 
-class SideToolBarBtn extends Component {
-  constructor(props) {
-    super(props);
-
-    this.props = props;
-  }
-
-  render() {
-    const side = this.props.side;
-
-    let label = null;
-    if (side == 'left') {
-      label = (
-        <div>
-          <img src={this.props.type.icon} width="19" height="19" />
-        </div>
-      );
-    } else {
-      label = <div>{this.props.type.symbol}</div>;
-    }
-    return (
-      <li>
-        <div
-          className="rdw-option-wrapper"
-          onClick={() => {
-            this.props.insertFn(this.props.type.symbol, this.props.type.type, this.props.side);
-          }}
-        >
-          {label}
-        </div>
-      </li>
+function SideToolBarBtn({ type, side, insertFn }) {
+  let label = null;
+  if (side === 'left') {
+    label = (
+      <div>
+        <img alt="icon" src={type.icon} width="19" height="19" />
+      </div>
     );
+  } else {
+    label = <div>{type.symbol}</div>;
   }
+  return (
+    <li>
+      <div
+        className="rdw-option-wrapper"
+        onClick={() => {
+          insertFn(type.symbol, type.type, side);
+        }}
+      >
+        {label}
+      </div>
+    </li>
+  );
 }
 
 export default SideToolBarBtn;
