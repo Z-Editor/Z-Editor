@@ -48,5 +48,15 @@
     "eslint-plugin-react": "^7.7.0",
     "react-test-renderer": "^16.4.0",
     "redux-mock-store": "^1.5.1"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}",
+      "!<rootDir>/node_modules/",
+      "!<rootDir>/path/to/dir/",
+      "!src/index.js",
+      "!src/registerServiceWorker.js",
+      "!src/editor/config.js"
+    ]
   }
 }
