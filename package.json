@@ -24,7 +24,7 @@
     "precommit": "lint-staged",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "test": "react-scripts test --env=jsdom --coverage",
     "eject": "react-scripts eject"
   },
   "browserslist": [
@@ -35,8 +35,8 @@
   ],
   "devDependencies": {
     "axios-mock-adapter": "^1.15.0",
-    "enzyme": "^3.3.0",
-    "enzyme-adapter-react-16": "^1.1.1",
+    "enzyme": "^3.7.0",
+    "enzyme-adapter-react-16": "^1.6.0",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-config-prettier": "^2.9.0",
     "eslint-config-react": "^1.1.7",
