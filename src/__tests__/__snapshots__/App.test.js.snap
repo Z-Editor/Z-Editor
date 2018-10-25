@@ -1,0 +1,275 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders without crashing renders correctly 1`] = `
+ShallowWrapper {
+  Symbol(enzyme.__root__): [Circular],
+  Symbol(enzyme.__unrendered__): <App />,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "getNode": [Function],
+    "render": [Function],
+    "simulateError": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__node__): Object {
+    "instance": null,
+    "key": undefined,
+    "nodeType": "host",
+    "props": Object {
+      "children": Array [
+        <div
+          className="head"
+        >
+          <div
+            className="logo"
+          >
+            Z-Editor
+          </div>
+          <a
+            className="github-button"
+            href="https://github.com/Z-Editor/Z-Editor"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            View on Github
+          </a>
+          <button
+            className="button"
+            onClick={[Function]}
+          >
+            Print
+          </button>
+        </div>,
+        <ZEditor />,
+      ],
+      "className": "flex-container",
+    },
+    "ref": null,
+    "rendered": Array [
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": Array [
+            <div
+              className="logo"
+            >
+              Z-Editor
+            </div>,
+            <a
+              className="github-button"
+              href="https://github.com/Z-Editor/Z-Editor"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              View on Github
+            </a>,
+            <button
+              className="button"
+              onClick={[Function]}
+            >
+              Print
+            </button>,
+          ],
+          "className": "head",
+        },
+        "ref": null,
+        "rendered": Array [
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": "Z-Editor",
+              "className": "logo",
+            },
+            "ref": null,
+            "rendered": "Z-Editor",
+            "type": "div",
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": "View on Github",
+              "className": "github-button",
+              "href": "https://github.com/Z-Editor/Z-Editor",
+              "rel": "noopener noreferrer",
+              "target": "_blank",
+            },
+            "ref": null,
+            "rendered": "View on Github",
+            "type": "a",
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": "Print",
+              "className": "button",
+              "onClick": [Function],
+            },
+            "ref": null,
+            "rendered": "Print",
+            "type": "button",
+          },
+        ],
+        "type": "div",
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "class",
+        "props": Object {},
+        "ref": null,
+        "rendered": null,
+        "type": [Function],
+      },
+    ],
+    "type": "div",
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "host",
+      "props": Object {
+        "children": Array [
+          <div
+            className="head"
+          >
+            <div
+              className="logo"
+            >
+              Z-Editor
+            </div>
+            <a
+              className="github-button"
+              href="https://github.com/Z-Editor/Z-Editor"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              View on Github
+            </a>
+            <button
+              className="button"
+              onClick={[Function]}
+            >
+              Print
+            </button>
+          </div>,
+          <ZEditor />,
+        ],
+        "className": "flex-container",
+      },
+      "ref": null,
+      "rendered": Array [
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": Array [
+              <div
+                className="logo"
+              >
+                Z-Editor
+              </div>,
+              <a
+                className="github-button"
+                href="https://github.com/Z-Editor/Z-Editor"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                View on Github
+              </a>,
+              <button
+                className="button"
+                onClick={[Function]}
+              >
+                Print
+              </button>,
+            ],
+            "className": "head",
+          },
+          "ref": null,
+          "rendered": Array [
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": "Z-Editor",
+                "className": "logo",
+              },
+              "ref": null,
+              "rendered": "Z-Editor",
+              "type": "div",
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": "View on Github",
+                "className": "github-button",
+                "href": "https://github.com/Z-Editor/Z-Editor",
+                "rel": "noopener noreferrer",
+                "target": "_blank",
+              },
+              "ref": null,
+              "rendered": "View on Github",
+              "type": "a",
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": "Print",
+                "className": "button",
+                "onClick": [Function],
+              },
+              "ref": null,
+              "rendered": "Print",
+              "type": "button",
+            },
+          ],
+          "type": "div",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "class",
+          "props": Object {},
+          "ref": null,
+          "rendered": null,
+          "type": [Function],
+        },
+      ],
+      "type": "div",
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+        "lifecycles": Object {
+          "componentDidUpdate": Object {
+            "onSetState": true,
+          },
+          "getDerivedStateFromProps": true,
+          "getSnapshotBeforeUpdate": true,
+          "setState": Object {
+            "skipsComponentDidUpdateOnNullish": true,
+          },
+        },
+      },
+    },
+  },
+}
+`;
