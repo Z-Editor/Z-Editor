@@ -7,7 +7,7 @@ import Schemata from './schemas/Schemata';
 import SchemataUp from './schemas/SchemataUp';
 import SchemataDown from './schemas/SchemataDown';
 import SideToolBar from './toolBar/sideToolBar';
-import { EditorState, RichUtils, convertToRaw } from 'draft-js';
+import { EditorState, RichUtils, convertToRaw, convertFromRaw } from 'draft-js';
 import { Entity, Modifier, DefaultDraftBlockRenderMap, genKey, ContentBlock } from 'draft-js';
 import { l_config, r_config } from './config';
 
@@ -191,6 +191,24 @@ class ZEditor extends Component {
     this.blockRendererFn = getBlockRendererFn(this.getEditorState, this.onEditorStateChange);
 
     this.onUserClick = this.insert_schema.bind(this);
+  }
+
+  // change editor state when import a file
+
+  changeEditorStateByUpload = newEditorState => {
+    let editorState = EditorState.createWithContent(convertFromRaw(JSON.parse(newEditorState)));
+
+    this.setState({ editorState: editorState });
+  };
+
+  // change editor state when import a file
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.newEditorState) {
+      let editorState = EditorState.createWithContent(convertFromRaw(JSON.parse(nextProps.newEditorState)));
+      return { editorState: editorState };
+    } else {
+      return null;
+    }
   }
 
   componentDidMount() {
