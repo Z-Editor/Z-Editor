@@ -5,6 +5,7 @@
   "author": "nadun1indunil@gmail.com",
   "homepage": "https://z-editor.github.io/",
   "dependencies": {
+    "downloadjs": "^1.4.7",
     "draft-js": "^0.10.1",
     "husky": "^1.1.1",
     "lint-staged": "^7.3.0",

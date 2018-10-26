@@ -7,7 +7,7 @@ import Schemata from './schemas/Schemata';
 import SchemataUp from './schemas/SchemataUp';
 import SchemataDown from './schemas/SchemataDown';
 import SideToolBar from './toolBar/sideToolBar';
-import { EditorState, RichUtils } from 'draft-js';
+import { EditorState, RichUtils, convertToRaw } from 'draft-js';
 import { Entity, Modifier, DefaultDraftBlockRenderMap, genKey, ContentBlock } from 'draft-js';
 import { l_config, r_config } from './config';
 
@@ -184,6 +184,7 @@ class ZEditor extends Component {
     }).merge(DefaultDraftBlockRenderMap);
 
     this.onEditorStateChange = editorState => {
+      this.props.setDownloadState(convertToRaw(this.state.editorState.getCurrentContent()));
       this.setState({ editorState });
     };
 

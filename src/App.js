@@ -1,8 +1,25 @@
 import React, { Component } from 'react';
 import ZEditor from './editor/editor';
 import './App.css';
+import download from 'downloadjs';
 
 class App extends Component {
+  state = {
+    downloadState: null
+  };
+
+  importZ = () => {
+    console.log('test');
+  };
+
+  downloadZ = () => {
+    download(JSON.stringify(this.state.downloadState), 'download.ze', 'text/plain');
+  };
+
+  setDownloadState = state => {
+    this.setState({ downloadState: state });
+  };
+
   render() {
     return (
       <div className="flex-container">
@@ -16,6 +33,12 @@ class App extends Component {
           >
             View on Github
           </a>
+          <button className="button" onClick={this.importZ}>
+            Import
+          </button>
+          <button className="button" onClick={this.downloadZ}>
+            Download
+          </button>
           <button
             className="button"
             onClick={() => {
@@ -26,7 +49,7 @@ class App extends Component {
           </button>
         </div>
 
-        <ZEditor />
+        <ZEditor setDownloadState={this.setDownloadState} />
       </div>
     );
   }
