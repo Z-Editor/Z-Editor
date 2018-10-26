@@ -30,7 +30,6 @@ class App extends Component {
 
   uploadFile = event => {
     let file = event.target.files[0];
-    console.log(file);
     if (file.name.substr(file.name.length - 2) != 'ze') {
       alert('not a Z Editor file');
     } else {
