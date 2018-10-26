@@ -67,6 +67,7 @@ class App extends Component {
           </a>
 
           <button
+            id="print"
             className="button"
             onClick={() => {
               window.print();
@@ -75,7 +76,7 @@ class App extends Component {
             Print
           </button>
 
-          <button className="button" onClick={this.downloadZ}>
+          <button id="download" className="button" onClick={this.downloadZ}>
             Download
           </button>
 
