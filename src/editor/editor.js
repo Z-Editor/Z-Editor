@@ -31,10 +31,10 @@ const convertBlock = (type, editorState, selectionState, contentState) => {
   const block = blockMap.get(key);
   const newText = block.getText();
   const newBlock = block.merge({ text: newText, type: newType });
-  const newContentState = contentState.merge({
-    blockMap: blockMap.set(key, newBlock),
-    selectionAfter: selectionState.merge({ anchorOffset: 0, focusOffset: 0 })
-  });
+  // const newContentState = contentState.merge({
+  //   blockMap: blockMap.set(key, newBlock),
+  //   selectionAfter: selectionState.merge({ anchorOffset: 0, focusOffset: 0 })
+  // });
 
   return newBlock;
 };
@@ -193,29 +193,11 @@ class ZEditor extends Component {
     this.onUserClick = this.insert_schema.bind(this);
   }
 
-  // change editor state when import a file
-
-  changeEditorStateByUpload = newEditorState => {
-    let editorState = EditorState.createWithContent(convertFromRaw(JSON.parse(newEditorState)));
-
-    this.setState({ editorState: editorState });
-  };
-
-  // change editor state when import a file
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.newEditorState) {
-      let editorState = EditorState.createWithContent(convertFromRaw(JSON.parse(nextProps.newEditorState)));
-      return { editorState: editorState };
-    } else {
-      return null;
-    }
-  }
-
   componentDidMount() {
     this.refs.editor.focusEditor();
   }
 
-  blockStyleFn(block) {
+  blockStyleFn = block => {
     switch (block.getType()) {
       case SCHEMA:
         return 'schemata';
@@ -226,7 +208,15 @@ class ZEditor extends Component {
       default:
         return 'block';
     }
-  }
+  };
+
+  // change editor state when import a file
+
+  changeEditorStateByUpload = newEditorState => {
+    let editorState = EditorState.createWithContent(convertFromRaw(JSON.parse(newEditorState)));
+
+    this.setState({ editorState: editorState });
+  };
 
   insertFN = (symbol, type, side) => {
     if (type) {

@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import ZEditor from './editor/editor';
 import './App.css';
 import download from 'downloadjs';
+import swal from 'sweetalert2';
 
 class App extends Component {
   state = {
-    downloadState: null,
-    importState: null
+    downloadState: null
   };
   child = React.createRef();
 
@@ -30,8 +30,10 @@ class App extends Component {
 
   uploadFile = event => {
     let file = event.target.files[0];
-    if (file.name.substr(file.name.length - 2) != 'ze') {
-      alert('not a Z Editor file');
+    if (file && file.name.substr(file.name.length - 2) !== 'ze') {
+      swal('Warning!', `Not a Z Editor file!`, 'warning');
+    } else if (!file) {
+      swal('Warning!', `You didn't upload a file!`, 'warning');
     } else {
       this.readFileContent(file)
         .then(content => this.child.current.changeEditorStateByUpload(content))
@@ -67,7 +69,7 @@ class App extends Component {
           </button>
 
           <div>
-            <label style={{ fontSize: '15px' }} className="button" htmlFor="upload-file">
+            <label style={{ fontSize: '15px', fontFamily: 'sans-serif' }} className="button" htmlFor="upload-file">
               Import
             </label>
             <input

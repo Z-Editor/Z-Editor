@@ -13,7 +13,8 @@
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-draft-wysiwyg": "^1.10.7",
-    "react-scripts": "2.0.4"
+    "react-scripts": "2.0.4",
+    "sweetalert2": "^7.28.10"
   },
   "lint-staged": {
     "src/**/*.{js,jsx,json,css}": [
