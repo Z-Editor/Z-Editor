@@ -20,8 +20,19 @@ class App extends Component {
   };
 
   downloadZ = () => {
-    var fileName = prompt('Please enter a Name for the Z file', 'Zeditor-file');
-    download(JSON.stringify(this.state.downloadState), `${fileName}.ze`, 'text/plain');
+    let fileName = '';
+    swal({
+      title: 'Input file Name',
+      input: 'text',
+      inputPlaceholder: 'File name',
+      allowOutsideClick: false,
+      showCancelButton: true
+    })
+      .then(data => {
+        fileName = data.value;
+        if (fileName) download(JSON.stringify(this.state.downloadState), `${fileName}.ze`, 'text/plain');
+      })
+      .catch(error => swal('Error!', `Something went wrong!`, 'Error'));
   };
 
   setDownloadState = state => {
