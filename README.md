@@ -1,5 +1,7 @@
 # Z-Editor
 
+[![Build Status](https://travis-ci.org/Z-Editor/Z-Editor.png?branch=master)](https://travis-ci.org/Z-Editor/Z-Editor)  [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/Z-Editor/Z-Editor/issues)
+
 A tool to edit and create your formal [Z-notation](https://en.wikipedia.org/wiki/Z_notation) documents.
 
 Try the **[Demo](https://z-editor.github.io/)**
@@ -28,6 +30,8 @@ to be more familiarized with the react boilerplate find getting started from [cr
 
 ### Functionalities
 
+You can download your Z work as a PDF or a ZE file. That ZE file you can again import to our editor and continue your work.
+
 Iconic schemas were created using [draft.js](https://draftjs.org/) blocks.
 
 you can find,
@@ -45,7 +49,6 @@ notations in Z-Editor toolbar
 Rich Text Utilities were added make your life more easier
 
 ### Todo
-- [ ]  implement a method save as file and upload and edit method
 - [ ]  loose the coupling between rdw and Z-Editor (current version of **react-draft-wysiwyg** doesn't support ref and few problems were the reasons to add the edited version of [react-draft-wysiwyg](https://github.com/jpuri/react-draft-wysiwyg))
 
 ## Something Missing?
