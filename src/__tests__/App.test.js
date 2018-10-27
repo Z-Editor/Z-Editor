@@ -28,8 +28,7 @@ describe('renders without crashing', () => {
     it('exists', () => {
       expect(app.find('#download')).toBeTruthy;
     });
-    it('calls window.print on click', () => {
-      global.print = jest.fn();
+    it('calls on click', () => {
       const button = app.find('#download');
       button.simulate('click');
     });

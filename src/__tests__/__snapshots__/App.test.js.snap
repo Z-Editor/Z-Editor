@@ -36,12 +36,50 @@ ShallowWrapper {
           </a>
           <button
             className="button"
+            id="print"
             onClick={[Function]}
           >
             Print
           </button>
+          <button
+            className="button"
+            id="download"
+            onClick={[Function]}
+          >
+            Download
+          </button>
+          <div>
+            <label
+              className="button"
+              htmlFor="upload-file"
+              style={
+                Object {
+                  "fontFamily": "sans-serif",
+                  "fontSize": "15px",
+                }
+              }
+            >
+              Import
+            </label>
+            <input
+              className="button"
+              id="upload-file"
+              name="myFile"
+              onChange={[Function]}
+              style={
+                Object {
+                  "opacity": 0,
+                  "position": "absolute",
+                  "zIndex": -1,
+                }
+              }
+              type="file"
+            />
+          </div>
         </div>,
-        <ZEditor />,
+        <ZEditor
+          setDownloadState={[Function]}
+        />,
       ],
       "className": "flex-container",
     },
@@ -68,10 +106,46 @@ ShallowWrapper {
             </a>,
             <button
               className="button"
+              id="print"
               onClick={[Function]}
             >
               Print
             </button>,
+            <button
+              className="button"
+              id="download"
+              onClick={[Function]}
+            >
+              Download
+            </button>,
+            <div>
+              <label
+                className="button"
+                htmlFor="upload-file"
+                style={
+                  Object {
+                    "fontFamily": "sans-serif",
+                    "fontSize": "15px",
+                  }
+                }
+              >
+                Import
+              </label>
+              <input
+                className="button"
+                id="upload-file"
+                name="myFile"
+                onChange={[Function]}
+                style={
+                  Object {
+                    "opacity": 0,
+                    "position": "absolute",
+                    "zIndex": -1,
+                  }
+                }
+                type="file"
+              />
+            </div>,
           ],
           "className": "head",
         },
@@ -111,11 +185,102 @@ ShallowWrapper {
             "props": Object {
               "children": "Print",
               "className": "button",
+              "id": "print",
               "onClick": [Function],
             },
             "ref": null,
             "rendered": "Print",
             "type": "button",
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": "Download",
+              "className": "button",
+              "id": "download",
+              "onClick": [Function],
+            },
+            "ref": null,
+            "rendered": "Download",
+            "type": "button",
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": Array [
+                <label
+                  className="button"
+                  htmlFor="upload-file"
+                  style={
+                    Object {
+                      "fontFamily": "sans-serif",
+                      "fontSize": "15px",
+                    }
+                  }
+                >
+                  Import
+                </label>,
+                <input
+                  className="button"
+                  id="upload-file"
+                  name="myFile"
+                  onChange={[Function]}
+                  style={
+                    Object {
+                      "opacity": 0,
+                      "position": "absolute",
+                      "zIndex": -1,
+                    }
+                  }
+                  type="file"
+                />,
+              ],
+            },
+            "ref": null,
+            "rendered": Array [
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": "Import",
+                  "className": "button",
+                  "htmlFor": "upload-file",
+                  "style": Object {
+                    "fontFamily": "sans-serif",
+                    "fontSize": "15px",
+                  },
+                },
+                "ref": null,
+                "rendered": "Import",
+                "type": "label",
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "className": "button",
+                  "id": "upload-file",
+                  "name": "myFile",
+                  "onChange": [Function],
+                  "style": Object {
+                    "opacity": 0,
+                    "position": "absolute",
+                    "zIndex": -1,
+                  },
+                  "type": "file",
+                },
+                "ref": null,
+                "rendered": null,
+                "type": "input",
+              },
+            ],
+            "type": "div",
           },
         ],
         "type": "div",
@@ -124,8 +289,12 @@ ShallowWrapper {
         "instance": null,
         "key": undefined,
         "nodeType": "class",
-        "props": Object {},
-        "ref": null,
+        "props": Object {
+          "setDownloadState": [Function],
+        },
+        "ref": Object {
+          "current": null,
+        },
         "rendered": null,
         "type": [Function],
       },
@@ -157,12 +326,50 @@ ShallowWrapper {
             </a>
             <button
               className="button"
+              id="print"
               onClick={[Function]}
             >
               Print
             </button>
+            <button
+              className="button"
+              id="download"
+              onClick={[Function]}
+            >
+              Download
+            </button>
+            <div>
+              <label
+                className="button"
+                htmlFor="upload-file"
+                style={
+                  Object {
+                    "fontFamily": "sans-serif",
+                    "fontSize": "15px",
+                  }
+                }
+              >
+                Import
+              </label>
+              <input
+                className="button"
+                id="upload-file"
+                name="myFile"
+                onChange={[Function]}
+                style={
+                  Object {
+                    "opacity": 0,
+                    "position": "absolute",
+                    "zIndex": -1,
+                  }
+                }
+                type="file"
+              />
+            </div>
           </div>,
-          <ZEditor />,
+          <ZEditor
+            setDownloadState={[Function]}
+          />,
         ],
         "className": "flex-container",
       },
@@ -189,10 +396,46 @@ ShallowWrapper {
               </a>,
               <button
                 className="button"
+                id="print"
                 onClick={[Function]}
               >
                 Print
               </button>,
+              <button
+                className="button"
+                id="download"
+                onClick={[Function]}
+              >
+                Download
+              </button>,
+              <div>
+                <label
+                  className="button"
+                  htmlFor="upload-file"
+                  style={
+                    Object {
+                      "fontFamily": "sans-serif",
+                      "fontSize": "15px",
+                    }
+                  }
+                >
+                  Import
+                </label>
+                <input
+                  className="button"
+                  id="upload-file"
+                  name="myFile"
+                  onChange={[Function]}
+                  style={
+                    Object {
+                      "opacity": 0,
+                      "position": "absolute",
+                      "zIndex": -1,
+                    }
+                  }
+                  type="file"
+                />
+              </div>,
             ],
             "className": "head",
           },
@@ -232,11 +475,102 @@ ShallowWrapper {
               "props": Object {
                 "children": "Print",
                 "className": "button",
+                "id": "print",
                 "onClick": [Function],
               },
               "ref": null,
               "rendered": "Print",
               "type": "button",
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": "Download",
+                "className": "button",
+                "id": "download",
+                "onClick": [Function],
+              },
+              "ref": null,
+              "rendered": "Download",
+              "type": "button",
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": Array [
+                  <label
+                    className="button"
+                    htmlFor="upload-file"
+                    style={
+                      Object {
+                        "fontFamily": "sans-serif",
+                        "fontSize": "15px",
+                      }
+                    }
+                  >
+                    Import
+                  </label>,
+                  <input
+                    className="button"
+                    id="upload-file"
+                    name="myFile"
+                    onChange={[Function]}
+                    style={
+                      Object {
+                        "opacity": 0,
+                        "position": "absolute",
+                        "zIndex": -1,
+                      }
+                    }
+                    type="file"
+                  />,
+                ],
+              },
+              "ref": null,
+              "rendered": Array [
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "children": "Import",
+                    "className": "button",
+                    "htmlFor": "upload-file",
+                    "style": Object {
+                      "fontFamily": "sans-serif",
+                      "fontSize": "15px",
+                    },
+                  },
+                  "ref": null,
+                  "rendered": "Import",
+                  "type": "label",
+                },
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "className": "button",
+                    "id": "upload-file",
+                    "name": "myFile",
+                    "onChange": [Function],
+                    "style": Object {
+                      "opacity": 0,
+                      "position": "absolute",
+                      "zIndex": -1,
+                    },
+                    "type": "file",
+                  },
+                  "ref": null,
+                  "rendered": null,
+                  "type": "input",
+                },
+              ],
+              "type": "div",
             },
           ],
           "type": "div",
@@ -245,8 +579,12 @@ ShallowWrapper {
           "instance": null,
           "key": undefined,
           "nodeType": "class",
-          "props": Object {},
-          "ref": null,
+          "props": Object {
+            "setDownloadState": [Function],
+          },
+          "ref": Object {
+            "current": null,
+          },
           "rendered": null,
           "type": [Function],
         },

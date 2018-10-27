@@ -1,6 +1,6 @@
 {
   "name": "z-editor",
-  "version": "0.2.1",
+  "version": "1.0.0",
   "private": true,
   "author": "nadun1indunil@gmail.com",
   "homepage": "https://z-editor.github.io/",
@@ -58,7 +58,8 @@
       "!<rootDir>/path/to/dir/",
       "!src/index.js",
       "!src/registerServiceWorker.js",
-      "!src/editor/config.js"
+      "!src/editor/config.js",
+      "!src/editor/edited-rdw/react-draft-wysiwyg.js"
     ]
   }
 }
