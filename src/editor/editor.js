@@ -7,7 +7,7 @@ import Schemata from './schemas/Schemata';
 import SchemataUp from './schemas/SchemataUp';
 import SchemataDown from './schemas/SchemataDown';
 import SideToolBar from './toolBar/sideToolBar';
-import { EditorState, RichUtils } from 'draft-js';
+import { EditorState, RichUtils, convertToRaw, convertFromRaw } from 'draft-js';
 import { Entity, Modifier, DefaultDraftBlockRenderMap, genKey, ContentBlock } from 'draft-js';
 import { l_config, r_config } from './config';
 
@@ -31,10 +31,10 @@ const convertBlock = (type, editorState, selectionState, contentState) => {
   const block = blockMap.get(key);
   const newText = block.getText();
   const newBlock = block.merge({ text: newText, type: newType });
-  const newContentState = contentState.merge({
-    blockMap: blockMap.set(key, newBlock),
-    selectionAfter: selectionState.merge({ anchorOffset: 0, focusOffset: 0 })
-  });
+  // const newContentState = contentState.merge({
+  //   blockMap: blockMap.set(key, newBlock),
+  //   selectionAfter: selectionState.merge({ anchorOffset: 0, focusOffset: 0 })
+  // });
 
   return newBlock;
 };
@@ -184,6 +184,7 @@ class ZEditor extends Component {
     }).merge(DefaultDraftBlockRenderMap);
 
     this.onEditorStateChange = editorState => {
+      this.props.setDownloadState(convertToRaw(this.state.editorState.getCurrentContent()));
       this.setState({ editorState });
     };
 
@@ -196,7 +197,7 @@ class ZEditor extends Component {
     this.refs.editor.focusEditor();
   }
 
-  blockStyleFn(block) {
+  blockStyleFn = block => {
     switch (block.getType()) {
       case SCHEMA:
         return 'schemata';
@@ -207,7 +208,15 @@ class ZEditor extends Component {
       default:
         return 'block';
     }
-  }
+  };
+
+  // change editor state when import a file
+
+  changeEditorStateByUpload = newEditorState => {
+    let editorState = EditorState.createWithContent(convertFromRaw(JSON.parse(newEditorState)));
+
+    this.setState({ editorState: editorState });
+  };
 
   insertFN = (symbol, type, side) => {
     if (type) {

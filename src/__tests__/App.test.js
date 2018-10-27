@@ -12,15 +12,25 @@ describe('renders without crashing', () => {
     expect(app).toMatchSnapshot();
   });
 
-  describe('button functionality', () => {
+  describe('print button functionality', () => {
     it('exists', () => {
-      expect(app.find('button')).toBeTruthy;
+      expect(app.find('#print')).toBeTruthy;
     });
     it('calls window.print on click', () => {
       global.print = jest.fn();
-      const button = app.find('button');
+      const button = app.find('#print');
       button.simulate('click');
       expect(window.print).toHaveBeenCalled();
+    });
+  });
+
+  describe('download button functionality', () => {
+    it('exists', () => {
+      expect(app.find('#download')).toBeTruthy;
+    });
+    it('calls on click', () => {
+      const button = app.find('#download');
+      button.simulate('click');
     });
   });
 });
