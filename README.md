@@ -1,6 +1,6 @@
 # Z-Editor
 
-[![Build Status](https://travis-ci.org/Z-Editor/Z-Editor.png?branch=master)](https://travis-ci.org/Z-Editor/Z-Editor)  [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/Z-Editor/Z-Editor/issues)
+[![Build Status](https://img.shields.io/travis/Z-Editor/Z-Editor/master.svg?)](https://travis-ci.org/Z-Editor/Z-Editor)  [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/Z-Editor/Z-Editor/issues)
 
 A tool to edit and create your formal [Z-notation](https://en.wikipedia.org/wiki/Z_notation) documents.
 
