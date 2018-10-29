@@ -7,7 +7,7 @@ Try out the **[Demo](https://z-editor.github.io/)**.
 
 <img src="https://github.com/Z-Editor/Z-Editor/blob/master/gif/demo.gif" width="800" height="400">
 
-### Table of Contents
+## Table of Contents
 - [Features](#features)
 - [Getting started](#getting-started)
   - [Prerequisites](#prerequisites)
@@ -19,7 +19,7 @@ Try out the **[Demo](https://z-editor.github.io/)**.
 - [Acknowledgments](#acknowledgments)
 - [License](#license)
 
-### Features
+## Features
 
 * Z-Editor supports following notations in the toolbar,
     - Schemas
