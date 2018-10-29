@@ -1,60 +1,78 @@
-# Z-Editor
-
+# Z-Editor 
 [![Build Status](https://img.shields.io/travis/Z-Editor/Z-Editor/master.svg?)](https://travis-ci.org/Z-Editor/Z-Editor)  [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/Z-Editor/Z-Editor/issues)
 
-A tool to edit and create your formal [Z-notation](https://en.wikipedia.org/wiki/Z_notation) documents.
+A tool to create, edit and print formal [Z-notation](https://en.wikipedia.org/wiki/Z_notation) documents.
 
-Try the **[Demo](https://z-editor.github.io/)**
+Try out the **[Demo](https://z-editor.github.io/)**.
 
 <img src="https://github.com/Z-Editor/Z-Editor/blob/master/gif/demo.gif" width="800" height="400">
 
-Finally hit the **print** button to take a copy of your Z-Notation Document.
+### Table of Contents
+- [Features](#features)
+- [Getting started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Install](#install)
+  - [Build](#build)
+  - [Start](#start)
+- [Todo](#todo)
+- [Contributing](#contributing)
+- [Acknowledgments](#acknowledgments)
+- [License](#license)
 
-Original repo is from [Open-SL](https://github.com/Open-SL) and inspired from [draft-wysiwyg](https://github.com/bkniffler/draft-wysiwyg) and [react-draft-wysiwyg](https://github.com/jpuri/react-draft-wysiwyg).
+### Features
 
-### Getting started
+* Z-Editor supports following notations in the toolbar,
+    - Schemas
+    - Logics
+    - Sets
+    - Relations
+    - Functions
+    - Sequences
+    - Bags
+* Download Z-Editor work as a PDF or a ZE file.
+* Import a ZE file to the editor and continue work.
+* Iconic schemas were created using [draft.js](https://draftjs.org/) blocks.
+* Rich Text Utilities.
 
+## Getting started
+
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+
+### Prerequisites
+- git
+- npm
+
+### Install
 ```
 git clone https://github.com/Z-Editor/Z-Editor.git
 cd Z-Editor
-npm start
+npm install
 ```
 
-in your console run
+### Build
 ```
 npm run build
 ``` 
-to build the project
 
-to be more familiarized with the react boilerplate find getting started from [create-react-app](https://github.com/facebookincubator/create-react-app#getting-started)
+### Start
+```
+npm run start
+``` 
 
-### Functionalities
+## Todo
+1. [ ]  Loose the coupling between **react-draft-wysiwyg** and Z-Editor.
+    * Current version of **react-draft-wysiwyg** doesn't support ref and few other problems were the reasons to add the edited version of [react-draft-wysiwyg](https://github.com/jpuri/react-draft-wysiwyg).
 
-You can download your Z work as a PDF or a ZE file. That ZE file you can again import to our editor and continue your work.
+## Contributing
 
-Iconic schemas were created using [draft.js](https://draftjs.org/) blocks.
+- We would greatly appreciate any [contribution](CONTRIBUTING.md) you make. 
+- If you have ideas for more functionality or recipes that should be on this project, [let us know](https://github.com/Z-Editor/Z-Editor/issues).
 
-you can find,
+## Acknowledgments
 
-- Schemas
-- Logics
-- Sets
-- Relations
-- Functions
-- Sequences
-- Bags
+- Original repo is from [Open-SL](https://github.com/Open-SL).
+- Z-Editor is inspired by [draft-wysiwyg](https://github.com/bkniffler/draft-wysiwyg) and [react-draft-wysiwyg](https://github.com/jpuri/react-draft-wysiwyg).
 
-notations in Z-Editor toolbar
-
-Rich Text Utilities were added make your life more easier
-
-### Todo
-- [ ]  loose the coupling between rdw and Z-Editor (current version of **react-draft-wysiwyg** doesn't support ref and few problems were the reasons to add the edited version of [react-draft-wysiwyg](https://github.com/jpuri/react-draft-wysiwyg))
-
-## Something Missing?
-
-If you have ideas for more or recipes that should be on this project, [let us know](https://github.com/Z-Editor/Z-Editor/issues) or [contribute](CONTRIBUTING.md
-) some!
 
 ## License
-Z-Editor is open-sourced software licensed under the [MIT License](LICENSE).
+Z-Editor  is under the MIT license. See the [License](LICENSE) for more information.
