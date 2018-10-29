@@ -60,7 +60,7 @@ npm run start
 ``` 
 
 ## Todo
-1. [ ]  Loose the coupling between **react-draft-wysiwyg** and Z-Editor.
+1. [ ] Loose the coupling between **react-draft-wysiwyg** and Z-Editor.
     * Current version of **react-draft-wysiwyg** doesn't support ref and few other problems were the reasons to add the edited version of [react-draft-wysiwyg](https://github.com/jpuri/react-draft-wysiwyg).
 
 ## Contributing
@@ -75,4 +75,4 @@ npm run start
 
 
 ## License
-Z-Editor  is under the MIT license. See the [License](LICENSE) for more information.
+Z-Editor is under the MIT license. See the [License](LICENSE) for more information.
