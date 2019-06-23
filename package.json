@@ -5,7 +5,6 @@
   "author": "nadun1indunil@gmail.com",
   "homepage": "https://z-editor.github.io/",
   "dependencies": {
-    "downloadjs": "^1.4.7",
     "draft-js": "^0.10.1",
     "husky": "^1.1.1",
     "lint-staged": "^7.3.0",
@@ -13,7 +12,7 @@
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-draft-wysiwyg": "^1.10.7",
-    "react-scripts": "2.0.4",
+    "react-scripts": "^3.0.1",
     "sweetalert2": "^7.28.10"
   },
   "lint-staged": {
@@ -27,7 +26,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom --coverage",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint src"
   },
   "browserslist": [
     ">0.2%",

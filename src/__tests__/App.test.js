@@ -14,7 +14,7 @@ describe('renders without crashing', () => {
 
   describe('print button functionality', () => {
     it('exists', () => {
-      expect(app.find('#print')).toBeTruthy;
+      expect(app.find('#print')).toBeTruthy();
     });
     it('calls window.print on click', () => {
       global.print = jest.fn();
@@ -26,7 +26,7 @@ describe('renders without crashing', () => {
 
   describe('download button functionality', () => {
     it('exists', () => {
-      expect(app.find('#download')).toBeTruthy;
+      expect(app.find('#download')).toBeTruthy();
     });
     it('calls on click', () => {
       const button = app.find('#download');
