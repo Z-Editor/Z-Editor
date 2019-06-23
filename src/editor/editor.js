@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Map } from 'immutable';
+import { EditorState, convertToRaw, convertFromRaw } from 'draft-js';
+import { Modifier, DefaultDraftBlockRenderMap, genKey, ContentBlock } from 'draft-js';
 import { Editor } from './edited-rdw/react-draft-wysiwyg';
 import './edited-rdw/styles.css';
 import '../App.css';
@@ -7,8 +9,6 @@ import Schemata from './schemas/Schemata';
 import SchemataUp from './schemas/SchemataUp';
 import SchemataDown from './schemas/SchemataDown';
 import SideToolBar from './toolBar/sideToolBar';
-import { EditorState, RichUtils, convertToRaw, convertFromRaw } from 'draft-js';
-import { Entity, Modifier, DefaultDraftBlockRenderMap, genKey, ContentBlock } from 'draft-js';
 import { l_config, r_config } from './config';
 
 const SCHEMA = 'schemata';

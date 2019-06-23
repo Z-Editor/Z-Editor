@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import ZEditor from './editor/editor';
 import './App.css';
-import download from 'downloadjs';
 import swal from 'sweetalert2';
 
 class App extends Component {
@@ -30,7 +29,15 @@ class App extends Component {
     })
       .then(data => {
         fileName = data.value;
-        if (fileName) download(JSON.stringify(this.state.downloadState), `${fileName}.ze`, 'text/plain');
+        if (fileName) {
+          // https://stackoverflow.com/questions/44656610/download-a-string-as-txt-file-in-react
+          const element = document.createElement('a');
+          const file = new Blob([JSON.stringify(this.state.downloadState)], { type: 'text/plain' });
+          element.href = URL.createObjectURL(file);
+          element.download = `${fileName}.ze`;
+          document.body.appendChild(element); // Required for this to work in FireFox
+          element.click();
+        }
       })
       .catch(error => swal('Error!', `Something went wrong!`, 'Error'));
   };
