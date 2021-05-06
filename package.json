@@ -11,7 +11,7 @@
     "prettier": "^1.14.3",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
-    "react-draft-wysiwyg": "^1.10.7",
+    "react-draft-wysiwyg": "^1.14.6",
     "react-scripts": "^3.0.1",
     "sweetalert2": "^7.28.10"
   },
