@@ -216,6 +216,8 @@ class ZEditor extends Component {
     let editorState = EditorState.createWithContent(convertFromRaw(JSON.parse(newEditorState)));
 
     this.setState({ editorState: editorState });
+    //to avoid empty file downloaded after immediate upload without modifications.
+    this.props.setDownloadState(convertToRaw(this.state.editorState.getCurrentContent()));
   };
 
   insertFN = (symbol, type, side) => {
