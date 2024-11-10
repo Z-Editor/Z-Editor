@@ -1,0 +1,17 @@
+.header {
+  width: 100%;
+  left: 0;
+  top: 0;
+  z-index: 15; /* Make sure it stays above the editor */
+  background: linear-gradient(150deg, #3366ff, #3333cc);
+  height: 40px;
+  width: 100%;
+  position: fixed;
+}
+
+.logo {
+  float: left;
+  font-size: 15px;
+  color: white;
+  margin: 10px;
+}

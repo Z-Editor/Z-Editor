@@ -1,0 +1,23 @@
+.header-button {
+  outline: 0;
+  cursor: pointer;
+  float: right;
+  margin: 1px 15px;
+  background: transparent;
+  border-radius: 20px;
+  border: 1px solid transparent;
+  font-weight: bold; 
+  font-size: 12px;
+  color: rgb(255, 255, 255);
+  width 150px;
+  padding: 10px;
+}
+
+.header-button:hover {
+  color: rgb(255, 255, 255);
+  border: 1px solid rgba(255, 255, 255, 0.51);
+}
+
+.header.active {
+  border: 1px solid rgba(255, 255, 255, 0.51);
+}
