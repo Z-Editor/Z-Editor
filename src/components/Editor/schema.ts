@@ -263,6 +263,30 @@ export const marks = {
       return codeDOM;
     },
   } as MarkSpec,
+
+  /// Superscript and Subscript marks.
+  superscript: {
+    parseDOM: [
+      {
+        tag: 'sup',
+        attrs: { level: 'sup' },
+      },
+    ],
+    toDOM: () => {
+      return ['sup', 0];
+    },
+  } as MarkSpec,
+  subscript: {
+    parseDOM: [
+      {
+        tag: 'sub',
+        attrs: { level: 'sub' },
+      },
+    ],
+    toDOM: () => {
+      return ['sub', 0];
+    },
+  } as MarkSpec,
 };
 
 /// This schema roughly corresponds to the document schema used by

@@ -9,7 +9,7 @@ import schemaHalf from '../../assets/half.svg';
 import schemaInverse from '../../assets/inverse.svg';
 import { schema } from '../Editor/schema';
 import { ToolButton } from '../ToolButton';
-import { toggleBold, toggleItalic } from './commands';
+import { toggleBold, toggleItalic, toggleSub, toggleSup } from './commands';
 
 function isBold(state: EditorState): boolean {
   return isMarkActive(state, schema.marks.strong);
@@ -17,6 +17,14 @@ function isBold(state: EditorState): boolean {
 
 function isItalic(state: EditorState): boolean {
   return isMarkActive(state, schema.marks.em);
+}
+
+function isSup(state: EditorState): boolean {
+  return isMarkActive(state, schema.marks.superscript);
+}
+
+function isSub(state: EditorState): boolean {
+  return isMarkActive(state, schema.marks.subscript);
 }
 
 // https://github.com/ProseMirror/prosemirror-example-setup/blob/afbc42a68803a57af3f29dd93c3c522c30ea3ed6/src/menu.js#L57-L61
@@ -130,6 +138,20 @@ const ToolsBar: ComponentType<ToolsBarProps> = ({ editorState, setEditorState })
         onClick={() => toggleItalic(editorState, (tr) => setEditorState(editorState.apply(tr)))}
       >
         I
+      </ToolButton>
+      <ToolButton
+        className="supsubscript"
+        isActive={isSup(editorState)}
+        onClick={() => toggleSup(editorState, (tr) => setEditorState(editorState.apply(tr)))}
+      >
+        X²
+      </ToolButton>
+      <ToolButton
+        className="supsubscript"
+        isActive={isSub(editorState)}
+        onClick={() => toggleSub(editorState, (tr) => setEditorState(editorState.apply(tr)))}
+      >
+        X₂
       </ToolButton>
       <span className="separator" />
       {schemaConfig.map((config) => (

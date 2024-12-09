@@ -21,3 +21,7 @@
   height: 25px;
   align-self: center;
 }
+
+.supsubscript {
+  font-weight: 600;
+}

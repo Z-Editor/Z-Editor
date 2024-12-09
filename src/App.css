@@ -1,6 +1,7 @@
 .App {
   font-family: 'Georgia', 'Cambria', 'Times New Roman', 'Times', 'serif';
   width: 100%;
+  display: flex;
 }
 
 /*.ProseMirrorContainer {*/
