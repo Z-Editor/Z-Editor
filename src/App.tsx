@@ -44,7 +44,7 @@ function App() {
   return (
     <div className="App">
       <Header editorState={editorState} setEditorState={setEditorState} />
-      <ToolsBar editorState={editorState} setEditorState={setEditorState} />
+      <ToolsBar editorState={editorState} setEditorState={setEditorState} editorRef={editorRef} />
       <Editor className="page" ref={editorRef} state={editorState} onChange={handleEditorChange} />
       <SidePanel editorState={editorState} setEditorState={setEditorState} editorRef={editorRef} />
     </div>

@@ -14,4 +14,31 @@ const toggleItalic = toggleMarkCommand(schema.marks.em);
 const toggleSup = toggleMarkCommand(schema.marks.superscript);
 const toggleSub = toggleMarkCommand(schema.marks.subscript);
 
-export { toggleBold, toggleItalic, toggleSub, toggleSup };
+function changeFontSize(size: string) {
+  return (state: EditorState, dispatch?: (tr: Transaction) => void): boolean => {
+    const { schema, selection } = state;
+    const { from, to, empty } = selection;
+    const markType: MarkType | undefined = schema.marks.fontSize;
+
+    if (markType && dispatch) {
+      const tr = state.tr;
+
+      if (empty) {
+        // If the selection is collapsed, add the mark to the cursor position
+        const storedMarks = state.storedMarks ?? [];
+        const newMark = markType.create({ size });
+
+        // Update stored marks to include the font size
+        tr.setStoredMarks([...storedMarks.filter((mark) => mark.type !== markType), newMark]);
+      } else {
+        // If text is selected, apply the mark to the range
+        tr.addMark(from, to, markType.create({ size }));
+      }
+
+      dispatch(tr.scrollIntoView());
+    }
+    return true;
+  };
+}
+
+export { changeFontSize, toggleBold, toggleItalic, toggleSub, toggleSup };

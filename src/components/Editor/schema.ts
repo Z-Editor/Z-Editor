@@ -1,4 +1,4 @@
-import { DOMOutputSpec, MarkSpec, NodeSpec, Schema } from 'prosemirror-model';
+import { DOMOutputSpec, Mark, MarkSpec, NodeSpec, Schema } from 'prosemirror-model';
 
 const pDOM: DOMOutputSpec = ['p', 0],
   blockquoteDOM: DOMOutputSpec = ['blockquote', 0],
@@ -286,6 +286,16 @@ export const marks = {
     toDOM: () => {
       return ['sub', 0];
     },
+  } as MarkSpec,
+  fontSize: {
+    attrs: { size: { default: '16px' } },
+    parseDOM: [
+      {
+        style: 'font-size',
+        getAttrs: (value: string) => ({ size: value }),
+      },
+    ],
+    toDOM: (mark: Mark) => ['span', { style: `font-size: ${mark.attrs.size}` }, 0],
   } as MarkSpec,
 };
 

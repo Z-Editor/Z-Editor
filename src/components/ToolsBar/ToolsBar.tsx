@@ -7,9 +7,10 @@ import { ComponentType } from 'react';
 import schemaFull from '../../assets/full.svg';
 import schemaHalf from '../../assets/half.svg';
 import schemaInverse from '../../assets/inverse.svg';
+import { Handle } from '../Editor/Editor';
 import { schema } from '../Editor/schema';
 import { ToolButton } from '../ToolButton';
-import { toggleBold, toggleItalic, toggleSub, toggleSup } from './commands';
+import { changeFontSize, toggleBold, toggleItalic, toggleSub, toggleSup } from './commands';
 
 function isBold(state: EditorState): boolean {
   return isMarkActive(state, schema.marks.strong);
@@ -27,10 +28,37 @@ function isSub(state: EditorState): boolean {
   return isMarkActive(state, schema.marks.subscript);
 }
 
+function deriveFontSize(state: EditorState): string {
+  console.log(getCurrentFontSize(state));
+  return getCurrentFontSize(state) ?? '16px';
+}
+
 // https://github.com/ProseMirror/prosemirror-example-setup/blob/afbc42a68803a57af3f29dd93c3c522c30ea3ed6/src/menu.js#L57-L61
 function isMarkActive(state: EditorState, mark: MarkType): boolean {
   const { from, $from, to, empty } = state.selection;
   return empty ? !!mark.isInSet(state.storedMarks ?? $from.marks()) : state.doc.rangeHasMark(from, to, mark);
+}
+
+function getCurrentFontSize(state: EditorState): string | null {
+  const { from, to } = state.selection;
+  const markType = state.schema.marks.fontSize;
+  let updatedFrom = from;
+
+  if (from - to === 0 && from !== 0) {
+    updatedFrom = from - 1;
+  }
+
+  let fontSize: string | null = null;
+  state.doc.nodesBetween(updatedFrom, to, (node) => {
+    if (node.marks) {
+      const fontSizeMark = node.marks.find((mark) => mark.type === markType);
+      if (fontSizeMark) {
+        fontSize = String(fontSizeMark.attrs?.size);
+      }
+    }
+  });
+
+  return fontSize;
 }
 
 const schemaConfig = [
@@ -117,12 +145,22 @@ const schemaConfig = [
   },
 ];
 
+const fontSizes = Array.from({ length: 13 }, (_, i) => 12 + i);
+
 interface ToolsBarProps {
   editorState: EditorState;
   setEditorState: (editorState: EditorState) => void;
+  editorRef: React.RefObject<Handle>;
 }
 
-const ToolsBar: ComponentType<ToolsBarProps> = ({ editorState, setEditorState }) => {
+const ToolsBar: ComponentType<ToolsBarProps> = ({ editorState, setEditorState, editorRef }) => {
+  const handleFontSizeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const size = event.target.value;
+
+    changeFontSize(size)(editorState, (tr) => setEditorState(editorState.apply(tr)));
+    editorRef.current?.view?.focus();
+  };
+
   return (
     <div className="menu">
       <ToolButton
@@ -166,6 +204,14 @@ const ToolsBar: ComponentType<ToolsBarProps> = ({ editorState, setEditorState })
           </div>
         </ToolButton>
       ))}
+      <span className="separator" />
+      <select className="select-box" onChange={handleFontSizeChange} value={deriveFontSize(editorState)}>
+        {fontSizes.map((size) => (
+          <option key={size} value={`${size}px`}>
+            {size}
+          </option>
+        ))}
+      </select>
     </div>
   );
 };
