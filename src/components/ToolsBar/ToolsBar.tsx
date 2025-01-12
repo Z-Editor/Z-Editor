@@ -10,7 +10,7 @@ import schemaInverse from '../../assets/inverse.svg';
 import { Handle } from '../Editor/Editor';
 import { schema } from '../Editor/schema';
 import { ToolButton } from '../ToolButton';
-import { changeFontSize, toggleBold, toggleItalic, toggleSub, toggleSup } from './commands';
+import { changeFontSize, changeFontType, toggleBold, toggleItalic, toggleSub, toggleSup } from './commands';
 
 function isBold(state: EditorState): boolean {
   return isMarkActive(state, schema.marks.strong);
@@ -31,6 +31,11 @@ function isSub(state: EditorState): boolean {
 function deriveFontSize(state: EditorState): string {
   console.log(getCurrentFontSize(state));
   return getCurrentFontSize(state) ?? '16px';
+}
+
+function deriveFontType(state: EditorState): string {
+  console.log(getCurrentFontType(state));
+  return getCurrentFontType(state) ?? 'Arial';
 }
 
 // https://github.com/ProseMirror/prosemirror-example-setup/blob/afbc42a68803a57af3f29dd93c3c522c30ea3ed6/src/menu.js#L57-L61
@@ -54,6 +59,28 @@ function getCurrentFontSize(state: EditorState): string | null {
       const fontSizeMark = node.marks.find((mark) => mark.type === markType);
       if (fontSizeMark) {
         fontSize = String(fontSizeMark.attrs?.size);
+      }
+    }
+  });
+
+  return fontSize;
+}
+
+function getCurrentFontType(state: EditorState): string | null {
+  const { from, to } = state.selection;
+  const markType = state.schema.marks.fontType;
+  let updatedFrom = from;
+
+  if (from - to === 0 && from !== 0) {
+    updatedFrom = from - 1;
+  }
+
+  let fontSize: string | null = null;
+  state.doc.nodesBetween(updatedFrom, to, (node) => {
+    if (node.marks) {
+      const fontTypeMark = node.marks.find((mark) => mark.type === markType);
+      if (fontTypeMark) {
+        fontSize = String(fontTypeMark.attrs?.type);
       }
     }
   });
@@ -156,8 +183,13 @@ interface ToolsBarProps {
 const ToolsBar: ComponentType<ToolsBarProps> = ({ editorState, setEditorState, editorRef }) => {
   const handleFontSizeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const size = event.target.value;
-
     changeFontSize(size)(editorState, (tr) => setEditorState(editorState.apply(tr)));
+    editorRef.current?.view?.focus();
+  };
+
+  const handleFontTypeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const type = event.target.value;
+    changeFontType(type)(editorState, (tr) => setEditorState(editorState.apply(tr)));
     editorRef.current?.view?.focus();
   };
 
@@ -211,6 +243,12 @@ const ToolsBar: ComponentType<ToolsBarProps> = ({ editorState, setEditorState, e
             {size}
           </option>
         ))}
+      </select>
+      <select className="select-box" onChange={handleFontTypeChange} value={deriveFontType(editorState)}>
+        <option value="Arial">Arial</option>
+        <option value="Times New Roman">Times New Roman</option>
+        <option value="Courier New">Courier New</option>
+        <option value="Verdana">Verdana</option>
       </select>
     </div>
   );

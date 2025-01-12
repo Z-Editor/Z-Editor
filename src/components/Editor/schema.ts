@@ -297,6 +297,16 @@ export const marks = {
     ],
     toDOM: (mark: Mark) => ['span', { style: `font-size: ${mark.attrs.size}` }, 0],
   } as MarkSpec,
+  fontType: {
+    attrs: { type: { default: 'Arial' } },
+    parseDOM: [
+      {
+        style: 'font-family',
+        getAttrs: (value) => ({ type: value }),
+      },
+    ],
+    toDOM: (mark) => ['span', { style: `font-family: ${mark.attrs.type}` }],
+  } as MarkSpec,
 };
 
 /// This schema roughly corresponds to the document schema used by

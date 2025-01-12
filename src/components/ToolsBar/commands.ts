@@ -14,11 +14,37 @@ const toggleItalic = toggleMarkCommand(schema.marks.em);
 const toggleSup = toggleMarkCommand(schema.marks.superscript);
 const toggleSub = toggleMarkCommand(schema.marks.subscript);
 
-function changeFontSize(size: string) {
+interface FontSizeValue {
+  size: string;
+}
+interface FontTypeValue {
+  type: string;
+}
+type MarkKeyValuePair = FontSizeValue | FontTypeValue;
+
+function isFontSizeValue(value: MarkKeyValuePair): value is FontSizeValue {
+  return (value as FontSizeValue).size !== undefined;
+}
+
+// Type guard for FontTypeValue
+function isFontTypeValue(value: MarkKeyValuePair): value is FontTypeValue {
+  return (value as FontTypeValue).type !== undefined;
+}
+
+const changeFontAttribute = (value: MarkKeyValuePair) => {
   return (state: EditorState, dispatch?: (tr: Transaction) => void): boolean => {
     const { schema, selection } = state;
     const { from, to, empty } = selection;
-    const markType: MarkType | undefined = schema.marks.fontSize;
+
+    let markType: MarkType | null = null;
+
+    if (isFontSizeValue(value)) {
+      markType = schema.marks.fontSize;
+    } else if (isFontTypeValue(value)) {
+      markType = schema.marks.fontType;
+    } else {
+      throw new Error('Unknown mark type value pair.');
+    }
 
     if (markType && dispatch) {
       const tr = state.tr;
@@ -26,19 +52,27 @@ function changeFontSize(size: string) {
       if (empty) {
         // If the selection is collapsed, add the mark to the cursor position
         const storedMarks = state.storedMarks ?? [];
-        const newMark = markType.create({ size });
+        const newMark = markType.create(value);
 
-        // Update stored marks to include the font size
+        // Update stored marks to include the font type
         tr.setStoredMarks([...storedMarks.filter((mark) => mark.type !== markType), newMark]);
       } else {
         // If text is selected, apply the mark to the range
-        tr.addMark(from, to, markType.create({ size }));
+        tr.addMark(from, to, markType.create(value));
       }
 
       dispatch(tr.scrollIntoView());
     }
     return true;
   };
+};
+
+const changeFontType = (type: string) => {
+  return changeFontAttribute({ type });
+};
+
+function changeFontSize(size: string) {
+  return changeFontAttribute({ size });
 }
 
-export { changeFontSize, toggleBold, toggleItalic, toggleSub, toggleSup };
+export { changeFontSize, changeFontType, toggleBold, toggleItalic, toggleSub, toggleSup };
