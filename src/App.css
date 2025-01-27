@@ -69,7 +69,8 @@ div .schema_roof {
 
 .page {
   width: 210mm;
-  height:297mm;
+  min-height:297mm;
+  height: auto;
   padding: 20mm;
   margin: 10mm auto;
   margin-top: 150px;
@@ -77,6 +78,7 @@ div .schema_roof {
   border-radius: 5px;
   background: white;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 }
 
 .schema_left_bar {
