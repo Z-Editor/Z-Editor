@@ -194,7 +194,7 @@ const ToolsBar: ComponentType<ToolsBarProps> = ({ editorState, setEditorState, e
   };
 
   return (
-    <div className="menu">
+    <div className="tools-bar">
       <ToolButton
         className="bold"
         isActive={isBold(editorState)}

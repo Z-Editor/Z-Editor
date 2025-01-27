@@ -69,7 +69,7 @@ div .schema_roof {
 
 .page {
   width: 210mm;
-  min-height: 297mm;
+  height:297mm;
   padding: 20mm;
   margin: 10mm auto;
   margin-top: 150px;

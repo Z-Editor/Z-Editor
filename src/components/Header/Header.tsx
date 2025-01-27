@@ -66,8 +66,12 @@ const Header: ComponentType<HeaderProps> = ({ editorState, setEditorState }) => 
   return (
     <div className="header">
       <div className="logo">Z-Editor</div>
-
-      <HeaderButton text="Print" />
+      <HeaderButton
+        text="Print"
+        onClick={() => {
+          window.print();
+        }}
+      />
       <HeaderButton text="Download" onClick={handleDownload} />
       <input
         ref={fileInputRef}

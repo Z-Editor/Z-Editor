@@ -1,18 +1,13 @@
-.menu-bar {
-  margin-bottom: 7px;
-  padding-left: 2px;
-}
-
-.menu {
+.tools-bar {
   display: flex;
   width: 100%;
   background-color: #f4f4f4;
   padding: 10px;
   border-bottom: 1px solid #ccc;
-  position: fixed; /* Stay fixed at the top */
+  position: fixed;
   top: 40px;
   left: 0;
-  z-index: 10; /* Make sure it stays above the editor */
+  z-index: 10;
 }
 
 .separator {
