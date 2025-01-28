@@ -66,6 +66,14 @@ const Header: ComponentType<HeaderProps> = ({ editorState, setEditorState }) => 
   return (
     <div className="header">
       <div className="logo">Z-Editor</div>
+      <a
+        className="github-button"
+        href="https://github.com/Z-Editor/Z-Editor"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        View on Github
+      </a>
       <HeaderButton
         text="Print"
         onClick={() => {
