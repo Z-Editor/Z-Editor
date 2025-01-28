@@ -12,7 +12,7 @@ Try out the **[Demo](https://z-editor.github.io/)**.
   - [Build](#build)
   - [Start](#start)
 - [Contributing](#contributing)
-- [Acknowledgments](#acknowledgments)
+- [Future plans](#future-plans)
 - [License](#license)
 
 ## Features
@@ -25,9 +25,9 @@ Try out the **[Demo](https://z-editor.github.io/)**.
     - Functions
     - Sequences
     - Bags
-* Download Z-Editor work as a PDF or a ZE file.
-* Import a ZE file to the editor and continue work.
-* Iconic schemas were created using [draft.js](https://draftjs.org/) blocks.
+* Download Z-Editor work as a PDF or a `ze` file.
+* Import a `ze` file to the editor and continue work.
+* Iconic schemas were created using [Prosemirror](https://prosemirror.net/) blocks.
 * Rich Text Utilities.
 
 ## Getting started
@@ -52,7 +52,7 @@ yarn run build
 
 ### Start
 ```
-yarn run start
+yarn run dev
 ``` 
 
 ## Contributing
@@ -60,9 +60,10 @@ yarn run start
 - We would greatly appreciate any [contribution](CONTRIBUTING.md) you make. 
 - If you have ideas for more functionality or recipes that should be on this project, [let us know](https://github.com/Z-Editor/Z-Editor/issues).
 
-## Acknowledgments
-
-- Original repo is from [Open-SL](https://github.com/Open-SL).
+## Future plans
+- Add unit tests.
+- Add page breaker lines.
+- H1, H1, H3 and other types of font format support.
 
 ## License
 Z-Editor is under the MIT license. See the [License](LICENSE) for more information.
