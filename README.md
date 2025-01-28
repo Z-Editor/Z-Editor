@@ -25,8 +25,8 @@ Try out the **[Demo](https://z-editor.github.io/)**.
     - Functions
     - Sequences
     - Bags
-* Download Z-Editor work as a PDF or a `ze` file.
-* Import a `ze` file to the editor and continue work.
+* Download Z-Editor work as a PDF or a `z` file.
+* Import a `z` file to the editor and continue work.
 * Iconic schemas were created using [Prosemirror](https://prosemirror.net/) blocks.
 * Rich Text Utilities.
 
