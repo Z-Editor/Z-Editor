@@ -3,6 +3,5 @@ import { defineConfig } from 'vite';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/zedv2',
   plugins: [react()],
 });

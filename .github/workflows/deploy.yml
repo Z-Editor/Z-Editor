@@ -3,7 +3,7 @@ name: Build and Deploy React Project
 on:
   push:
     branches:
-      - v2 # Trigger on pushes to the v2 branch
+      - master
 
 jobs:
   build:
@@ -14,26 +14,26 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
-          ref: v2 # Checkout the specific v2 branch
+          ref: master
 
       # Set up Node.js for building the React app
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: "20" # Use appropriate Node.js version for your project
+          node-version: "20"
 
       # Install dependencies and build the project
       - name: Install dependencies and build
         run: |
           corepack enable
           yarn install
-          yarn run build  # Build command for React (adjust if different)
+          yarn run build
 
       # Checkout the target repository to push the build
       - name: Checkout target repo
         uses: actions/checkout@v2
         with:
-          repository: Open-SL/zedv2 # Specify target repository
+          repository: Z-Editor/z-editor.github.io
           token: ${{ secrets.Z_ACCESS_TOKEN }} # Use a personal access token with repo permissions
           ref: main # Target branch
           path: target-repo
@@ -42,7 +42,7 @@ jobs:
       - name: Copy build output
         run: |
           # rm -rf target-repo/*
-          cp -r dist/* target-repo/  # Assumes your build output is in the 'build' directory
+          cp -r dist/* target-repo/
 
       # Commit and push changes to the target repository
       - name: Commit and push changes
@@ -51,5 +51,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add .
-          git commit -m "Deploy React app from v2 branch"
+          git commit -m "Deploy React app from the master branch"
           git push origin main
