@@ -1,0 +1,27 @@
+.tool-button {
+  font-size: 14px;
+  cursor: pointer;
+  width: 28px;
+  height: 28px;
+  margin-right: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  box-shadow: none;
+  border: none;
+  background-color: #f4f4f4;
+  /*border: 1px solid #ccc;*/
+}
+
+.tool-button:hover {
+  color: blue;
+}
+
+.tool-button.bold {
+  font-weight: 700;
+}
+
+.tool-button.italic {
+  font-style: italic;
+}
