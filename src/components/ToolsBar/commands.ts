@@ -17,16 +17,17 @@ const toggleSub = toggleMarkCommand(schema.marks.subscript);
 interface FontSizeValue {
   size: string;
 }
+
 interface FontTypeValue {
   type: string;
 }
+
 type MarkKeyValuePair = FontSizeValue | FontTypeValue;
 
 function isFontSizeValue(value: MarkKeyValuePair): value is FontSizeValue {
   return (value as FontSizeValue).size !== undefined;
 }
 
-// Type guard for FontTypeValue
 function isFontTypeValue(value: MarkKeyValuePair): value is FontTypeValue {
   return (value as FontTypeValue).type !== undefined;
 }

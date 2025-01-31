@@ -37,7 +37,6 @@ function App() {
   const editorRef = useRef<Handle>(null);
 
   const handleEditorChange = (newState: EditorState) => {
-    console.log(newState.toJSON());
     setEditorState(newState);
   };
 
