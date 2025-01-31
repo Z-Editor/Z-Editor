@@ -1,5 +1,6 @@
 import './ToolsBar.css';
 
+import { setBlockType } from 'prosemirror-commands';
 import { MarkType } from 'prosemirror-model';
 import { EditorState, TextSelection } from 'prosemirror-state';
 import { ComponentType } from 'react';
@@ -11,32 +12,6 @@ import { Handle } from '../Editor/Editor';
 import { schema } from '../Editor/schema';
 import { ToolButton } from '../ToolButton';
 import { changeFontSize, changeFontType, toggleBold, toggleItalic, toggleSub, toggleSup } from './commands';
-
-function isBold(state: EditorState): boolean {
-  return isMarkActive(state, schema.marks.strong);
-}
-
-function isItalic(state: EditorState): boolean {
-  return isMarkActive(state, schema.marks.em);
-}
-
-function isSup(state: EditorState): boolean {
-  return isMarkActive(state, schema.marks.superscript);
-}
-
-function isSub(state: EditorState): boolean {
-  return isMarkActive(state, schema.marks.subscript);
-}
-
-function deriveFontSize(state: EditorState): string {
-  console.log(getCurrentFontSize(state));
-  return getCurrentFontSize(state) ?? '16px';
-}
-
-function deriveFontType(state: EditorState): string {
-  console.log(getCurrentFontType(state));
-  return getCurrentFontType(state) ?? 'Arial';
-}
 
 // https://github.com/ProseMirror/prosemirror-example-setup/blob/afbc42a68803a57af3f29dd93c3c522c30ea3ed6/src/menu.js#L57-L61
 function isMarkActive(state: EditorState, mark: MarkType): boolean {
@@ -86,6 +61,44 @@ function getCurrentFontType(state: EditorState): string | null {
   });
 
   return fontSize;
+}
+
+function getCurrentFontStyle(state: EditorState): string | null {
+  const { $from } = state.selection;
+  const node = $from.node();
+  if (node.type.name === 'heading' && typeof node.attrs?.level === 'string') {
+    return node.attrs.level.toString();
+  } else {
+    return 'normal'; // Default to normal text (paragraph)
+  }
+}
+
+function isBold(state: EditorState): boolean {
+  return isMarkActive(state, schema.marks.strong);
+}
+
+function isItalic(state: EditorState): boolean {
+  return isMarkActive(state, schema.marks.em);
+}
+
+function isSup(state: EditorState): boolean {
+  return isMarkActive(state, schema.marks.superscript);
+}
+
+function isSub(state: EditorState): boolean {
+  return isMarkActive(state, schema.marks.subscript);
+}
+
+function deriveFontSize(state: EditorState): string {
+  return getCurrentFontSize(state) ?? '16px';
+}
+
+function deriveFontType(state: EditorState): string {
+  return getCurrentFontType(state) ?? 'Arial';
+}
+
+function deriveFontStyle(state: EditorState): string {
+  return getCurrentFontStyle(state) ?? 'normal';
 }
 
 const schemaConfig = [
@@ -193,6 +206,17 @@ const ToolsBar: ComponentType<ToolsBarProps> = ({ editorState, setEditorState, e
     editorRef.current?.view?.focus();
   };
 
+  const toggleHeading = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const level = event.target.value;
+    const { schema } = editorState;
+
+    const headingType = schema.nodes.heading;
+    if (!headingType) return;
+
+    setBlockType(headingType, { level })(editorState, (tr) => setEditorState(editorState.apply(tr)));
+    editorRef.current?.view?.focus();
+  };
+
   return (
     <div className="tools-bar">
       <ToolButton
@@ -249,6 +273,14 @@ const ToolsBar: ComponentType<ToolsBarProps> = ({ editorState, setEditorState, e
         <option value="Times New Roman">Times New Roman</option>
         <option value="Courier New">Courier New</option>
         <option value="Verdana">Verdana</option>
+      </select>
+      <select className="select-box" onChange={toggleHeading} value={deriveFontStyle(editorState)}>
+        <option value="1">H1</option>
+        <option value="2">H2</option>
+        <option value="3">H3</option>
+        <option value="4">H4</option>
+        <option value="5">H5</option>
+        <option value="normal">Normal</option>
       </select>
     </div>
   );

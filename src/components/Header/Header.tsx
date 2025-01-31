@@ -21,7 +21,6 @@ const Header: ComponentType<HeaderProps> = ({ editorState, setEditorState }) => 
         const text = await file.text();
         const savedState: unknown = JSON.parse(text);
 
-        console.log(savedState);
         // Reconstruct the EditorState from saved JSON data
         const newState = EditorState.create({
           schema,
