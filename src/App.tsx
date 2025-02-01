@@ -1,7 +1,7 @@
 import 'prosemirror-view/style/prosemirror.css';
 import './App.css';
 
-import { baseKeymap } from 'prosemirror-commands';
+import { baseKeymap, splitBlockKeepMarks } from 'prosemirror-commands';
 import { history, redo, undo } from 'prosemirror-history';
 import { keymap } from 'prosemirror-keymap';
 import { EditorState } from 'prosemirror-state';
@@ -22,6 +22,7 @@ function App() {
         history(),
         keymap({
           ...baseKeymap,
+          Enter: splitBlockKeepMarks,
           'Mod-z': undo,
           'Mod-y': redo,
           'Mod-Shift-z': redo,
