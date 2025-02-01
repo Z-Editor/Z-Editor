@@ -66,7 +66,7 @@ function getCurrentFontType(state: EditorState): string | null {
 function getCurrentFontStyle(state: EditorState): string | null {
   const { $from } = state.selection;
   const node = $from.node();
-  if (node.type.name === 'heading' && typeof node.attrs?.level === 'string') {
+  if (node.type.name === 'heading' && typeof node.attrs?.level === 'number') {
     return node.attrs.level.toString();
   } else {
     return 'normal'; // Default to normal text (paragraph)
@@ -213,7 +213,13 @@ const ToolsBar: ComponentType<ToolsBarProps> = ({ editorState, setEditorState, e
     const headingType = schema.nodes.heading;
     if (!headingType) return;
 
-    setBlockType(headingType, { level })(editorState, (tr) => setEditorState(editorState.apply(tr)));
+    if (level === 'normal') {
+      setBlockType(headingType, { level: null })(editorState, (tr) => setEditorState(editorState.apply(tr)));
+      editorRef.current?.view?.focus();
+      return;
+    }
+
+    setBlockType(headingType, { level: Number(level) })(editorState, (tr) => setEditorState(editorState.apply(tr)));
     editorRef.current?.view?.focus();
   };
 
