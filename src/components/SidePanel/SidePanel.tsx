@@ -6,7 +6,7 @@ import { ComponentType, useState } from 'react';
 import { Handle } from '../Editor/Editor';
 import { sideBarSymbols } from './constants';
 
-interface SidePanelProps {
+export interface SidePanelProps {
   editorState: EditorState;
   setEditorState: (editorState: EditorState) => void;
   editorRef: React.RefObject<Handle>;
@@ -43,9 +43,9 @@ const SidePanel: ComponentType<SidePanelProps> = ({ editorState, setEditorState,
           </button>
 
           {sideBarSymbols.map((section, index) => (
-            <div className="symbol-section" key={index}>
+            <div className="symbol-section" data-testid="symbol-section" key={index}>
               {section.data.map((symbol, index) => (
-                <div className="symbol" key={index} onClick={() => handleSymbolClick(symbol.symbol)}>
+                <div className="symbol" data-testid="symbol" key={index} onClick={() => handleSymbolClick(symbol.symbol)}>
                   {symbol.symbol}
                 </div>
               ))}

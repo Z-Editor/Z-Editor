@@ -61,9 +61,8 @@ yarn run dev
 - If you have ideas for more functionality or recipes that should be on this project, [let us know](https://github.com/Z-Editor/Z-Editor/issues).
 
 ## Future plans
-- Add unit tests.
 - Add page breaker lines.
-- H1, H1, H3 and other types of font format support.
+- Improve unit tests.
 
 ## License
 Z-Editor is under the MIT license. See the [License](LICENSE) for more information.

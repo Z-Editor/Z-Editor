@@ -28,3 +28,6 @@ dist-ssr
 
 #pnp
 .pnp.*
+
+# coverage
+coverage/

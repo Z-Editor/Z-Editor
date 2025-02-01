@@ -23,10 +23,11 @@ jobs:
           node-version: "20"
 
       # Install dependencies and build the project
-      - name: Install dependencies and build
+      - name: Install dependencies, test and build
         run: |
           corepack enable
           yarn install
+          yarn test
           yarn run build
 
       # Checkout the target repository to push the build

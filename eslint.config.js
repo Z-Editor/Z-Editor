@@ -41,6 +41,16 @@ export default tseslint
         ...react.configs['jsx-runtime'].rules,
         'react/prop-types': 'off',
       },
+      overrides: [
+        {
+          files: ['src/**/*.spec.ts', 'src/**/*.spec.tsx'],
+          rules: {
+            '@typescript-eslint/no-unsafe-assignment': 'off',
+            '@typescript-eslint/no-unsafe-member-access': 'off',
+            '@typescript-eslint/no-unsafe-argument': 'off',
+          },
+        },
+      ],
     },
   )
   .concat(eslintPluginPrettier);
