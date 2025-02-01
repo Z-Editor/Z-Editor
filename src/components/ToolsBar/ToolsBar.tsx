@@ -186,6 +186,14 @@ const schemaConfig = [
 ];
 
 const fontSizes = Array.from({ length: 13 }, (_, i) => 12 + i);
+const fontStyles = [
+  { value: 'normal', label: 'Normal' },
+  { value: '1', label: 'H1' },
+  { value: '2', label: 'H2' },
+  { value: '3', label: 'H3' },
+  { value: '4', label: 'H4' },
+  { value: '5', label: 'H5' },
+];
 
 interface ToolsBarProps {
   editorState: EditorState;
@@ -281,12 +289,11 @@ const ToolsBar: ComponentType<ToolsBarProps> = ({ editorState, setEditorState, e
         <option value="Verdana">Verdana</option>
       </select>
       <select className="select-box" onChange={toggleHeading} value={deriveFontStyle(editorState)}>
-        <option value="1">H1</option>
-        <option value="2">H2</option>
-        <option value="3">H3</option>
-        <option value="4">H4</option>
-        <option value="5">H5</option>
-        <option value="normal">Normal</option>
+        {fontStyles.map(({ value, label }) => (
+          <option key={value} value={value}>
+            {label}
+          </option>
+        ))}
       </select>
     </div>
   );
