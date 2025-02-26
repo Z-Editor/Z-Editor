@@ -2,9 +2,11 @@ import './Header.css';
 
 import { EditorState } from 'prosemirror-state';
 import { ComponentType, useCallback, useRef } from 'react';
+import html2canvas from 'html2canvas';
 
 import { schema } from '../Editor';
 import { HeaderButton } from '../HeaderButton';
+import { DropDownMenu } from '../DropDownMenu';
 
 interface HeaderProps {
   editorState: EditorState;
@@ -62,6 +64,34 @@ const Header: ComponentType<HeaderProps> = ({ editorState, setEditorState }) => 
     URL.revokeObjectURL(url);
   };
 
+  const exportAsPNG = async () => {
+    const contentContainer = document.getElementById('content-container');
+    if (!contentContainer) {
+      return;
+    }
+
+    const canvas = await html2canvas(contentContainer, {
+      backgroundColor: '#ffffff',
+      scale: 2,
+      useCORS: true,
+    });
+
+    const dataUrl = canvas.toDataURL('image/png');
+
+    const link = document.createElement('a');
+
+    const fileName = window.prompt('Enter the name for the PNG file', 'zeditor_export.png');
+    if (!fileName) {
+      return;
+    }
+
+    link.download = fileName.endsWith('.png') ? fileName : `${fileName}.png`;
+    link.href = dataUrl;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <div className="header">
       <div className="logo">Z-Editor</div>
@@ -90,6 +120,19 @@ const Header: ComponentType<HeaderProps> = ({ editorState, setEditorState }) => 
             await handleFileChange(e);
           })();
         }}
+      />
+      <DropDownMenu
+        text="Export"
+        options={[
+          {
+            label: '- PNG',
+            onClick: () => {
+              void (async () => {
+                await exportAsPNG();
+              })();
+            },
+          },
+        ]}
       />
       <HeaderButton text="Import" onClick={triggerUpload} />
     </div>
