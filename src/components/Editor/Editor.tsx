@@ -64,7 +64,7 @@ export default forwardRef<Handle, Props>(function ProseMirror(props, ref): JSX.E
       return viewRef.current;
     },
   }));
-  return <div ref={root} style={props.style} className={props.className} />;
+  return <div id="content-container" ref={root} style={props.style} className={props.className} />;
 
   function buildProps(props: Partial<Props>): Partial<DirectEditorProps> {
     return {
