@@ -5325,9 +5325,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^5.4.1":
-  version: 5.4.14
-  resolution: "vite@npm:5.4.14"
+"vite@npm:^5.4.15":
+  version: 5.4.15
+  resolution: "vite@npm:5.4.15"
   dependencies:
     esbuild: "npm:^0.21.3"
     fsevents: "npm:~2.3.3"
@@ -5364,7 +5364,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 10c0/8842933bd70ca6a98489a0bb9c8464bec373de00f9a97c8c7a4e64b24d15c88bfaa8c1acb38a68c3e5eb49072ffbccb146842c2d4edcdd036a9802964cffe3d1
+  checksum: 10c0/f8a4893bf9d57fe3ded6dc0a2278e8ded707fc9cf38d5a3255fe3caaeea41c52f29bf4deb5e85c9e8dbc8848e9046a7306727ca3fb7b67847d75ee2f2afda5e5
   languageName: node
   linkType: hard
 
@@ -5705,7 +5705,7 @@ __metadata:
     react-dom: "npm:^18.3.1"
     typescript: "npm:^5.5.3"
     typescript-eslint: "npm:^8.0.1"
-    vite: "npm:^5.4.1"
+    vite: "npm:^5.4.15"
     vitest: "npm:^3.0.4"
     vitest-browser-react: "npm:^0.0.4"
   languageName: unknown
