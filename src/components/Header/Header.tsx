@@ -4,6 +4,7 @@ import html2canvas from 'html2canvas';
 import { EditorState } from 'prosemirror-state';
 import { ComponentType, useCallback, useRef } from 'react';
 
+import { track } from '../../analytics';
 import { DropDownMenu } from '../DropDownMenu';
 import { schema } from '../Editor';
 
@@ -26,6 +27,7 @@ const Header: ComponentType<HeaderProps> = ({ editorState, setEditorState, docNa
     // Chrome uses document.title as the default "Save as PDF" filename.
     const prev = document.title;
     document.title = sanitizeBase(docName, 'document');
+    track('file_download_pdf');
     window.print();
     document.title = prev;
   }, [docName]);
@@ -45,6 +47,7 @@ const Header: ComponentType<HeaderProps> = ({ editorState, setEditorState, docNa
 
         setEditorState(newState);
         setDocName(file.name.replace(/\.z$/i, ''));
+        track('file_import');
       }
     },
     [editorState, setEditorState, setDocName],
@@ -68,6 +71,7 @@ const Header: ComponentType<HeaderProps> = ({ editorState, setEditorState, docNa
     document.body.removeChild(link);
 
     URL.revokeObjectURL(url);
+    track('file_download');
   };
 
   const exportAsPNG = async () => {
@@ -90,6 +94,7 @@ const Header: ComponentType<HeaderProps> = ({ editorState, setEditorState, docNa
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+    track('file_export_png');
   };
 
   return (
@@ -126,7 +131,13 @@ const Header: ComponentType<HeaderProps> = ({ editorState, setEditorState, docNa
                 })();
               },
             },
-            { label: 'Print', onClick: () => window.print() },
+            {
+              label: 'Print',
+              onClick: () => {
+                track('file_print');
+                window.print();
+              },
+            },
           ]}
         />
         <input

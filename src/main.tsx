@@ -1,4 +1,5 @@
 import './index.css';
+import './analytics';
 
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';

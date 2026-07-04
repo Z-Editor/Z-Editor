@@ -6,6 +6,7 @@ import { MarkType } from 'prosemirror-model';
 import { EditorState, TextSelection } from 'prosemirror-state';
 import { ComponentType } from 'react';
 
+import { track } from '../../analytics';
 import schemaFull from '../../assets/full.svg';
 import schemaHalf from '../../assets/half.svg';
 import schemaInverse from '../../assets/inverse.svg';
@@ -205,18 +206,21 @@ interface ToolsBarProps {
 const ToolsBar: ComponentType<ToolsBarProps> = ({ editorState, setEditorState, editorRef }) => {
   const handleFontSizeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const size = event.target.value;
+    track('format_text', { format: 'font_size', value: size });
     changeFontSize(size)(editorState, (tr) => setEditorState(editorState.apply(tr)));
     editorRef.current?.view?.focus();
   };
 
   const handleFontTypeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const type = event.target.value;
+    track('format_text', { format: 'font_type', value: type });
     changeFontType(type)(editorState, (tr) => setEditorState(editorState.apply(tr)));
     editorRef.current?.view?.focus();
   };
 
   const toggleHeading = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const level = event.target.value;
+    track('format_text', { format: 'heading', value: level });
     const { schema } = editorState;
 
     const headingType = schema.nodes.heading;
@@ -239,6 +243,7 @@ const ToolsBar: ComponentType<ToolsBarProps> = ({ editorState, setEditorState, e
         title="Undo"
         isActive={false}
         onClick={() => {
+          track('history', { action: 'undo' });
           undo(editorState, (tr) => setEditorState(editorState.apply(tr)));
           editorRef.current?.view?.focus();
         }}
@@ -250,6 +255,7 @@ const ToolsBar: ComponentType<ToolsBarProps> = ({ editorState, setEditorState, e
         title="Redo"
         isActive={false}
         onClick={() => {
+          track('history', { action: 'redo' });
           redo(editorState, (tr) => setEditorState(editorState.apply(tr)));
           editorRef.current?.view?.focus();
         }}
@@ -260,28 +266,40 @@ const ToolsBar: ComponentType<ToolsBarProps> = ({ editorState, setEditorState, e
       <ToolButton
         className="bold"
         isActive={isBold(editorState)}
-        onClick={() => toggleBold(editorState, (tr) => setEditorState(editorState.apply(tr)))}
+        onClick={() => {
+          track('format_text', { format: 'bold' });
+          toggleBold(editorState, (tr) => setEditorState(editorState.apply(tr)));
+        }}
       >
         B
       </ToolButton>
       <ToolButton
         className="italic"
         isActive={isItalic(editorState)}
-        onClick={() => toggleItalic(editorState, (tr) => setEditorState(editorState.apply(tr)))}
+        onClick={() => {
+          track('format_text', { format: 'italic' });
+          toggleItalic(editorState, (tr) => setEditorState(editorState.apply(tr)));
+        }}
       >
         I
       </ToolButton>
       <ToolButton
         className="supsubscript"
         isActive={isSup(editorState)}
-        onClick={() => toggleSup(editorState, (tr) => setEditorState(editorState.apply(tr)))}
+        onClick={() => {
+          track('format_text', { format: 'superscript' });
+          toggleSup(editorState, (tr) => setEditorState(editorState.apply(tr)));
+        }}
       >
         X²
       </ToolButton>
       <ToolButton
         className="supsubscript"
         isActive={isSub(editorState)}
-        onClick={() => toggleSub(editorState, (tr) => setEditorState(editorState.apply(tr)))}
+        onClick={() => {
+          track('format_text', { format: 'subscript' });
+          toggleSub(editorState, (tr) => setEditorState(editorState.apply(tr)));
+        }}
       >
         X₂
       </ToolButton>
@@ -291,7 +309,10 @@ const ToolsBar: ComponentType<ToolsBarProps> = ({ editorState, setEditorState, e
           key={config.title}
           className="bold"
           isActive={false}
-          onClick={() => config.handleSchemaInsert(editorState, setEditorState)}
+          onClick={() => {
+            track('insert_schema', { schema: config.title });
+            config.handleSchemaInsert(editorState, setEditorState);
+          }}
         >
           <div>
             <img alt={config.title} src={config.icon} width="19" height="19" />

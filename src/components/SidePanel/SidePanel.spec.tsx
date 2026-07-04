@@ -1,19 +1,24 @@
 import { fireEvent, render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { EditorState } from 'prosemirror-state';
 import { describe, expect, it, vi } from 'vitest';
-import SidePanel, { SidePanelProps } from './SidePanel';
-import userEvent from '@testing-library/user-event';
+
 import { Handle } from '../Editor/Editor';
 import { sideBarSymbols } from './constants';
+import SidePanel, { SidePanelProps } from './SidePanel';
 
 describe('SidePanel', () => {
-	const mockSetEditorState = {selection: { from: 0, to: 1 }, tr: { insertText: vi.fn() }, apply: vi.fn() } as unknown  as EditorState;
-	const mockEditorRef = { current: { view: { focus: vi.fn() } } };
-	const defaultProps: SidePanelProps = {
-		editorState: mockSetEditorState,
-		setEditorState: vi.fn(),
-		editorRef: mockEditorRef as unknown as React.RefObject<Handle>,
-	};
+  const mockSetEditorState = {
+    selection: { from: 0, to: 1 },
+    tr: { insertText: vi.fn() },
+    apply: vi.fn(),
+  } as unknown as EditorState;
+  const mockEditorRef = { current: { view: { focus: vi.fn() } } };
+  const defaultProps: SidePanelProps = {
+    editorState: mockSetEditorState,
+    setEditorState: vi.fn(),
+    editorRef: mockEditorRef as unknown as React.RefObject<Handle>,
+  };
 
   it('renders in collapsed state by default', () => {
     render(<SidePanel {...defaultProps} />);

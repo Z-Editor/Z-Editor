@@ -24,6 +24,8 @@ jobs:
 
       # Install dependencies and build the project
       - name: Install dependencies, test and build
+        env:
+          VITE_GA_ID: ${{ vars.VITE_GA_ID }}
         run: |
           corepack enable
           yarn install

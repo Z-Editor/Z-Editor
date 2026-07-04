@@ -3,6 +3,7 @@ import './SidePanel.css';
 import { EditorState } from 'prosemirror-state';
 import { ComponentType, useState } from 'react';
 
+import { track } from '../../analytics';
 import { Handle } from '../Editor/Editor';
 import { sideBarSymbols } from './constants';
 
@@ -19,6 +20,7 @@ const SidePanel: ComponentType<SidePanelProps> = ({ editorState, setEditorState,
     const { tr, selection } = editorState;
     const { from, to } = selection;
 
+    track('insert_symbol', { symbol });
     tr.insertText(symbol, from, to);
     setEditorState(editorState.apply(tr));
     editorRef.current?.view?.focus();
@@ -45,7 +47,12 @@ const SidePanel: ComponentType<SidePanelProps> = ({ editorState, setEditorState,
           {sideBarSymbols.map((section, index) => (
             <div className="symbol-section" data-testid="symbol-section" key={index}>
               {section.data.map((symbol, index) => (
-                <div className="symbol" data-testid="symbol" key={index} onClick={() => handleSymbolClick(symbol.symbol)}>
+                <div
+                  className="symbol"
+                  data-testid="symbol"
+                  key={index}
+                  onClick={() => handleSymbolClick(symbol.symbol)}
+                >
                   {symbol.symbol}
                 </div>
               ))}
