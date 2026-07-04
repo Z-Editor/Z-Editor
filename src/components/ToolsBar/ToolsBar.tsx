@@ -1,6 +1,7 @@
 import './ToolsBar.css';
 
 import { setBlockType } from 'prosemirror-commands';
+import { redo, undo } from 'prosemirror-history';
 import { MarkType } from 'prosemirror-model';
 import { EditorState, TextSelection } from 'prosemirror-state';
 import { ComponentType } from 'react';
@@ -234,6 +235,29 @@ const ToolsBar: ComponentType<ToolsBarProps> = ({ editorState, setEditorState, e
   return (
     <div className="tools-bar">
       <ToolButton
+        className="history"
+        title="Undo"
+        isActive={false}
+        onClick={() => {
+          undo(editorState, (tr) => setEditorState(editorState.apply(tr)));
+          editorRef.current?.view?.focus();
+        }}
+      >
+        ↶
+      </ToolButton>
+      <ToolButton
+        className="history"
+        title="Redo"
+        isActive={false}
+        onClick={() => {
+          redo(editorState, (tr) => setEditorState(editorState.apply(tr)));
+          editorRef.current?.view?.focus();
+        }}
+      >
+        ↷
+      </ToolButton>
+      <span className="separator" />
+      <ToolButton
         className="bold"
         isActive={isBold(editorState)}
         onClick={() => toggleBold(editorState, (tr) => setEditorState(editorState.apply(tr)))}
@@ -275,20 +299,35 @@ const ToolsBar: ComponentType<ToolsBarProps> = ({ editorState, setEditorState, e
         </ToolButton>
       ))}
       <span className="separator" />
-      <select className="select-box" onChange={handleFontSizeChange} value={deriveFontSize(editorState)}>
+      <select
+        className="select-box"
+        aria-label="Font size"
+        onChange={handleFontSizeChange}
+        value={deriveFontSize(editorState)}
+      >
         {fontSizes.map((size) => (
           <option key={size} value={`${size}px`}>
             {size}
           </option>
         ))}
       </select>
-      <select className="select-box" onChange={handleFontTypeChange} value={deriveFontType(editorState)}>
+      <select
+        className="select-box"
+        aria-label="Font family"
+        onChange={handleFontTypeChange}
+        value={deriveFontType(editorState)}
+      >
         <option value="Arial">Arial</option>
         <option value="Times New Roman">Times New Roman</option>
         <option value="Courier New">Courier New</option>
         <option value="Verdana">Verdana</option>
       </select>
-      <select className="select-box" onChange={toggleHeading} value={deriveFontStyle(editorState)}>
+      <select
+        className="select-box"
+        aria-label="Text style"
+        onChange={toggleHeading}
+        value={deriveFontStyle(editorState)}
+      >
         {fontStyles.map(({ value, label }) => (
           <option key={value} value={value}>
             {label}

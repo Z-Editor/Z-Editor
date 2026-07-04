@@ -1,16 +1,23 @@
 .side-panel {
-  position: fixed;
-  top: 90px;
-  right: 0;
+  flex: none;
   height: 100%;
   width: 250px;
-  background-color: #f8f9fa;
-  overflow-x: hidden;
-  padding-top: 20px;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-  padding: 10px;
-  border-left: 1px solid #ccc;
+  background-color: #ffffff;
+  overflow-y: auto;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.06);
+  border-left: 1px solid #e0e0e0;
+  padding: 12px;
+}
+
+.collapsed-side-bar {
+  flex: none;
+  height: 100%;
+  width: 44px;
+  background-color: #ffffff;
+  overflow: hidden;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.06);
+  border-left: 1px solid #e0e0e0;
+  padding: 12px 8px;
 }
 
 .symbol-section {
@@ -34,24 +41,13 @@
   cursor: pointer;
 }
 
-.collapsed-side-bar {
-  position: fixed;
-  top: 90px;
-  right: 0;
-  height: 100%;
-  width: 50px;
-  background-color: #f8f9fa;
-  overflow-x: hidden;
-  padding-top: 20px;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-  padding: 10px;
-  border-left: 1px solid #ccc;
+.symbol:hover {
+  background-color: #e8eaed;
 }
 
 .toggle-collapse-button {
   font-size: 14px;
-  color: #9d9999;
+  color: #5f6368;
   cursor: pointer;
   width: 28px;
   height: 28px;
@@ -63,4 +59,8 @@
   box-shadow: none;
   border: none;
   background-color: #f4f4f4;
+}
+
+.toggle-collapse-button:hover {
+  background-color: #e8eaed;
 }

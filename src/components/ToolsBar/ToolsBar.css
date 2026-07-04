@@ -1,19 +1,19 @@
 .tools-bar {
+  flex: none;
   display: flex;
-  width: 100%;
-  background-color: #f4f4f4;
-  padding: 10px;
-  border-bottom: 1px solid #ccc;
-  position: fixed;
-  top: 40px;
-  left: 0;
-  z-index: 10;
+  align-items: center;
+  flex-wrap: wrap;
+  background-color: #edf2fa;
+  padding: 6px 12px;
+  margin: 8px 12px;
+  border-radius: 20px;
+  gap: 2px;
 }
 
 .separator {
-  margin: 0 10px;
-  border-left: 1px solid #ccc;
-  height: 25px;
+  margin: 0 8px;
+  border-left: 1px solid #dadce0;
+  height: 24px;
   align-self: center;
 }
 
@@ -22,17 +22,22 @@
 }
 
 .select-box {
-  border: 1px solid lightgrey;
+  border: 1px solid #dadce0;
   border-radius: 6px;
-  padding: 4px;
-  font-size: 16px;
+  padding: 4px 6px;
+  font-size: 14px;
   background-color: white;
   outline: none;
   margin-left: 4px;
+  cursor: pointer;
+}
+
+.select-box:hover {
+  background-color: #f1f3f4;
 }
 
 .select-box:focus {
-  border-color: lightgrey;
+  border-color: #3366ff;
   box-shadow: none;
   outline: none;
 }

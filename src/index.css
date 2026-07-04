@@ -13,37 +13,35 @@ body {
 
 @page {
   size: A4;
-  margin: 0;
+  margin: 20mm;
 }
 
 @media print {
-  .header {
-    display: none;
+  .topbar,
+  .tools-bar,
+  .side-panel,
+  .collapsed-side-bar,
+  .statusbar {
+    display: none !important;
   }
 
-  .tools-bar {
-    display: none;
-  }
-
-  .side-panel {
-    display: none;
-  }
-
-  body * {
-    visibility: hidden;
-  }
-
-  .page * {
-    visibility: visible;
+  .app-shell,
+  .workspace,
+  .canvas {
+    display: block !important;
+    overflow: visible !important;
+    height: auto !important;
+    padding: 0 !important;
+    background: white !important;
   }
 
   .page {
-    background-color: white;
-    height: 100%;
-    width: 100%;
-    position: relative;
-    top: -150px;
-    left: 0;
-    margin: 0;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    width: 100% !important;
+    min-height: auto !important;
   }
 }

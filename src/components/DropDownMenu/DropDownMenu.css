@@ -1,52 +1,49 @@
 .dropdown {
-  float: right;
   position: relative;
 }
 
 .dropdown-button {
   background: transparent;
   border: 1px solid transparent;
-  border-radius: 20px;
-  color: rgb(255, 255, 255);
+  border-radius: 4px;
+  color: #444746;
   cursor: pointer;
-  float: right;
-  font-size: 12px;
-  font-weight: bold;
-  margin: 1px 15px;
+  font-size: 13px;
+  font-weight: 500;
+  margin: 0;
   outline: 0;
-  padding: 10px;
+  padding: 4px 10px;
 }
 
 .dropdown-button:hover {
-  border: 1px solid rgba(255, 255, 255, 0.51);
-  color: rgb(255, 255, 255);
+  background-color: #f1f3f4;
+  color: #202124;
 }
 
 .dropdown-menu {
-  background-color: #f9f9f9;
-  border-radius: 20px;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  background-color: #ffffff;
+  border-radius: 4px;
+  box-shadow: 0px 2px 6px 2px rgba(60, 64, 67, 0.15);
   left: 0;
   list-style: none;
-  margin: 0;
-  min-width: 100px;
-  padding: 0;
+  margin: 4px 0 0;
+  min-width: 180px;
+  padding: 6px 0;
   position: absolute;
   top: 100%;
-  z-index: 1;
+  z-index: 20;
 }
 
 .dropdown-menu li {
-  color: black;
+  color: #202124;
   cursor: pointer;
   display: block;
-  font-size: 12px;
-  padding: 12px 28px;
+  font-size: 13px;
+  padding: 8px 20px;
   text-decoration: none;
+  white-space: nowrap;
 }
 
 .dropdown-menu li:hover {
-  background-color: #f1f1f1;
-  border-radius: 20px;
-  border: 1px solid black;
+  background-color: #f1f3f4;
 }

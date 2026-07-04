@@ -7,12 +7,15 @@ interface ButtonProps {
   isActive: boolean;
   className: string;
   onClick: () => void;
+  title?: string;
 }
 
 const ToolButton: ComponentType<ButtonProps> = (props: ButtonProps) => {
   return (
     <button
       className={`tool-button ${props.className}`}
+      title={props.title}
+      aria-label={props.title}
       style={{
         backgroundColor: props.isActive ? '#d3e3fd' : '#f4f4f4',
       }}
