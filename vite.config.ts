@@ -1,6 +1,6 @@
-import { defineConfig as testConfig } from "vitest/config";
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
+import react from '@vitejs/plugin-react';
+import { defineConfig } from 'vite';
+import { defineConfig as testConfig } from 'vitest/config';
 
 // Vite configuration
 const config = defineConfig({

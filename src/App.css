@@ -1,21 +1,25 @@
-.App {
-  font-family: 'Georgia', 'Cambria', 'Times New Roman', 'Times', 'serif';
+.app-shell {
+  font-family: 'Roboto', 'Arial', sans-serif;
+  height: 100vh;
   width: 100%;
   display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: #f9fbfd;
 }
 
-/*.ProseMirrorContainer {*/
-/*  padding: 16px;*/
-/*  border: 1px solid #ccc;*/
-/*  transition: 0.1s;*/
-/*  border-radius: 5px;*/
-/*  background-color: #fff;*/
-/*}*/
-/**/
-/*.ProseMirrorContainer:focus-within {*/
-/*  box-shadow: 0 0 0 3px #a6c3ff;*/
-/*  border-color: blue;*/
-/*}*/
+.workspace {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+}
+
+.canvas {
+  flex: 1;
+  overflow: auto;
+  background-color: #f9fbfd;
+  padding: 24px 0 48px;
+}
 
 .ProseMirror {
   min-height: 200px;
@@ -34,7 +38,7 @@ p {
   border: 1px solid;
   padding: 10px;
   text-align: center;
-  background-color: #f9f9f9; /* Optional styling */
+  background-color: #f9f9f9;
 }
 
 .schema_block {
@@ -69,16 +73,15 @@ div .schema_roof {
 
 .page {
   width: 210mm;
-  min-height:297mm;
+  min-height: 297mm;
   height: auto;
   padding: 20mm;
-  margin: 10mm auto;
-  margin-top: 150px;
-  border: 1px #d3d3d3 solid;
-  border-radius: 5px;
+  margin: 0 auto;
+  border: 1px solid #e0e0e0;
+  border-radius: 2px;
   background: white;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
+  box-shadow: 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+  font-family: 'Georgia', 'Cambria', 'Times New Roman', 'Times', 'serif';
 }
 
 .schema_left_bar {

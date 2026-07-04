@@ -1,0 +1,17 @@
+.statusbar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  height: 28px;
+  padding: 0 16px;
+  background-color: #ffffff;
+  border-top: 1px solid #e0e0e0;
+  font-family: 'Roboto', 'Arial', sans-serif;
+  font-size: 12px;
+  color: #5f6368;
+}
+
+.statusbar-item {
+  white-space: nowrap;
+}

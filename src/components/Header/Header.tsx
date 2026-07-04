@@ -1,20 +1,36 @@
 import './Header.css';
 
+import html2canvas from 'html2canvas';
 import { EditorState } from 'prosemirror-state';
 import { ComponentType, useCallback, useRef } from 'react';
-import html2canvas from 'html2canvas';
 
-import { schema } from '../Editor';
-import { HeaderButton } from '../HeaderButton';
+import { track } from '../../analytics';
 import { DropDownMenu } from '../DropDownMenu';
+import { schema } from '../Editor';
 
 interface HeaderProps {
   editorState: EditorState;
   setEditorState: (state: EditorState) => void;
+  docName: string;
+  setDocName: (name: string) => void;
 }
 
-const Header: ComponentType<HeaderProps> = ({ editorState, setEditorState }) => {
+function sanitizeBase(name: string, fallback: string): string {
+  const trimmed = name.trim();
+  return trimmed ? trimmed : fallback;
+}
+
+const Header: ComponentType<HeaderProps> = ({ editorState, setEditorState, docName, setDocName }) => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  const printAsPdf = useCallback(() => {
+    // Chrome uses document.title as the default "Save as PDF" filename.
+    const prev = document.title;
+    document.title = sanitizeBase(docName, 'document');
+    track('file_download_pdf');
+    window.print();
+    document.title = prev;
+  }, [docName]);
 
   const handleFileChange = useCallback(
     async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -23,7 +39,6 @@ const Header: ComponentType<HeaderProps> = ({ editorState, setEditorState }) => 
         const text = await file.text();
         const savedState: unknown = JSON.parse(text);
 
-        // Reconstruct the EditorState from saved JSON data
         const newState = EditorState.create({
           schema,
           plugins: editorState.plugins,
@@ -31,9 +46,11 @@ const Header: ComponentType<HeaderProps> = ({ editorState, setEditorState }) => 
         });
 
         setEditorState(newState);
+        setDocName(file.name.replace(/\.z$/i, ''));
+        track('file_import');
       }
     },
-    [editorState, setEditorState],
+    [editorState, setEditorState, setDocName],
   );
 
   const triggerUpload = () => {
@@ -45,23 +62,16 @@ const Header: ComponentType<HeaderProps> = ({ editorState, setEditorState }) => 
     const blob = new Blob([JSON.stringify(stateJSON)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
 
-    // Prompt the user to name the file
-    const fileName = window.prompt('Enter the name for the download file', 'zeditor_download.z');
-    if (!fileName) {
-      // Exit if the user cancels or provides no name
-      return;
-    }
-
-    // Create a temporary link element
+    const base = sanitizeBase(docName, 'zeditor_download');
     const link = document.createElement('a');
     link.href = url;
-    link.download = fileName.endsWith('.z') ? fileName : `${fileName}.z`; // Ensure proper file extension
+    link.download = base.endsWith('.z') ? base : `${base}.z`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
 
-    // Free up the URL after download
     URL.revokeObjectURL(url);
+    track('file_download');
   };
 
   const exportAsPNG = async () => {
@@ -77,64 +87,71 @@ const Header: ComponentType<HeaderProps> = ({ editorState, setEditorState }) => 
     });
 
     const dataUrl = canvas.toDataURL('image/png');
-
+    const base = sanitizeBase(docName, 'zeditor_export');
     const link = document.createElement('a');
-
-    const fileName = window.prompt('Enter the name for the PNG file', 'zeditor_export.png');
-    if (!fileName) {
-      return;
-    }
-
-    link.download = fileName.endsWith('.png') ? fileName : `${fileName}.png`;
+    link.download = base.endsWith('.png') ? base : `${base}.png`;
     link.href = dataUrl;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+    track('file_export_png');
   };
 
   return (
-    <div className="header">
-      <div className="logo">Z-Editor</div>
-      <a
-        className="github-button"
-        href="https://github.com/Z-Editor/Z-Editor"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        View on Github
-      </a>
-      <HeaderButton
-        text="Print"
-        onClick={() => {
-          window.print();
-        }}
-      />
-      <HeaderButton text="Download" onClick={handleDownload} />
-      <input
-        ref={fileInputRef}
-        type="file"
-        style={{ display: 'none' }}
-        accept=".z"
-        onChange={(e) => {
-          void (async () => {
-            await handleFileChange(e);
-          })();
-        }}
-      />
-      <DropDownMenu
-        text="Export"
-        options={[
-          {
-            label: '- PNG',
-            onClick: () => {
-              void (async () => {
-                await exportAsPNG();
-              })();
+    <div className="topbar">
+      <div className="titlebar">
+        <div className="brand">Z-Editor</div>
+        <input
+          className="doc-title"
+          value={docName}
+          aria-label="Document name"
+          onChange={(e) => setDocName(e.target.value)}
+        />
+        <a
+          className="github-link"
+          href="https://github.com/Z-Editor/Z-Editor"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          View on GitHub
+        </a>
+      </div>
+      <div className="menubar">
+        <DropDownMenu
+          text="File"
+          options={[
+            { label: 'Import (.z)', onClick: triggerUpload },
+            { label: 'Download (.z)', onClick: handleDownload },
+            { label: 'Download as PDF', onClick: printAsPdf },
+            {
+              label: 'Export as PNG',
+              onClick: () => {
+                void (async () => {
+                  await exportAsPNG();
+                })();
+              },
             },
-          },
-        ]}
-      />
-      <HeaderButton text="Import" onClick={triggerUpload} />
+            {
+              label: 'Print',
+              onClick: () => {
+                track('file_print');
+                window.print();
+              },
+            },
+          ]}
+        />
+        <input
+          ref={fileInputRef}
+          type="file"
+          style={{ display: 'none' }}
+          accept=".z"
+          onChange={(e) => {
+            void (async () => {
+              await handleFileChange(e);
+            })();
+          }}
+        />
+      </div>
     </div>
   );
 };

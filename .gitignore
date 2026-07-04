@@ -31,3 +31,7 @@ dist-ssr
 
 # coverage
 coverage/
+
+# Local env (do not commit secrets/IDs)
+.env
+.env.local

@@ -1,24 +1,58 @@
-.header {
-  width: 100%;
-  left: 0;
-  top: 0;
-  z-index: 15;
-  background: linear-gradient(150deg, #3366ff, #3333cc);
-  height: 40px;
-  width: 100%;
-  position: fixed;
+.topbar {
+  flex: none;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
 }
 
-.logo {
-  float: left;
+.titlebar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px 4px;
+}
+
+.brand {
+  font-size: 20px;
+  font-weight: 500;
+  color: #3366ff;
+  white-space: nowrap;
+}
+
+.doc-title {
   font-size: 15px;
-  color: white;
-  margin: 10px;
+  color: #202124;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 4px 8px;
+  outline: none;
+  background: transparent;
+  min-width: 120px;
+  max-width: 360px;
 }
 
-.github-button {
-  float: left;
-  margin: 10px;
-  color: white;
+.doc-title:hover {
+  border-color: #dadce0;
+}
+
+.doc-title:focus {
+  border-color: #3366ff;
+}
+
+.github-link {
+  margin-left: auto;
+  color: #5f6368;
   font-size: 13px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.github-link:hover {
+  text-decoration: underline;
+}
+
+.menubar {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 0 12px 4px;
 }
