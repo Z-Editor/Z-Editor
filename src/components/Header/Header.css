@@ -38,16 +38,33 @@
   border-color: #3366ff;
 }
 
-.github-link {
+.header-actions {
   margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.icon-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   color: #5f6368;
   font-size: 13px;
   text-decoration: none;
   white-space: nowrap;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: background-color 0.15s ease, color 0.15s ease;
 }
 
-.github-link:hover {
-  text-decoration: underline;
+.icon-link:hover {
+  background-color: #f1f3f4;
+  color: #202124;
+}
+
+.icon-link svg {
+  flex: none;
 }
 
 .menubar {
