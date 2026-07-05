@@ -23,6 +23,14 @@ if (GA_ID) {
   };
   window.gtag('js', new Date());
   window.gtag('config', GA_ID);
+
+  // Report uncaught errors so bugs users hit are visible in GA4 (Reports -> exceptions).
+  window.addEventListener('error', (e) => {
+    track('exception', { description: `${e.message} @ ${e.filename}:${e.lineno}`, fatal: false });
+  });
+  window.addEventListener('unhandledrejection', (e) => {
+    track('exception', { description: `unhandledrejection: ${String(e.reason)}`, fatal: false });
+  });
 }
 
 export function track(name: string, params?: Params): void {

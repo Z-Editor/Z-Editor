@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Questions & ideas (Discussions)
+    url: https://github.com/Z-Editor/Z-Editor/discussions
+    about: Ask questions or discuss open-ended ideas before filing an issue.
