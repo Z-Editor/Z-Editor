@@ -26,6 +26,8 @@ jobs:
       - name: Install dependencies, test and build
         env:
           VITE_GA_ID: ${{ vars.VITE_GA_ID }}
+          VITE_GOOGLE_CLIENT_ID: ${{ vars.VITE_GOOGLE_CLIENT_ID }}
+          VITE_GOOGLE_API_KEY: ${{ vars.VITE_GOOGLE_API_KEY }}
         run: |
           corepack enable
           yarn install

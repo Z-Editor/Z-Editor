@@ -2,11 +2,14 @@ import './Header.css';
 
 import html2canvas from 'html2canvas';
 import { EditorState } from 'prosemirror-state';
-import { ComponentType, useCallback, useRef } from 'react';
+import { ComponentType, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { track } from '../../analytics';
+import { downloadFile, driveConfigured, pickFile, saveFile } from '../../googleDrive';
 import { DropDownMenu } from '../DropDownMenu';
 import { schema } from '../Editor';
+
+type SaveStatus = 'idle' | 'saving' | 'saved' | 'error';
 
 interface HeaderProps {
   editorState: EditorState;
@@ -22,6 +25,94 @@ function sanitizeBase(name: string, fallback: string): string {
 
 const Header: ComponentType<HeaderProps> = ({ editorState, setEditorState, docName, setDocName }) => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  const [driveFileId, setDriveFileId] = useState<string | null>(null);
+  const [saveStatus, setSaveStatus] = useState<SaveStatus>('idle');
+
+  // Refs keep the autosave interval reading the latest values without resetting each keystroke.
+  const currentContent = useMemo(() => JSON.stringify(editorState.doc.toJSON()), [editorState]);
+  const contentRef = useRef(currentContent);
+  contentRef.current = currentContent;
+  const docNameRef = useRef(docName);
+  docNameRef.current = docName;
+  const driveFileIdRef = useRef<string | null>(null);
+  const lastSavedRef = useRef('');
+  const savingRef = useRef(false);
+
+  useEffect(() => {
+    driveFileIdRef.current = driveFileId;
+  }, [driveFileId]);
+
+  const pushToDrive = useCallback(async (): Promise<void> => {
+    savingRef.current = true;
+    setSaveStatus('saving');
+    try {
+      const content = contentRef.current;
+      const id = await saveFile(docNameRef.current, content, driveFileIdRef.current ?? undefined);
+      driveFileIdRef.current = id;
+      setDriveFileId(id);
+      lastSavedRef.current = content;
+      setSaveStatus('saved');
+    } finally {
+      savingRef.current = false;
+    }
+  }, []);
+
+  const openFromDrive = useCallback(async (): Promise<void> => {
+    try {
+      const picked = await pickFile();
+      if (!picked) return;
+      const text = await downloadFile(picked.id);
+      const savedState: unknown = JSON.parse(text);
+      const newState = EditorState.create({
+        schema,
+        plugins: editorState.plugins,
+        doc: schema.nodeFromJSON(savedState),
+      });
+      setEditorState(newState);
+      setDocName(picked.name.replace(/\.z$/i, ''));
+      lastSavedRef.current = JSON.stringify(newState.doc.toJSON());
+      setDriveFileId(picked.id);
+      setSaveStatus('saved');
+      track('drive_open');
+    } catch (err) {
+      alert(`Could not open from Google Drive: ${(err as Error).message}`);
+    }
+  }, [editorState.plugins, setEditorState, setDocName]);
+
+  const saveToDrive = useCallback(async (): Promise<void> => {
+    try {
+      await pushToDrive();
+      track('drive_save');
+    } catch (err) {
+      setSaveStatus('error');
+      alert(`Could not save to Google Drive: ${(err as Error).message}`);
+    }
+  }, [pushToDrive]);
+
+  // Autosave every 60s while the document is Drive-backed, only when it has unsaved changes.
+  useEffect(() => {
+    if (!driveFileId) return;
+    const autosave = async () => {
+      if (savingRef.current || contentRef.current === lastSavedRef.current) return;
+      try {
+        await pushToDrive();
+        track('drive_autosave', { ok: true });
+      } catch {
+        setSaveStatus('error');
+        track('drive_autosave', { ok: false });
+      }
+    };
+    const interval = setInterval(() => void autosave(), 60_000);
+    const onHide = () => {
+      if (document.visibilityState === 'hidden') void autosave();
+    };
+    document.addEventListener('visibilitychange', onHide);
+    return () => {
+      clearInterval(interval);
+      document.removeEventListener('visibilitychange', onHide);
+    };
+  }, [driveFileId, pushToDrive]);
 
   const printAsPdf = useCallback(() => {
     // Chrome uses document.title as the default "Save as PDF" filename.
@@ -107,6 +198,15 @@ const Header: ComponentType<HeaderProps> = ({ editorState, setEditorState, docNa
           aria-label="Document name"
           onChange={(e) => setDocName(e.target.value)}
         />
+        {driveFileId && (
+          <span className="save-status" data-status={saveStatus}>
+            {saveStatus === 'saving'
+              ? 'Saving…'
+              : saveStatus === 'error'
+                ? 'Save failed — retrying'
+                : 'All changes saved to Drive'}
+          </span>
+        )}
         <div className="header-actions">
           <a
             className="icon-link"
@@ -150,8 +250,20 @@ const Header: ComponentType<HeaderProps> = ({ editorState, setEditorState, docNa
         <DropDownMenu
           text="File"
           options={[
-            { label: 'Import (.z)', onClick: triggerUpload },
-            { label: 'Download (.z)', onClick: handleDownload },
+            {
+              label: 'Import',
+              children: [
+                { label: 'From device (.z)', onClick: triggerUpload },
+                ...(driveConfigured ? [{ label: 'From Google Drive', onClick: () => void openFromDrive() }] : []),
+              ],
+            },
+            {
+              label: 'Save',
+              children: [
+                { label: 'To device (.z)', onClick: handleDownload },
+                ...(driveConfigured ? [{ label: 'To Google Drive', onClick: () => void saveToDrive() }] : []),
+              ],
+            },
             { label: 'Download as PDF', onClick: printAsPdf },
             {
               label: 'Export as PNG',

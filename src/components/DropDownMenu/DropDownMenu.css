@@ -47,3 +47,31 @@
 .dropdown-menu li:hover {
   background-color: #f1f3f4;
 }
+
+.menu-label {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.submenu-arrow {
+  color: #5f6368;
+  font-size: 15px;
+  margin-left: 16px;
+}
+
+.dropdown-menu li.has-submenu {
+  position: relative;
+}
+
+.dropdown-menu .submenu {
+  display: none;
+  left: 100%;
+  margin: 0;
+  top: -6px;
+}
+
+/* ponytail: pure-CSS flyout, opens right; flip to left if it clips, revisit then */
+.dropdown-menu li.has-submenu:hover > .submenu {
+  display: block;
+}
