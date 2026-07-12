@@ -2,16 +2,84 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="Online tool to edit formal Z notations">
-    <meta name="author" content="Nadun Indunil">
-    <meta name="keywords" content="Z,Z-Editor,Z-notations,Online,Editor,Prosemirror,React.js">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Z-Editor</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+
+    <title>Z-Editor — Free Online Z Notation Editor</title>
+    <meta
+      name="description"
+      content="Z-Editor is a free, open-source online editor for formal Z notation. Write, format, and export Z specifications right in your browser — no install, no account."
+    />
+    <meta
+      name="keywords"
+      content="Z notation, Z-Editor, Z notation editor, formal methods, formal specification, online editor, Z spec, ProseMirror"
+    />
+    <meta name="author" content="Nadun Indunil" />
+    <link rel="canonical" href="https://z-editor.github.io/" />
+    <meta name="theme-color" content="#1a73e8" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Z-Editor" />
+    <meta property="og:url" content="https://z-editor.github.io/" />
+    <meta property="og:title" content="Z-Editor — Free Online Z Notation Editor" />
+    <meta
+      property="og:description"
+      content="A free, open-source online editor for formal Z notation. Write, format, and export Z specifications right in your browser."
+    />
+    <meta property="og:image" content="https://z-editor.github.io/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Z-Editor — Free Online Z Notation Editor" />
+    <meta
+      name="twitter:description"
+      content="A free, open-source online editor for formal Z notation. Write, format, and export Z specifications right in your browser."
+    />
+    <meta name="twitter:image" content="https://z-editor.github.io/og-image.png" />
+
+    <!-- Structured data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Z-Editor",
+        "url": "https://z-editor.github.io/",
+        "description": "A free, open-source online editor for formal Z notation. Write, format, and export Z specifications right in your browser.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "browserRequirements": "Requires a modern web browser with JavaScript enabled",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "author": {
+          "@type": "Person",
+          "name": "Nadun Indunil"
+        }
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
+    <noscript>
+      <main style="max-width: 640px; margin: 48px auto; padding: 0 20px; font-family: sans-serif">
+        <h1>Z-Editor — Free Online Z Notation Editor</h1>
+        <p>
+          Z-Editor is a free, open-source, browser-based editor for formal
+          <strong>Z notation</strong>. Write, format, and export Z specifications with no install
+          and no account — your documents stay on your device or in your own Google Drive.
+        </p>
+        <p>Z-Editor requires JavaScript. Please enable JavaScript to use the editor.</p>
+        <p>
+          Learn more or contribute on
+          <a href="https://github.com/Z-Editor/Z-Editor">GitHub</a>.
+        </p>
+      </main>
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
