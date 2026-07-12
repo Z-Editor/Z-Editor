@@ -38,6 +38,16 @@
   border-color: #3366ff;
 }
 
+.save-status {
+  font-size: 12px;
+  color: #5f6368;
+  white-space: nowrap;
+}
+
+.save-status[data-status='error'] {
+  color: #d93025;
+}
+
 .header-actions {
   margin-left: auto;
   display: flex;
