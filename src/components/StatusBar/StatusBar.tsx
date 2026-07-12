@@ -23,6 +23,14 @@ const StatusBar: ComponentType<StatusBarProps> = ({ editorState }) => {
         {words} {words === 1 ? 'word' : 'words'}
       </span>
       <span className="statusbar-item">{text.length} characters</span>
+      <span className="statusbar-links">
+        <a href="/privacy.html" target="_blank" rel="noopener noreferrer">
+          Privacy
+        </a>
+        <a href="/terms.html" target="_blank" rel="noopener noreferrer">
+          Terms
+        </a>
+      </span>
     </div>
   );
 };

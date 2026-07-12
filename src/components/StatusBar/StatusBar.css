@@ -15,3 +15,19 @@
 .statusbar-item {
   white-space: nowrap;
 }
+
+.statusbar-links {
+  margin-left: auto;
+  display: flex;
+  gap: 16px;
+}
+
+.statusbar-links a {
+  color: #5f6368;
+  text-decoration: none;
+}
+
+.statusbar-links a:hover {
+  color: #1a73e8;
+  text-decoration: underline;
+}
