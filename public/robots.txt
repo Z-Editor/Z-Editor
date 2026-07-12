@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://z-editor.github.io/sitemap.xml
